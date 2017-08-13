@@ -24,14 +24,22 @@ Public Class ServiceOrderServices
                 Dim pcaEnd As New SqlParameter("PCAEnd", model.PCAEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim gpuStart As New SqlParameter("GPUStart", model.GPUStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim gpuEnd As New SqlParameter("GPUEnd", model.GPUEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
-                Dim createBy As New SqlParameter("CreateBy", 1) With {.SqlDbType = SqlDbType.Int}
+                Dim createBy As New SqlParameter("CreateBy", model.CreateBy) With {.SqlDbType = SqlDbType.Int}
+                Dim custIdStart As New SqlParameter("CustIDStart", model.CustIDStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
+                Dim custSignStart As New SqlParameter("CustSignStart", model.CustSignStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 4000}
+                Dim custIdStop As New SqlParameter("CustIDStop", model.CustIDStop) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
+                Dim custSignStop As New SqlParameter("CustSignStop", model.CustSignStop) With {.SqlDbType = SqlDbType.NVarChar, .Size = 4000}
+                Dim condOfCharge As New SqlParameter("CondOfCharge", model.CondOfCharge) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
+                Dim remark As New SqlParameter("Remark", model.Remark) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
                 'initial output parameters
                 Dim success As New SqlParameter("Success", SqlDbType.Int) With {.Direction = ParameterDirection.Output}
                 Dim retmessage As New SqlParameter("RetMsg", SqlDbType.NVarChar) With {.Direction = ParameterDirection.Output, .Size = 255}
 
                 repository.DTEDBContext.Database.ExecuteSqlCommand("sp_Insert_SO @Station, @GateNo, @PCA1, @PCA2, @GPU1, @GPU2, @FlightNo, @AircraftType, @AircraftReg, @AircraftCarrier, @ETA, 
-                                                                @ETD, @PCAStart, @PCAEnd, @GPUStart, @GPUEnd, @CreateBy, @Success out, @RetMsg out",
-                                                                   station, gateNo, pca1, pca2, gpu1, gpu2, flightNo, acType, acReg, acCar, eta, etd, pcaStart, pcaEnd, gpuStart, gpuEnd, createBy, success, retmessage)
+                                                                @ETD, @PCAStart, @PCAEnd, @GPUStart, @GPUEnd, @CreateBy, @CustIDStart, @CustSignStart, @CustIDStop, @CustSignStop,
+                                                                @CondOfCharge, @Remark,@Success out, @RetMsg out",
+                                                                   station, gateNo, pca1, pca2, gpu1, gpu2, flightNo, acType, acReg, acCar, eta, etd, pcaStart, pcaEnd, gpuStart, gpuEnd, createBy,
+                                                                   custIdStart, custSignStart, custIdStop, custSignStop, condOfCharge, remark, success, retmessage)
                 Dim result = New ServiceOrder.OutputSPInsertSO()
                 result.Success = success.Value
                 result.RetMsg = retmessage.Value

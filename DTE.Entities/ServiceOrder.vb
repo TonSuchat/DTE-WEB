@@ -38,6 +38,13 @@ Public Class ServiceOrder
         Public Property GPUStart As String
         Public Property GPUEnd As String
         Public Property CreateBy As Integer
+        Public Property CustIDStart As String
+        Public Property CustSignStart As String
+        Public Property CustIDStop As String
+        Public Property CustSignStop As String
+        Public Property CondOfCharge As String
+        Public Property Remark As String
+
 
         Public Sub New()
             Me.DateNow = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")

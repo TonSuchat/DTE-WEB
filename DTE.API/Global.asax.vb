@@ -11,4 +11,11 @@ Public Class WebApiApplication
         RouteConfig.RegisterRoutes(RouteTable.Routes)
         BundleConfig.RegisterBundles(BundleTable.Bundles)
     End Sub
+
+    Sub Application_BeginRequest()
+        If Request.Headers.AllKeys.Contains("Origin") AndAlso Request.HttpMethod = "OPTIONS" Then
+            Response.Flush()
+        End If
+    End Sub
+
 End Class

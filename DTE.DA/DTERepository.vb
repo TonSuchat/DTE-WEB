@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports DTE.Entities
 
 Public Class DTERepository
@@ -88,6 +89,7 @@ Public Class DTERepository
                 If String.IsNullOrEmpty(username) OrElse String.IsNullOrEmpty(password) Then Return Nothing
                 Return DTEDBContext.Users.FirstOrDefault(Function(u) u.UserName.Trim() = username AndAlso u.PWD.Trim() = password)
             Catch ex As Exception
+                Log(ex.ToString())
                 Return Nothing
             End Try
         End Function
@@ -95,5 +97,13 @@ Public Class DTERepository
     End Class
 
 #End Region
+
+
+    Public Shared Sub Log(message As String)
+        Dim path As String = "E:\temp\log.txt"
+        Using sw As StreamWriter = File.AppendText(path)
+            sw.WriteLine(message)
+        End Using
+    End Sub
 
 End Class
