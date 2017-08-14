@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="ServiceOrder.vb" />
     <Compile Include="Transaction.vb" />
+    <Compile Include="UploadImage.vb" />
     <Compile Include="User.vb" />
   </ItemGroup>
   <ItemGroup>

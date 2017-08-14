@@ -40,7 +40,15 @@ Namespace Controllers
                 .Remark = model.Remark
                 }
             Dim result = services.ExecuteStoredInsertSO(inputSaveSO)
-            Return Ok("SONumber")
+            If result.Success = 1 Then
+                'insert upload images
+                Dim uploadImgs As New List(Of Entities.UploadImage)
+                For Each img In model.UploadImages
+                    uploadImgs.Add(New Entities.UploadImage() With {.WONumber = result.RetMsg, .image = img})
+                Next
+                services.AddUploadImages(uploadImgs)
+            End If
+            Return Ok(New With {.success = result.Success, .message = result.RetMsg})
         End Function
 
     End Class

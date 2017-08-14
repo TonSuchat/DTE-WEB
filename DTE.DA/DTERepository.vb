@@ -98,6 +98,37 @@ Public Class DTERepository
 
 #End Region
 
+#Region "UploadImageRepository"
+
+    Public Class UploadImageRepository
+        Inherits DTERepository
+
+        Public Function AddUploadImage(model As UploadImage) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.createDate = DateTime.Now()
+                DTEDBContext.UploadImages.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function AddUploadImages(models As List(Of UploadImage)) As Boolean
+            Try
+                For Each model In models
+                    AddUploadImage(model)
+                Next
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+    End Class
+
+#End Region
+
 
     Public Shared Sub Log(message As String)
         Dim path As String = "E:\temp\log.txt"

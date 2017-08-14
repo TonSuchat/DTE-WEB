@@ -11,5 +11,6 @@ Public Class DTEContext
 
     Public Property Transactions As DbSet(Of Transaction)
     Public Property Users As DbSet(Of User)
+    Public Property UploadImages As DbSet(Of UploadImage)
 
 End Class

@@ -31,6 +31,7 @@
         Public Property CustSignStop As String
         Public Property CondOfCharge As String
         Public Property Remark As String
+        Public Property UploadImages As List(Of String)
     End Class
 
 End Class
