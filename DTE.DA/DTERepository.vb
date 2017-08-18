@@ -62,16 +62,84 @@ Public Class DTERepository
 
 #End Region
 
+#Region "FlightData"
+
+    Public Class FlightDataRepository
+        Inherits DTERepository
+
+        Public Function AddFlightData(model As FlightData) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.CreateDate = DateTime.Now()
+                DTEDBContext.FlightDatas.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function GetFlightDatas() As List(Of FlightData)
+            Try
+                Return DTEDBContext.FlightDatas.ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function GetFlightDatas(selectedDate As Date) As List(Of FlightData)
+            Try
+                Return DTEDBContext.FlightDatas.Where(Function(f) Entity.DbFunctions.TruncateTime(f.STD) = selectedDate OrElse Entity.DbFunctions.TruncateTime(f.STA) = selectedDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+    End Class
+
+#End Region
+
 #Region "Transaction"
 
     Public Class TransactionRepository
         Inherits DTERepository
 
-        Public Function GetTransactions() As List(Of Transaction)
+        Public Function GetTransaction(id As Integer) As Transaction
             Try
-                Return DTEDBContext.Transactions.ToList()
+                If id = 0 Then Return Nothing
+                Return DTEDBContext.Transactions.FirstOrDefault(Function(t) t.id = id AndAlso t.IsActive = True)
             Catch ex As Exception
                 Return Nothing
+            End Try
+        End Function
+
+        Public Function GetTransactions() As List(Of Transaction)
+            Try
+                Return DTEDBContext.Transactions.Where(Function(t) t.IsActive = True).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function GetTransactions(userId As Integer) As List(Of Transaction)
+            Try
+                If userId = 0 Then Return Nothing
+                Return DTEDBContext.Transactions.Where(Function(t) t.CreateBy = userId AndAlso t.IsActive = True).OrderByDescending(Function(t) t.CreateDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function RemoveTransaction(id As Integer) As Boolean
+            Try
+                If id = 0 Then Return False
+                Dim model = DTEDBContext.Transactions.FirstOrDefault(Function(t) t.id = id)
+                If IsNothing(model) Then Return False
+                'flag delete
+                model.IsActive = False
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
             End Try
         End Function
 
@@ -90,6 +158,15 @@ Public Class DTERepository
                 Return DTEDBContext.Users.FirstOrDefault(Function(u) u.UserName.Trim() = username AndAlso u.PWD.Trim() = password)
             Catch ex As Exception
                 Log(ex.ToString())
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function GetUser(id As Integer) As User
+            Try
+                If id = 0 Then Return Nothing
+                Return DTEDBContext.Users.FirstOrDefault(Function(u) u.id = id)
+            Catch ex As Exception
                 Return Nothing
             End Try
         End Function
@@ -122,6 +199,14 @@ Public Class DTERepository
                 Return True
             Catch ex As Exception
                 Return False
+            End Try
+        End Function
+
+        Public Function GetUploadImages(woNumber As String) As List(Of UploadImage)
+            Try
+                Return DTEDBContext.UploadImages.Where(Function(u) u.WONumber = woNumber).ToList()
+            Catch ex As Exception
+                Return Nothing
             End Try
         End Function
 

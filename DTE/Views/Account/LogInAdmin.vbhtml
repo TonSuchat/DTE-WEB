@@ -1,15 +1,14 @@
 ﻿@ModelType LogInViewModel
 
 @Code
-    ViewData("Title") = "เข้าสู่ระบบ"
+    ViewData("Title") = "เข้าสู่ระบบ-Admin"
 End Code
 
-
 <div class="row">
-    <h2>เข้าสู่ระบบ</h2>
+    <h2>เข้าสู่ระบบ-Admin</h2>
     <div class="col-md-12">
         <section id="loginForm">
-            @Using Html.BeginForm("LogIn", "Account", New With {.ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, New With {.class = "form-horizontal", .role = "form"})
+            @Using Html.BeginForm("LogInAdmin", "Account", New With {.ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, New With {.class = "form-horizontal", .role = "form"})
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
                 @<div class="form-group">
@@ -29,6 +28,3 @@ End Code
         </section>
     </div>
 </div>
-
-
-

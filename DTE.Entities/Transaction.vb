@@ -46,9 +46,25 @@ Public Class Transaction
     <Required()>
     Public Property Printed As Boolean
     Public Property CreateBy As Integer?
+    Public Property CustIDStart As String
+    Public Property CustSignStart As String
+    Public Property CustIDStop As String
+    Public Property CustSignStop As String
+    Public Property CondOfCharge As String
+    Public Property Remark As String
     Public Property UpdateBy As Integer?
     <Required()>
     Public Property UpdateDate As DateTime
     <Required()>
+    Public Property IsActive As Boolean
+    <Required()>
     Public Property CreateDate As DateTime
+End Class
+
+Partial Public Class Transaction
+    Public ReadOnly Property CreatedDateTxt As String
+        Get
+            Return Me.CreateDate.ToString("dd/MM/yyyy HH:mm")
+        End Get
+    End Property
 End Class

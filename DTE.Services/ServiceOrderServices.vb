@@ -26,9 +26,9 @@ Public Class ServiceOrderServices
                 Dim gpuEnd As New SqlParameter("GPUEnd", model.GPUEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim createBy As New SqlParameter("CreateBy", model.CreateBy) With {.SqlDbType = SqlDbType.Int}
                 Dim custIdStart As New SqlParameter("CustIDStart", model.CustIDStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim custSignStart As New SqlParameter("CustSignStart", model.CustSignStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 4000}
+                Dim custSignStart As New SqlParameter("CustSignStart", model.CustSignStart) With {.SqlDbType = SqlDbType.Text}
                 Dim custIdStop As New SqlParameter("CustIDStop", model.CustIDStop) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim custSignStop As New SqlParameter("CustSignStop", model.CustSignStop) With {.SqlDbType = SqlDbType.NVarChar, .Size = 4000}
+                Dim custSignStop As New SqlParameter("CustSignStop", model.CustSignStop) With {.SqlDbType = SqlDbType.Text}
                 Dim condOfCharge As New SqlParameter("CondOfCharge", model.CondOfCharge) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
                 Dim remark As New SqlParameter("Remark", model.Remark) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
                 'initial output parameters
@@ -84,6 +84,26 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
+    Public Function GetUser(id As Integer) As User
+        Using repository As New UserRepository()
+            Return repository.GetUser(id)
+        End Using
+    End Function
+
+    Public Function GetUser(username As String, password As String) As User
+        Using repository As New UserRepository()
+            Return repository.GetUser(username, password)
+        End Using
+    End Function
+
+    Public Function GetUserAdmin(username As String, password As String) As User
+        Using repository As New UserRepository()
+            Dim user = repository.GetUser(username, password)
+            If IsNothing(user) Then Return Nothing
+            If user.IsAdmin Then Return user Else Return Nothing
+        End Using
+    End Function
+
 #End Region
 
 #Region "UploadImage"
@@ -91,6 +111,44 @@ Public Class ServiceOrderServices
     Public Function AddUploadImages(models As List(Of UploadImage)) As Boolean
         Using repository As New UploadImageRepository()
             Return repository.AddUploadImages(models)
+        End Using
+    End Function
+
+    Public Function GetUploadImages(woNumber As String) As List(Of UploadImage)
+        Using repository As New UploadImageRepository()
+            Return repository.GetUploadImages(woNumber)
+        End Using
+    End Function
+
+#End Region
+
+#Region "Transactions"
+
+    Public Function GetTransaction(id As Integer) As Transaction
+        Using repository As New TransactionRepository()
+            Return repository.GetTransaction(id)
+        End Using
+    End Function
+
+    Public Function GetTransactions(userId As Integer) As List(Of Transaction)
+        Using repository As New TransactionRepository()
+            Return repository.GetTransactions(userId)
+        End Using
+    End Function
+
+    Public Function RemoveTransaction(id As Integer) As Boolean
+        Using repository As New TransactionRepository()
+            Return repository.RemoveTransaction(id)
+        End Using
+    End Function
+
+#End Region
+
+#Region "FlightData"
+
+    Public Function GetFlightDatas(selectedDate As Date) As List(Of FlightData)
+        Using repository As New FlightDataRepository()
+            Return repository.GetFlightDatas(selectedDate)
         End Using
     End Function
 

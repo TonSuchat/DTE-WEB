@@ -13,6 +13,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DTE", "DTE\DTE.vbproj", "{C
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DTE.API", "DTE.API\DTE.API.vbproj", "{685A0D30-584B-4395-920B-318AF74E4440}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{A2617D4B-CEC9-429F-9787-F0A6475968B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

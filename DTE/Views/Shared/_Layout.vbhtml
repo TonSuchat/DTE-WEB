@@ -21,11 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("บันทึก Service Order", "../", "Home")</li>
-                    <li>@Html.ActionLink("รายงาน", "ServiceOrder", "Report")</li>
-                    <li>@Html.ActionLink("ผู้ดูแลระบบ", "Admin", "Home")</li>
+                    
                 </ul>
-                @*@Html.Partial("_LoginPartial")*@
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>

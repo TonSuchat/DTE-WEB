@@ -8,7 +8,8 @@ Public Class UploadImage
     <Required()>
     <MaxLength(13)>
     Public Property WONumber As String
-    Public Property image As String
+    <Required()>
+    Public Property objectImage As String
     <Required()>
     Public Property createDate As DateTime
 End Class

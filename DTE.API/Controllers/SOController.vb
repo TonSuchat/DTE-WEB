@@ -13,6 +13,7 @@ Namespace Controllers
             Return Ok(services.Login(model.UserID, model.Password))
         End Function
 
+        <HttpPost()>
         Public Function SaveSO(model As SORequestModels.SaveSO) As IHttpActionResult
             Dim inputSaveSO As New Entities.ServiceOrder.InputSPInsertSO() With {
                 .AircraftCarrier = model.ACCarrier,
@@ -44,11 +45,51 @@ Namespace Controllers
                 'insert upload images
                 Dim uploadImgs As New List(Of Entities.UploadImage)
                 For Each img In model.UploadImages
-                    uploadImgs.Add(New Entities.UploadImage() With {.WONumber = result.RetMsg, .image = img})
+                    uploadImgs.Add(New Entities.UploadImage() With {.WONumber = result.RetMsg, .objectImage = img})
                 Next
                 services.AddUploadImages(uploadImgs)
             End If
             Return Ok(New With {.success = result.Success, .message = result.RetMsg})
+        End Function
+
+        <HttpPost()>
+        Public Function GetSO(model As SORequestModels.GetSO) As IHttpActionResult
+            Dim models = services.GetTransactions(model.UserId)
+            Return Ok(models)
+        End Function
+
+        <HttpPost()>
+        Public Function GetSOById(model As SORequestModels.GetSOById) As IHttpActionResult
+            Dim result = New SOResponseModels.GetSOById(services.GetTransaction(model.Id))
+            'find createdbyname and updatedbyname
+            result.CreatedByName = services.GetUser(result.CreateBy).UserName
+            If (Not IsNothing(result.UpdateBy)) Then result.UpdatedByName = services.GetUser(result.UpdateBy).UserName
+            'find upload images
+            Dim uploadImages = services.GetUploadImages(result.WONumber)
+            For Each img In uploadImages
+                result.UploadImages.Add(img.objectImage)
+            Next
+            Return Ok(result)
+        End Function
+
+        <HttpPost()>
+        Public Function EditSO(model As SORequestModels.EditSO) As IHttpActionResult
+
+        End Function
+
+        <HttpPost()>
+        Public Function DeleteSO(model As SORequestModels.DeleteSO) As IHttpActionResult
+            Return Ok(services.RemoveTransaction(model.Id))
+        End Function
+
+        <HttpPost()>
+        Public Function GetFlightData(model As SORequestModels.GetFlightData) As IHttpActionResult
+            If String.IsNullOrEmpty(model.FlightDate) Then Return Ok(New EmptyResult())
+            Dim year As Integer = CInt(model.FlightDate.Substring(0, 4))
+            Dim month As Integer = CInt(model.FlightDate.Substring(4, 2))
+            Dim day As Integer = CInt(model.FlightDate.Substring(6, 2))
+            Dim selectedDate As New Date(year, month, day)
+            Return Ok(services.GetFlightDatas(selectedDate.Date))
         End Function
 
     End Class

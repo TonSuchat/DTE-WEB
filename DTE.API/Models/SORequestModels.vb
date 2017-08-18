@@ -34,4 +34,26 @@
         Public Property UploadImages As List(Of String)
     End Class
 
+    Public Class GetSO
+        Public Property UserId As Integer
+    End Class
+
+    Public Class GetSOById
+        Public Property Id As Integer
+    End Class
+
+    Public Class EditSO
+        Inherits SaveSO
+
+        Public Property Id As Integer
+    End Class
+
+    Public Class DeleteSO
+        Public Property Id As Integer
+    End Class
+
+    Public Class GetFlightData
+        Public Property FlightDate As String
+    End Class
+
 End Class
