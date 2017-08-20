@@ -60,15 +60,7 @@ Namespace Controllers
 
         <HttpPost()>
         Public Function GetSOById(model As SORequestModels.GetSOById) As IHttpActionResult
-            Dim result = New SOResponseModels.GetSOById(services.GetTransaction(model.Id))
-            'find createdbyname and updatedbyname
-            result.CreatedByName = services.GetUser(result.CreateBy).UserName
-            If (Not IsNothing(result.UpdateBy)) Then result.UpdatedByName = services.GetUser(result.UpdateBy).UserName
-            'find upload images
-            Dim uploadImages = services.GetUploadImages(result.WONumber)
-            For Each img In uploadImages
-                result.UploadImages.Add(img.objectImage)
-            Next
+            Dim result = services.GetTransactionDetail(model.Id)
             Return Ok(result)
         End Function
 

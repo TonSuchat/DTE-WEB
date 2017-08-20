@@ -33,6 +33,64 @@ Public Class DTERepository
         _dispose = True
     End Sub
 
+#Region "AirlineMasterData"
+    Public Class AirlineMasterDataRepository
+        Inherits DTERepository
+
+        Public Function AddAirlineMasterData(model As AirlineMasterData) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.CreateDate = DateTime.Now()
+                model.UpdateDate = DateTime.Now()
+                DTEDBContext.AirlineMasterDatas.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function GetAirlineMasterData(id As Integer) As AirlineMasterData
+            Try
+                If id = 0 Then Return Nothing
+                Return DTEDBContext.AirlineMasterDatas.FirstOrDefault(Function(a) a.Id = id)
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function GetAirlineMasterDatas() As List(Of AirlineMasterData)
+            Try
+                Return DTEDBContext.AirlineMasterDatas().OrderByDescending(Function(a) a.UpdateDate).ThenByDescending(Function(a) a.CreateDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function EditAirlineMasterData(model As AirlineMasterData) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.UpdateDate = DateTime.Now()
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function RemoveAirlineMasterDatas(id As Integer) As Boolean
+            Try
+                Dim model As AirlineMasterData = GetAirlineMasterData(id)
+                If IsNothing(model) Then Return False
+                DTEDBContext.AirlineMasterDatas.Remove(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+    End Class
+#End Region
+
 #Region "Service Order"
 
     Public Class ServiceOrderRepository
@@ -114,7 +172,7 @@ Public Class DTERepository
 
         Public Function GetTransactions() As List(Of Transaction)
             Try
-                Return DTEDBContext.Transactions.Where(Function(t) t.IsActive = True).ToList()
+                Return DTEDBContext.Transactions.OrderByDescending(Function(t) t.UpdateDate).ThenByDescending(Function(t) t.CreateDate).Where(Function(t) t.IsActive = True).ToList()
             Catch ex As Exception
                 Return Nothing
             End Try
@@ -171,6 +229,36 @@ Public Class DTERepository
             End Try
         End Function
 
+        Public Function GetUsers() As List(Of User)
+            Try
+                Return DTEDBContext.Users.OrderByDescending(Function(u) u.CreateDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function AddUser(model As User) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.CreateDate = DateTime.Now()
+                DTEDBContext.Users.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function RemoveUser(id As Integer) As Boolean
+            Try
+                Dim model = GetUser(id)
+                If IsNothing(model) Then Return False
+                DTEDBContext.Users.Remove(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
     End Class
 
 #End Region
@@ -212,6 +300,49 @@ Public Class DTERepository
 
     End Class
 
+#End Region
+
+#Region "Log"
+
+    Public Class LogRepository
+        Inherits DTERepository
+
+        Public Function AddLog(model As Log) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.CreateDate = DateTime.Now()
+                DTEDBContext.Logs.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function GetLogs() As List(Of Log)
+            Try
+                Return DTEDBContext.Logs.OrderByDescending(Function(l) l.CreateDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+    End Class
+
+#End Region
+
+#Region "ViewLog"
+    Public Class ViewLogRepository
+        Inherits DTERepository
+
+        Public Function GetViewLogs() As List(Of VW_Log)
+            Try
+                Return DTEDBContext.ViewLogs.OrderByDescending(Function(l) l.CreateDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+    End Class
 #End Region
 
 

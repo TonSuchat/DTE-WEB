@@ -21,7 +21,20 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    
+                    @if Helpers.CheckIsAuthen() Then
+                        @<li><a href="@Url.Action("ManageServiceOrder", "ServiceOrder")">ข้อมูล Service-Order</a></li>
+                        @<li> <a href="#">ข้อมูล Flight-Data</a></li>
+                        @<li> <a href="@Url.Action("ManageAirlineMasterData", "Airline")">ข้อมูล Airline</a></li>
+                        If Helpers.GetCurrentUser().IsAdmin Then
+                            @<li Class="dropdown">
+                                <a href="#" Class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span Class="caret"></span></a>
+                                <ul Class="dropdown-menu">
+                                    <li> <a href="@Url.Action("ManageUser", "Admin")"> จัดการ-User</a></li>
+                                    <li> <a href="@Url.Action("Log", "Admin")"> ดู-Log</a></li>
+                                </ul>
+                            </li>
+                        End If
+                    End If
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

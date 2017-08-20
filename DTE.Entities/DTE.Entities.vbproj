@@ -64,7 +64,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirlineMasterData.vb" />
     <Compile Include="FlightData.vb" />
+    <Compile Include="Log.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -82,8 +84,10 @@
     </Compile>
     <Compile Include="ServiceOrder.vb" />
     <Compile Include="Transaction.vb" />
+    <Compile Include="TransactionDetail.vb" />
     <Compile Include="UploadImage.vb" />
     <Compile Include="User.vb" />
+    <Compile Include="VW_Log.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

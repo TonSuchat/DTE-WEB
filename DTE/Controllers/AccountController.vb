@@ -17,8 +17,11 @@ Namespace Controllers
                 If IsNothing(user) Then
                     ModelState.AddModelError("", "UserName/Password ผิด")
                 Else
+                    'log
+                    Helpers.Log(Helpers.LogType.LogIn, user.id)
                     Helpers.SetCurrentUser(user)
                     'redirect
+                    RedirectToAction("Index", "Home")
                 End If
             End If
             Return View(model)
@@ -33,13 +36,25 @@ Namespace Controllers
             If ModelState.IsValid Then
                 Dim user = services.GetUserAdmin(model.UserName, model.Password)
                 If IsNothing(user) Then
-                    ModelState.AddModelError("", "UserName/Password ผิด")
+                    ModelState.AddModelError("", "UserName/Password ผิด/ User อาจไม่มีสิทธิ์เข้าสู่ระบบแบบ Admin")
                 Else
+                    'log
+                    Helpers.Log(Helpers.LogType.LogIn, user.id)
+                    'keep current user in session
                     Helpers.SetCurrentUser(user)
                     'redirect
+                    Return RedirectToAction("ManageUser", "Admin")
                 End If
             End If
             Return View(model)
+        End Function
+
+        <HttpPost()>
+        Public Function LogOff()
+            'log
+            Helpers.Log(Helpers.LogType.LogOut, Helpers.GetCurrentUser().id)
+            Helpers.ClearCurrentUser()
+            Return RedirectToAction("Index", "Home")
         End Function
 
     End Class

@@ -234,6 +234,8 @@
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\Startup.Auth.vb" />
     <Compile Include="Controllers\AccountController.vb" />
+    <Compile Include="Controllers\AdminController.vb" />
+    <Compile Include="Controllers\AirlineController.vb" />
     <Compile Include="Controllers\ReportController.vb" />
     <Compile Include="Controllers\ServiceOrderController.vb" />
     <Compile Include="Filters\AuthorizationFilter.vb" />
@@ -288,6 +290,7 @@
     <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\google.prettify.min.css" />
     <Content Include="Content\Gridmvc.css" />
@@ -322,6 +325,7 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-dialog.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js" />
@@ -329,6 +333,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Views\Manage\AddPhoneNumber.vbhtml" />
     <Content Include="Views\Manage\ChangePassword.vbhtml" />
@@ -345,6 +350,15 @@
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Account\LogIn.vbhtml" />
     <Content Include="Views\Account\LogInAdmin.vbhtml" />
+    <Content Include="Views\Home\Denied.vbhtml" />
+    <Content Include="Views\Admin\ManageUser.vbhtml" />
+    <Content Include="Views\Shared\NotFoundData.vbhtml" />
+    <Content Include="Views\Admin\AddUser.vbhtml" />
+    <Content Include="Views\Admin\Log.vbhtml" />
+    <Content Include="Views\Airline\ManageAirlineMasterData.vbhtml" />
+    <Content Include="Views\Airline\AddAirlineMasterData.vbhtml" />
+    <Content Include="Views\Airline\EditAirlineMasterData.vbhtml" />
+    <Content Include="Views\ServiceOrder\ManageServiceOrder.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

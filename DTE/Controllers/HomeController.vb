@@ -26,4 +26,9 @@
 
         Return View()
     End Function
+
+    Function Denied() As ActionResult
+        Return View()
+    End Function
+
 End Class

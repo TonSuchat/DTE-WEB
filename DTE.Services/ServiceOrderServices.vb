@@ -75,8 +75,48 @@ Public Class ServiceOrderServices
         End Try
     End Function
 
+#Region "AirlineMasterData"
+
+    Public Function GetAirlineMasterData(id As Integer) As AirlineMasterData
+        Using repository As New AirlineMasterDataRepository()
+            Return repository.GetAirlineMasterData(id)
+        End Using
+    End Function
+
+    Public Function GetAirlineMasterDatas() As List(Of AirlineMasterData)
+        Using repository As New AirlineMasterDataRepository()
+            Return repository.GetAirlineMasterDatas()
+        End Using
+    End Function
+
+    Public Function AddAirlineMasterData(model As AirlineMasterData) As Boolean
+        Using repository As New AirlineMasterDataRepository()
+            Return repository.AddAirlineMasterData(model)
+        End Using
+    End Function
+
+    Public Function EditAirlineMasterData(model As AirlineMasterData) As Boolean
+        Using repository As New AirlineMasterDataRepository()
+            Return repository.EditAirlineMasterData(model)
+        End Using
+    End Function
+
+    Public Function RemoveAirlineMasterData(id As Integer) As Boolean
+        Using repository As New AirlineMasterDataRepository()
+            Return repository.RemoveAirlineMasterDatas(id)
+        End Using
+    End Function
+
+#End Region
+
 
 #Region "User"
+
+    Public Function AddUser(model As User) As Boolean
+        Using repository As New UserRepository()
+            Return repository.AddUser(model)
+        End Using
+    End Function
 
     Public Function Login(username As String, password As String) As Boolean
         Using repository As New UserRepository()
@@ -101,6 +141,18 @@ Public Class ServiceOrderServices
             Dim user = repository.GetUser(username, password)
             If IsNothing(user) Then Return Nothing
             If user.IsAdmin Then Return user Else Return Nothing
+        End Using
+    End Function
+
+    Public Function GetUsers() As List(Of User)
+        Using repository As New UserRepository()
+            Return repository.GetUsers()
+        End Using
+    End Function
+
+    Public Function RemoveUser(id As Integer) As Boolean
+        Using repository As New UserRepository()
+            Return repository.RemoveUser(id)
         End Using
     End Function
 
@@ -130,6 +182,12 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
+    Public Function GetTransactions() As List(Of Transaction)
+        Using repository As New TransactionRepository()
+            Return repository.GetTransactions()
+        End Using
+    End Function
+
     Public Function GetTransactions(userId As Integer) As List(Of Transaction)
         Using repository As New TransactionRepository()
             Return repository.GetTransactions(userId)
@@ -140,6 +198,35 @@ Public Class ServiceOrderServices
         Using repository As New TransactionRepository()
             Return repository.RemoveTransaction(id)
         End Using
+    End Function
+
+    Public Function GetTransactionDetail(id As Integer) As TransactionDetail
+        Dim result = New TransactionDetail(GetTransaction(id))
+        ProcessFindDetailForTransaction(result)
+        Return result
+    End Function
+
+    Private Sub ProcessFindDetailForTransaction(ByRef transaction As TransactionDetail)
+        'find createdbyname and updatedbyname
+        transaction.CreatedByName = GetUser(transaction.CreateBy).UserName
+        If (Not IsNothing(transaction.UpdateBy)) Then transaction.UpdatedByName = GetUser(transaction.UpdateBy).UserName
+        'find upload images
+        Dim uploadImages = GetUploadImages(transaction.WONumber)
+        For Each img In uploadImages
+            transaction.UploadImages.Add(img.objectImage)
+        Next
+    End Sub
+
+    Public Function GetTransactionsDetail() As List(Of TransactionDetail)
+        Dim transactions = GetTransactions()
+        If IsNothing(transactions) Then Return Nothing
+        Dim result As New List(Of TransactionDetail)
+        For Each item In transactions
+            Dim currentDetail As New TransactionDetail(item)
+            ProcessFindDetailForTransaction(currentDetail)
+            result.Add(currentDetail)
+        Next
+        Return result
     End Function
 
 #End Region
@@ -153,5 +240,29 @@ Public Class ServiceOrderServices
     End Function
 
 #End Region
+
+#Region "Log"
+
+    Public Function AddLog(model As Log) As Boolean
+        Using repository As New LogRepository()
+            Return repository.AddLog(model)
+        End Using
+    End Function
+
+    Public Function GetLogs() As List(Of Log)
+        Using repository As New LogRepository()
+            Return repository.GetLogs()
+        End Using
+    End Function
+
+    Public Function GetViewLogs() As List(Of VW_Log)
+        Using repository As New ViewLogRepository()
+            Return repository.GetViewLogs()
+        End Using
+    End Function
+
+#End Region
+
+
 
 End Class
