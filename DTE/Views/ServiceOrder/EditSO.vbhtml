@@ -6,6 +6,15 @@ End Code
 
 @section scripts
 
+    <style type="text/css">
+        input,
+        select,
+        textarea,
+        .input-group {
+            max-width: 100% !important;
+        }
+    </style>
+
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
@@ -14,7 +23,7 @@ End Code
     <script type="text/javascript">
 
         $(function () {
- 
+
             @*if(@success != null && @success == 0) bootbox.alert("บันทึกข้อมูลแล้ว");
 
             $('#STADTPicker').datetimepicker({format : 'D/MM/YYYY HH:mm:ss'});
@@ -102,16 +111,16 @@ End Section
     </div>
 
     @*@If Not IsNothing(insertResult) Then
-        @<div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                @If insertResult.Success = 0 Then
-                    @<div class="alert alert-success" role="alert">@insertResult.RetMsg</div>
-                Else
-                    @<div class="alert alert-danger" role="alert">@insertResult.RetMsg</div>
-                End If
+            @<div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    @If insertResult.Success = 0 Then
+                        @<div class="alert alert-success" role="alert">@insertResult.RetMsg</div>
+                    Else
+                        @<div class="alert alert-danger" role="alert">@insertResult.RetMsg</div>
+                    End If
+                </div>
             </div>
-        </div>
-    End If*@
+        End If*@
 
     @<div Class="row">
 
