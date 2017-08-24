@@ -18,8 +18,12 @@ Public Class FlightData
     <MaxLength(50)>
     Public Property ACReg As String
     <Required()>
+    <DataType(DataType.DateTime)>
+    <DisplayFormat(DataFormatString:="{0:dd/MM/yyyy}", ApplyFormatInEditMode:=True)>
     Public Property STA As DateTime
     <Required()>
+    <DataType(DataType.DateTime)>
+    <DisplayFormat(DataFormatString:="{0:dd/MM/yyyy}", ApplyFormatInEditMode:=True)>
     Public Property STD As DateTime
     <Required()>
     <MaxLength(10)>

@@ -229,14 +229,149 @@ Public Class ServiceOrderServices
         Return result
     End Function
 
+    Public Function GetDtTransactions(selectedDate As Date) As DataTable
+        Dim transactions = GetTransactions().Where(Function(t) t.CreateDate.Date = selectedDate).OrderBy(Function(t) t.CreateDate).ToList()
+        Dim dt As New DataTable()
+        InitialDtColumns(dt)
+        For Each item In transactions
+            Dim row = dt.NewRow()
+            SetValueToDataRow(row, item)
+            dt.Rows.Add(row)
+        Next
+        Return dt
+    End Function
+
+    Private Sub InitialDtColumns(ByRef dt As DataTable)
+        dt.Columns.Add("WONumber")
+        dt.Columns.Add("Station")
+        dt.Columns.Add("GateNo")
+        dt.Columns.Add("PCA1")
+        dt.Columns.Add("PCA2")
+        dt.Columns.Add("GPU1")
+        dt.Columns.Add("GPU2")
+        dt.Columns.Add("FlightNo")
+        dt.Columns.Add("AircraftType")
+        dt.Columns.Add("AircraftReg")
+        dt.Columns.Add("AircraftCarrier")
+        dt.Columns.Add("ETA")
+        dt.Columns.Add("ETD")
+        dt.Columns.Add("PCAStart")
+        dt.Columns.Add("PCAEnd")
+        dt.Columns.Add("GPUStart")
+        dt.Columns.Add("GPUEnd")
+        dt.Columns.Add("PCATotalMin")
+        dt.Columns.Add("GPUTotalMin")
+        dt.Columns.Add("ServiceRate")
+        dt.Columns.Add("Valid")
+        dt.Columns.Add("Printed")
+        dt.Columns.Add("CreateBy")
+        dt.Columns.Add("CustIDStart")
+        dt.Columns.Add("CustIDStop")
+        dt.Columns.Add("CondOfCharge")
+        dt.Columns.Add("Remark")
+        dt.Columns.Add("UpdateBy")
+        dt.Columns.Add("UpdateDate")
+        dt.Columns.Add("CreateDate")
+    End Sub
+
+    Private Sub SetValueToDataRow(ByRef row As DataRow, data As Transaction)
+        row("WONumber") = data.WONumber
+        row("Station") = data.Station
+        row("GateNo") = data.GateNo
+        row("PCA1") = data.PCA1
+        row("PCA2") = data.PCA2
+        row("GPU1") = data.GPU1
+        row("GPU2") = data.GPU2
+        row("FlightNo") = data.FlightNo
+        row("AircraftType") = data.AircraftType
+        row("AircraftReg") = data.AircraftReg
+        row("AircraftCarrier") = data.AircraftCarrier
+        row("ETA") = If(String.IsNullOrEmpty(data.ETA), "", Date.ParseExact(data.ETA, "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture))
+        row("ETD") = If(String.IsNullOrEmpty(data.ETD), "", Date.ParseExact(data.ETD, "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture))
+        row("PCAStart") = If(String.IsNullOrEmpty(data.PCAStart), "", Date.ParseExact(data.PCAStart, "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture))
+        row("PCAEnd") = If(String.IsNullOrEmpty(data.PCAEnd), "", Date.ParseExact(data.PCAEnd, "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture))
+        row("GPUStart") = If(String.IsNullOrEmpty(data.GPUStart), "", Date.ParseExact(data.GPUStart, "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture))
+        row("GPUEnd") = If(String.IsNullOrEmpty(data.GPUEnd), "", Date.ParseExact(data.GPUEnd, "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture))
+        row("PCATotalMin") = data.PCATotalMin
+        row("GPUTotalMin") = data.GPUTotalMin
+        row("ServiceRate") = data.ServiceRate
+        row("Valid") = data.Valid
+        row("Printed") = data.Printed
+        row("CreateBy") = data.CreateBy
+        row("CustIDStart") = data.CustIDStart
+        row("CustIDStop") = data.CustIDStop
+        row("CondOfCharge") = data.CondOfCharge
+        row("Remark") = data.Remark
+        row("UpdateBy") = data.UpdateBy
+        row("UpdateDate") = data.UpdateDate
+        row("CreateDate") = data.CreateDate
+    End Sub
+
 #End Region
 
 #Region "FlightData"
+
+    Public Function AddFlightData(model As FlightData) As Boolean
+        Using repository As New FlightDataRepository()
+            Return repository.AddFlightData(model)
+        End Using
+    End Function
+
+    Public Function GetFlightData(id As Integer) As FlightData
+        Using repository As New FlightDataRepository()
+            Return repository.GetFlightData(id)
+        End Using
+    End Function
+
+    Public Function GetFlightDatas() As List(Of FlightData)
+        Using repository As New FlightDataRepository()
+            Return repository.GetFlightDatas()
+        End Using
+    End Function
 
     Public Function GetFlightDatas(selectedDate As Date) As List(Of FlightData)
         Using repository As New FlightDataRepository()
             Return repository.GetFlightDatas(selectedDate)
         End Using
+    End Function
+
+    Public Function EditFlightData(model As FlightData) As Boolean
+        Using repository As New FlightDataRepository()
+            Return repository.EditFlightData(model)
+        End Using
+    End Function
+
+    Public Function RemoveFlightData(id As Integer) As Boolean
+        Using repository As New FlightDataRepository()
+            Return repository.RemoveFlightData(id)
+        End Using
+    End Function
+
+    Public Function ImportFlightDataByDatatable(dt As DataTable, selectedDate As Date) As Boolean
+        Try
+            If IsNothing(dt) Then Return False
+            Dim flightDatas As New List(Of FlightData)
+            For Each row As DataRow In dt.Rows
+                Dim sta As DateTime = If(row(4).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(4).ToString().Split(":")(0), row(4).ToString().Split(":")(1), 0), DirectCast(row(4), DateTime))
+                Dim std As DateTime = If(row(4).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(5).ToString().Split(":")(0), row(5).ToString().Split(":")(1), 0), DirectCast(row(5), DateTime))
+                Dim currentFlightData As New FlightData() With {
+                    .FlightNo = row(0),
+                    .ACType = row(1),
+                    .ACCarrier = row(2),
+                    .ACReg = row(3),
+                    .STA = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, sta.Hour, sta.Minute, 0),
+                    .STD = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, std.Hour, std.Minute, 0),
+                    .GateNo = row(6)
+                    }
+                flightDatas.Add(currentFlightData)
+            Next
+            For Each item In flightDatas
+                AddFlightData(item)
+            Next
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
     End Function
 
 #End Region

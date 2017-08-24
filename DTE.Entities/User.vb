@@ -3,7 +3,6 @@ Imports System.ComponentModel.DataAnnotations.Schema
 
 <Table("tbl_User")>
 Public Class User
-
     <Key()>
     Public Property id As Integer
     <Required()>
@@ -16,6 +15,9 @@ Public Class User
     Public Property UserDesc As String
     <Required()>
     Public Property IsAdmin As Boolean
+    <Required()>
+    <MaxLength(10)>
+    Public Property Station As String
     <Required()>
     Public Property CreateDate As DateTime
 End Class

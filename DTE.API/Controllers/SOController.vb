@@ -10,7 +10,7 @@ Namespace Controllers
 
         <HttpPost()>
         Public Function Login(model As SORequestModels.Login) As IHttpActionResult
-            Return Ok(services.Login(model.UserID, model.Password))
+            Return Ok(services.GetUser(model.UserID, model.Password))
         End Function
 
         <HttpPost()>
@@ -66,7 +66,7 @@ Namespace Controllers
 
         <HttpPost()>
         Public Function EditSO(model As SORequestModels.EditSO) As IHttpActionResult
-
+            Return Ok()
         End Function
 
         <HttpPost()>

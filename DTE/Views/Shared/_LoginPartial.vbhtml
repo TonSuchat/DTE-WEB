@@ -2,7 +2,7 @@
 
 @If Helpers.CheckIsAuthen() Then
     @Using Html.BeginForm("LogOff", "Account", FormMethod.Post, New With {.id = "logoutForm", .class = "navbar-right"})
-        @Html.AntiForgeryToken()
+        @*@Html.AntiForgeryToken()*@
         @<ul class="nav navbar-nav navbar-right">
             <li>
                 <a href="#">สวัสดี  @Helpers.GetCurrentUser().UserName </a>

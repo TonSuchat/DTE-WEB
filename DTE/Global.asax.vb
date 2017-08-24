@@ -8,5 +8,6 @@ Public Class MvcApplication
         FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters)
         RouteConfig.RegisterRoutes(RouteTable.Routes)
         BundleConfig.RegisterBundles(BundleTable.Bundles)
+        ModelBinders.Binders.DefaultBinder = New CustomBinder()
     End Sub
 End Class

@@ -43,7 +43,7 @@ Namespace Controllers
                     'keep current user in session
                     Helpers.SetCurrentUser(user)
                     'redirect
-                    Return RedirectToAction("ManageUser", "Admin")
+                    Return RedirectToAction("Index", "Home")
                 End If
             End If
             Return View(model)

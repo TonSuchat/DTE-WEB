@@ -23,7 +23,7 @@
                 <ul class="nav navbar-nav">
                     @if Helpers.CheckIsAuthen() Then
                         @<li><a href="@Url.Action("ManageServiceOrder", "ServiceOrder")">ข้อมูล Service-Order</a></li>
-                        @<li> <a href="#">ข้อมูล Flight-Data</a></li>
+                        @<li> <a href="@Url.Action("ManageFlightData", "FlightData")">ข้อมูล Flight-Data</a></li>
                         @<li> <a href="@Url.Action("ManageAirlineMasterData", "Airline")">ข้อมูล Airline</a></li>
                         If Helpers.GetCurrentUser().IsAdmin Then
                             @<li Class="dropdown">

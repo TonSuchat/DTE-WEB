@@ -33,6 +33,12 @@ End Code
             @Html.LabelFor(Function(u) u.IsAdmin)
         </div>
 
+        @<div Class="form-group">
+            @Html.LabelFor(Function(u) u.Station)
+            @Html.TextBoxFor(Function(u) u.Station, New With {.class = "form-control"})
+            @Html.ValidationMessageFor(Function(u) u.Station)
+        </div>
+
         @<Button Class="btn btn-primary">ตกลง</Button>
     End Using
 

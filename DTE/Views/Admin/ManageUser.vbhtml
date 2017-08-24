@@ -35,6 +35,7 @@ End Section
                     <th class="text-center">UserName</th>
                     <th class="text-center">UserDesc</th>
                     <th class="text-center">IsAdmin</th>
+                    <th class="text-center">Station</th>
                     <th class="text-center">CreateDate</th>
                     @*<th class="text-center">แก้ไข</th>*@
                     <th class="text-center">ลบ</th>
@@ -45,6 +46,7 @@ End Section
                         <td class="text-center">@item.UserName</td>
                         <td>@item.UserDesc</td>
                         <td class="text-center">@item.IsAdmin</td>
+                         <td class="text-center">@item.Station</td>
                         <td class="text-center">@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                         @*<td class="text-center">
                             <a class="btn btn-sm btn-warning" href="@Url.Action("EditUser", "Admin")">

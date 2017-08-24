@@ -1,9 +1,7 @@
-﻿@ModelType DTE.Entities.ServiceOrder.InputSPInsertSO
+﻿@ModelType Entities.TransactionDetail
 
 @Code
-    ViewData("Title") = "CreateServiceOrder"
-    Dim insertResult = If(IsNothing(ViewData("result")), Nothing, DirectCast(ViewData("result"), Entities.ServiceOrder.OutputSPInsertSO))
-    Dim success As Integer = If(IsNothing(insertResult), 99, insertResult.Success)
+    ViewData("Title") = "แก้ไข-SO"
 End Code
 
 @section scripts
@@ -17,7 +15,7 @@ End Code
 
         $(function () {
  
-            if(@success != null && @success == 0) bootbox.alert("บันทึกข้อมูลแล้ว");
+            @*if(@success != null && @success == 0) bootbox.alert("บันทึกข้อมูลแล้ว");
 
             $('#STADTPicker').datetimepicker({format : 'D/MM/YYYY HH:mm:ss'});
             $('#STADTPicker').on('dp.change', function (e) {
@@ -75,7 +73,7 @@ End Code
                 bootbox.confirm("ยืนยันสร้าง Service-Order?",function(result){
                     if(result) $('form').submit();
                 });
-            });
+            });*@
 
         });
 
@@ -103,7 +101,7 @@ End Section
         </div>
     </div>
 
-    @If Not IsNothing(insertResult) Then
+    @*@If Not IsNothing(insertResult) Then
         @<div class="row">
             <div class="col-md-offset-2 col-md-8">
                 @If insertResult.Success = 0 Then
@@ -113,7 +111,7 @@ End Section
                 End If
             </div>
         </div>
-    End If
+    End If*@
 
     @<div Class="row">
 
@@ -121,7 +119,7 @@ End Section
 
             <div Class="form-group">
                 <Label>Date</Label>
-                <input type="text" Class="form-control" value="@Model.DateNow" disabled />
+                <input type="text" Class="form-control" value="@DateTime.Now().ToString("dd/MM/yyyy HH:mm")" disabled />
             </div>
 
             <div class="form-group">

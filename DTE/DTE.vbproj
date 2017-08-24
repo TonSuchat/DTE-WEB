@@ -236,8 +236,10 @@
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\AdminController.vb" />
     <Compile Include="Controllers\AirlineController.vb" />
+    <Compile Include="Controllers\FlightDataController.vb" />
     <Compile Include="Controllers\ReportController.vb" />
     <Compile Include="Controllers\ServiceOrderController.vb" />
+    <Compile Include="Custombinder.vb" />
     <Compile Include="Filters\AuthorizationFilter.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
@@ -251,9 +253,11 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\AccountViewModels.vb" />
+    <Compile Include="Models\FlightDataViewModels.vb" />
     <Compile Include="Models\IdentityModels.vb" />
     <Compile Include="Models\ManageViewModels.vb" />
     <Compile Include="Models\ReportViewModels.vb" />
+    <Compile Include="Models\ServiceOrderViewModels.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -315,6 +319,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\DTE.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -343,7 +348,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.vbhtml" />
     <Content Include="Views\Shared\Lockout.vbhtml" />
     <Content Include="Views\Shared\_LoginPartial.vbhtml" />
-    <Content Include="Views\ServiceOrder\CreateServiceOrder.vbhtml" />
+    <Content Include="Views\ServiceOrder\EditSO.vbhtml" />
     <Content Include="Views\Report\ServiceOrder.vbhtml" />
     <Content Include="Views\Home\Admin.vbhtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
@@ -359,6 +364,11 @@
     <Content Include="Views\Airline\AddAirlineMasterData.vbhtml" />
     <Content Include="Views\Airline\EditAirlineMasterData.vbhtml" />
     <Content Include="Views\ServiceOrder\ManageServiceOrder.vbhtml" />
+    <Content Include="Views\ServiceOrder\Detail.vbhtml" />
+    <Content Include="Views\FlightData\ManageFlightData.vbhtml" />
+    <Content Include="Views\FlightData\AddOrEditFlightData.vbhtml" />
+    <Content Include="Views\FlightData\ImportExcel.vbhtml" />
+    <Content Include="Views\ServiceOrder\ExportExcel.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -391,6 +401,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

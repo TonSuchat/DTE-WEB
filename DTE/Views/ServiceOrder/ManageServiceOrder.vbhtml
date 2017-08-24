@@ -32,48 +32,53 @@ End Section
     Else
         @<h2>จัดการข้อมูล-SO</h2>
 
-        @<table id="tblSO" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th class="text-center">WONumber</th>
-                    <th class="text-center">Station</th>
-                    <th class="text-center">Flight No.</th>
-                    <th class="text-center">UpdateBy</th>
-                    <th class="text-center">CreateBy</th>
-                    <th class="text-center">UpdateDate</th>
-                    <th class="text-center">CreateDate</th>
-                    <th class="text-center">แก้ไข</th>
-                    <th class="text-center">ลบ</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for Each item In Model
-                    @<tr>
-                        <td class="text-center"><a target="_blank" href="@Url.Action("Detail", "ServiceOrder", New With {.id = item.id})">@item.WONumber</a></td>
-                        <td class="text-center">@item.Station</td>
-                        <td class="text-center">@item.FlightNo</td>
-                        <td>@item.UpdatedByName</td>
-                        <td>@item.CreatedByName</td>
-                        <td>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        <td>@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        <td class="text-center">
-                            <a href="@Url.Action("EditTransaction", "ServiceOrder")" class="btn btn-warning btn-sm">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            @using Html.BeginForm("RemoveTransaction", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
-                                @<input type="hidden" value="@item.id" name="id" />
-                                    @<button type="button" class="btn btn-sm btn-danger btnremove">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                            End Using
-                        </td>
-                    </tr>
-                Next
-            </tbody>
-        </table>
+        @<div Class="row">
+            <a Class="btn btn-lg btn-success" href="@Url.Action("ExportExcel", "ServiceOrder")">Export to Excel</a>
+        </div>
 
+        @<div class="row">
+             <table id="tblSO" class="table table-bordered table-striped">
+                 <thead>
+                     <tr>
+                         <th class="text-center">WONumber</th>
+                         <th class="text-center">Station</th>
+                         <th class="text-center">Flight No.</th>
+                         <th class="text-center">UpdateBy</th>
+                         <th class="text-center">CreateBy</th>
+                         <th class="text-center">UpdateDate</th>
+                         <th class="text-center">CreateDate</th>
+                         <th class="text-center">แก้ไข</th>
+                         <th class="text-center">ลบ</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     @For Each item In Model
+                         @<tr>
+                             <td class="text-center"><a target="_blank" href="@Url.Action("Detail", "ServiceOrder", New With {.id = item.id})">@item.WONumber</a></td>
+                             <td class="text-center">@item.Station</td>
+                             <td class="text-center">@item.FlightNo</td>
+                             <td>@item.UpdatedByName</td>
+                             <td>@item.CreatedByName</td>
+                             <td>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                             <td>@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                             <td class="text-center">
+                                 <a href="@Url.Action("EditSO", "ServiceOrder", New With {.id = item.id})" class="btn btn-warning btn-sm">
+                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                 </a>
+                             </td>
+                             <td class="text-center">
+                                 @using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
+                                     @<input type="hidden" value="@item.id" name="id" />
+                                     @<button type="button" class="btn btn-sm btn-danger btnremove">
+                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                     </button>
+                                 End Using
+                             </td>
+                         </tr>
+                     Next
+                 </tbody>
+             </table>
+        </div>
     End If
 </div>
 

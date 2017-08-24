@@ -138,7 +138,7 @@ Public Class DTERepository
 
         Public Function GetFlightDatas() As List(Of FlightData)
             Try
-                Return DTEDBContext.FlightDatas.ToList()
+                Return DTEDBContext.FlightDatas.OrderByDescending(Function(f) f.CreateDate).ToList()
             Catch ex As Exception
                 Return Nothing
             End Try
@@ -149,6 +149,36 @@ Public Class DTERepository
                 Return DTEDBContext.FlightDatas.Where(Function(f) Entity.DbFunctions.TruncateTime(f.STD) = selectedDate OrElse Entity.DbFunctions.TruncateTime(f.STA) = selectedDate).ToList()
             Catch ex As Exception
                 Return Nothing
+            End Try
+        End Function
+
+        Public Function GetFlightData(id As Integer) As FlightData
+            Try
+                Return DTEDBContext.FlightDatas.FirstOrDefault(Function(f) f.id = id)
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function EditFlightData(model As FlightData) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function RemoveFlightData(id As Integer) As Boolean
+            Try
+                If id = 0 Then Return False
+                Dim model = GetFlightData(id)
+                If IsNothing(model) Then Return False
+                DTEDBContext.FlightDatas.Remove(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
             End Try
         End Function
 
