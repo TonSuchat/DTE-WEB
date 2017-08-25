@@ -15,7 +15,19 @@ Namespace Controllers
         End Function
 
         Function ManageServiceOrder() As ActionResult
-            Return View(services.GetTransactionsDetail())
+            Return View(GetManageServiceOrderViewModel(Date.Now()))
+        End Function
+
+        <HttpPost()>
+        Function ManageServiceOrder(model As ManageServiceOrderViewModel) As ActionResult
+            Return View(GetManageServiceOrderViewModel(model.SelectedDate))
+        End Function
+
+        Private Function GetManageServiceOrderViewModel(selectedDate As Date)
+            Dim result As New ManageServiceOrderViewModel()
+            result.SelectedDate = selectedDate
+            result.TransactionsDetail = services.GetTransactionsDetail(result.SelectedDate)
+            Return result
         End Function
 
         Function Detail(id As Integer) As ActionResult
@@ -32,16 +44,16 @@ Namespace Controllers
             Return RedirectToAction("ManageServiceOrder")
         End Function
 
-        Function ExportExcel() As ActionResult
-            Return View()
-        End Function
+        'Function ExportExcel() As ActionResult
+        '    Return View()
+        'End Function
 
         <HttpPost()>
         Function ExportExcel(model As ExportExcelViewModel) As ActionResult
             Try
-                Dim dt As DataTable = services.GetDtTransactions(model.SelectedDate)
+                Dim dt As DataTable = services.GetDtTransactions(model.ExcelSelectedDate)
                 If Not IsNothing(dt) AndAlso dt.Rows.Count > 0 Then
-                    Dim fileName As String = String.Format("SO_{0}", model.SelectedDate.ToString("yyyyMMdd"))
+                    Dim fileName As String = String.Format("SO_{0}", model.ExcelSelectedDate.ToString("yyyyMMdd"))
                     Dim grid As New GridView()
                     grid.DataSource = dt
                     grid.DataBind()
@@ -62,11 +74,11 @@ Namespace Controllers
                     Response.End()
                 Else : ModelState.AddModelError("", "ไม่พบข้อมูลในวันที่เลือก")
                 End If
-                Return View()
+                Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.ExcelSelectedDate))
             Catch ex As Exception
                 Helpers.LogTxt(ex.ToString())
                 ModelState.AddModelError("", "เกิดข้อผิดพลาด")
-                Return View()
+                Return View("ManageServiceOrder")
             End Try
         End Function
 

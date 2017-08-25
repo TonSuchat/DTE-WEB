@@ -229,6 +229,18 @@ Public Class ServiceOrderServices
         Return result
     End Function
 
+    Public Function GetTransactionsDetail(selectedDate As Date) As List(Of TransactionDetail)
+        Dim transactions = GetTransactions().Where(Function(t) t.CreateDate.Date = selectedDate.Date).OrderByDescending(Function(t) t.CreateDate).ToList()
+        If IsNothing(transactions) Then Return Nothing
+        Dim result As New List(Of TransactionDetail)
+        For Each item In transactions
+            Dim currentDetail As New TransactionDetail(item)
+            ProcessFindDetailForTransaction(currentDetail)
+            result.Add(currentDetail)
+        Next
+        Return result
+    End Function
+
     Public Function GetDtTransactions(selectedDate As Date) As DataTable
         Dim transactions = GetTransactions().Where(Function(t) t.CreateDate.Date = selectedDate).OrderBy(Function(t) t.CreateDate).ToList()
         Dim dt As New DataTable()
