@@ -9,7 +9,6 @@ Namespace Controllers
         Inherits Controller
 
         Private services As New ServiceOrderServices
-
         Function Index() As ActionResult
             Return View()
         End Function
@@ -39,9 +38,11 @@ Namespace Controllers
         End Function
 
         <HttpPost()>
-        Function RemoveSO(id As Integer) As ActionResult
-            services.RemoveTransaction(id)
-            Return RedirectToAction("ManageServiceOrder")
+        Function RemoveSO(model As RemoveServiceOrderViewModel) As ActionResult
+            services.RemoveTransaction(model.id)
+            'log
+            Helpers.Log(Helpers.LogType.DeleteData, Helpers.GetCurrentUser().id, model.id, "Transaction")
+            Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.removeSelectedDate))
         End Function
 
         'Function ExportExcel() As ActionResult

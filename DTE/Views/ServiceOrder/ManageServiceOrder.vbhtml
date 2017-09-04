@@ -33,6 +33,7 @@ End Code
             //});
 
             $('#ExcelSelectedDate').val($('#SelectedDate').val());
+            //$('#removeSelectedDate').val($('#SelectedDate').val());
         })
 
     </script>
@@ -106,6 +107,7 @@ End Section
                         <td class="text-center">
                             @using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
                             @<input type="hidden" value="@item.id" name="id" />
+                            @<input type="hidden" value="@Model.SelectedDate" name="removeSelectedDate" />
                             @<button type="button" class="btn btn-sm btn-danger btnremove">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>

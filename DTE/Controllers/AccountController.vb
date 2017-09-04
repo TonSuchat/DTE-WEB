@@ -21,7 +21,7 @@ Namespace Controllers
                     Helpers.Log(Helpers.LogType.LogIn, user.id)
                     Helpers.SetCurrentUser(user)
                     'redirect
-                    RedirectToAction("Index", "Home")
+                    Return RedirectToAction("Index", "Home")
                 End If
             End If
             Return View(model)
