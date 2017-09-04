@@ -386,6 +386,13 @@ Public Class ServiceOrderServices
         End Try
     End Function
 
+    Public Sub RemoveTrashFlightData()
+        Using repository As New FlightDataRepository()
+            Dim models = repository.GetFlightDatas().Where(Function(f) f.STA.Date < DateAdd(DateInterval.Day, -30, Date.Now())).ToList()
+            repository.RemoveFlightDatas(models)
+        End Using
+    End Sub
+
 #End Region
 
 #Region "Log"

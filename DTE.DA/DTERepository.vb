@@ -182,6 +182,16 @@ Public Class DTERepository
             End Try
         End Function
 
+        Public Function RemoveFlightDatas(models As List(Of FlightData)) As Boolean
+            Try
+                If IsNothing(models) Then Return False
+                DTEDBContext.FlightDatas.RemoveRange(models)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
     End Class
 
 #End Region

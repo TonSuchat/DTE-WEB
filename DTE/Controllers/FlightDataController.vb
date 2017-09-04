@@ -70,6 +70,8 @@ Namespace Controllers
                                 If Not IsNothing(dt) Then
                                     'import data
                                     services.ImportFlightDataByDatatable(dt, New Date(filename.Substring(0, 4), filename.Substring(4, 2), filename.Substring(6, 2)))
+                                    'delete trash datas
+                                    services.RemoveTrashFlightData()
                                     Return RedirectToAction("ManageFlightData")
                                 Else : ModelState.AddModelError("", "ไม่สามารถดึงข้อมูลจากไฟล์ได้")
                                 End If
