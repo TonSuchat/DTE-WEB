@@ -32,7 +32,7 @@ End Section
     <h2>จัดการข้อมูล-Flight</h2>
 
     <div class="row">
-        <a class="btn btn-lg btn-warning" href="@Url.Action("ImportExcel", "FlightData")">Import-Excel</a>
+        <a class="btn btn-lg btn-warning" href="@Url.Action("ImportExcel", "FlightData")">Import-CSV</a>
         <a class="btn btn-lg btn-success" href="@Url.Action("AddFlightData", "FlightData")">เพิ่มข้อมูล</a>
     </div>
 
