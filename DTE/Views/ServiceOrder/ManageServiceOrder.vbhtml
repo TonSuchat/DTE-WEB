@@ -81,6 +81,7 @@ End Section
                     <th class="text-center">WONumber</th>
                     <th class="text-center">Station</th>
                     <th class="text-center">Flight No.</th>
+                    <th class="text-center">Service-Rate</th>
                     <th class="text-center">UpdateBy</th>
                     <th class="text-center">CreateBy</th>
                     <th class="text-center">UpdateDate</th>
@@ -95,6 +96,7 @@ End Section
                         <td class="text-center"><a target="_blank" href="@Url.Action("Detail", "ServiceOrder", New With {.id = item.id})">@item.WONumber</a></td>
                         <td class="text-center">@item.Station</td>
                         <td class="text-center">@item.FlightNo</td>
+                         <td class="text-center">@item.ServiceRate</td>
                         <td>@item.UpdatedByName</td>
                         <td>@item.CreatedByName</td>
                         <td>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
