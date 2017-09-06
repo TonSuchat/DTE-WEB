@@ -27,7 +27,7 @@ End Code
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Air Carrier: </label>
+                        <label class="col-md-3 control-label">Airline: </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.AircraftCarrier</p>
                         </div>
@@ -111,6 +111,30 @@ End Code
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">PCA-Start: </label>
+                        <div class="col-md-9">
+                            @If Not String.IsNullOrEmpty(Model.PCAStart) Then
+                                @<p Class="form-control-static">
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.PCAStart).ToString("dd/MM/yyyy HH:mm:ss")
+                                </p>
+                            Else
+                                @<p Class="form-control-static">-</p>
+                            End If
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">PCA-Stop: </label>
+                        <div class="col-md-9">
+                            @If Not String.IsNullOrEmpty(Model.PCAEnd) Then
+                                @<p Class="form-control-static">
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.PCAEnd).ToString("dd/MM/yyyy HH:mm:ss")
+                                </p>
+                            Else
+                                @<p Class="form-control-static">-</p>
+                            End If
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">PCA-TotalTime: </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.PCATotalMin</p>
@@ -126,6 +150,30 @@ End Code
                         <label class="col-md-3 control-label">2 Plug: </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.GPU2</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">GPU-Start: </label>
+                        <div class="col-md-9">
+                            @If Not String.IsNullOrEmpty(Model.GPUStart) Then
+                                @<p Class="form-control-static">
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.GPUStart).ToString("dd/MM/yyyy HH:mm:ss")
+                                </p>
+                            Else
+                                @<p Class="form-control-static">-</p>
+                            End If
+                        </div>
+                    </div>
+                    <div Class="form-group">
+                        <Label Class="col-md-3 control-label">GPU-Stop: </Label>
+                        <div Class="col-md-9">
+                           @If Not String.IsNullOrEmpty(Model.GPUEnd) Then
+                                @<p Class="form-control-static">
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.GPUEnd).ToString("dd/MM/yyyy HH:mm:ss")
+                                </p>
+                           Else
+                                @<p Class="form-control-static">-</p>
+                           End If
                         </div>
                     </div>
                     <div class="form-group">
@@ -183,7 +231,7 @@ End Code
                 <div Class="col-md-offset-2 col-md-8 border form-horizontal">
                     <h2 class="text-center"><u>Upload Images</u></h2>
                     @For Each img In Model.UploadImages
-                        @<img class="img-thumbnail" src="@img" />
+                    @<img class="img-thumbnail" src="@img" />
                     Next
                 </div>
             </div>

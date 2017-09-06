@@ -11,6 +11,7 @@ Public Class FlightData
     <Required()>
     <MaxLength(50)>
     Public Property ACType As String
+    <Display(Name:="Airline")>
     <Required()>
     <MaxLength(50)>
     Public Property ACCarrier As String

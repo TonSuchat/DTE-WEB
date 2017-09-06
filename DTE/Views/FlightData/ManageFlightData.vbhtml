@@ -45,7 +45,7 @@ End Section
                     <tr>
                         <th cla ss="text-center">Flight No.</th>
                         <th class="text-center">AC-Type</th>
-                        <th class="text-center">AC-Carrier</th>
+                        <th class="text-center">Airline</th>
                         <th class="text-center">AC-Reg</th>
                         <th class="text-center">STA</th>
                         <th class="text-center">STD</th>

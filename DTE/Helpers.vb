@@ -1,4 +1,5 @@
 ﻿Imports System.Data.OleDb
+Imports System.Globalization
 
 Public NotInheritable Class Helpers
 
@@ -86,5 +87,13 @@ Public NotInheritable Class Helpers
         y.Close()
         y.Dispose()
     End Sub
+
+    Public Shared Function ConvertDateTimeDTEFormat(input As String) As DateTime
+        Try
+            Return DateTime.ParseExact(input, "yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
 
 End Class
