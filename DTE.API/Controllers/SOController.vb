@@ -53,6 +53,45 @@ Namespace Controllers
         End Function
 
         <HttpPost()>
+        Public Function SaveTempSO(model As SORequestModels.SaveSO) As IHttpActionResult
+            Dim tempTransaction As New Entities.TempTransaction() With {
+                .AircraftCarrier = model.ACCarrier, .AircraftReg = model.ACReg,
+                .AircraftType = model.ACType, .CondOfCharge = model.CondOfCharge,
+                .CreateBy = model.UserID, .CustIDStart = model.CustIDStart,
+                .CustIDStop = model.CustIDStop, .CustSignStart = model.CustSignStart,
+                .CustSignStop = model.CustSignStop, .ETA = model.STA,
+                .ETD = model.STD, .FlightNo = model.FlightNo, .GateNo = model.GateNo,
+                .GPU1 = model.GPU1, .GPU2 = model.GPU2, .GPUEnd = model.GPUStop,
+                .GPUStart = model.GPUStart, .GPUTotalMin = If(String.IsNullOrEmpty(model.GPUTotalTime), Nothing, model.GPUTotalTime),
+                .PCA1 = model.PCA1, .PCA2 = model.PCA2, .PCAEnd = model.PCAStop,
+                .PCAStart = model.PCAStart, .PCATotalMin = If(String.IsNullOrEmpty(model.PCATotalTime), Nothing, model.PCATotalTime),
+                .Remark = model.Remark, .Station = model.Station
+                }
+            Dim result = services.AddTempTransaction(tempTransaction)
+            If result Then
+                'insert upload images
+                Dim uploadImgs As New List(Of Entities.UploadImage)
+                For Each img In model.UploadImages
+                    uploadImgs.Add(New Entities.UploadImage() With {.refId = tempTransaction.id, .objectImage = img})
+                Next
+                services.AddUploadImages(uploadImgs)
+            End If
+            Return Ok(New With {.success = If(result, 1, 0)})
+        End Function
+
+        <HttpPost()>
+        Public Function GetTempSO() As IHttpActionResult
+            Dim models = services.GetTempTransactions()
+            Return Ok(models)
+        End Function
+
+        <HttpPost()>
+        Public Function GetTempSO(id As Integer) As IHttpActionResult
+            Dim model = services.GetTempTransaction(id)
+            Return Ok(model)
+        End Function
+
+        <HttpPost()>
         Public Function GetSO(model As SORequestModels.GetSO) As IHttpActionResult
             Dim models = services.GetTransactions(model.UserId)
             Return Ok(models)
@@ -82,6 +121,11 @@ Namespace Controllers
             Dim day As Integer = CInt(model.FlightDate.Substring(6, 2))
             Dim selectedDate As New Date(year, month, day)
             Return Ok(services.GetFlightDatas(selectedDate.Date))
+        End Function
+
+        <HttpPost()>
+        Public Function GetSequenceNo() As IHttpActionResult
+            Return Ok(services.GetSequence().SequenceNo)
         End Function
 
     End Class

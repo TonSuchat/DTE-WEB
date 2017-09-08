@@ -245,6 +245,53 @@ Public Class DTERepository
 
 #End Region
 
+#Region "TempTransaction"
+
+    Public Class TempTransactionRepository
+        Inherits DTERepository
+
+        Public Function AddTempTransaction(model As TempTransaction) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.CreateDate = DateTime.Now()
+                DTEDBContext.TempTransactions.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function RemoveTempTransaction(model As TempTransaction) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                DTEDBContext.TempTransactions.Remove(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function GetTempTransactions() As List(Of TempTransaction)
+            Try
+                Return DTEDBContext.TempTransactions.OrderByDescending(Function(t) t.CreateDate).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function GetTempTransaction(id As Integer) As TempTransaction
+            Try
+                If id = 0 Then Return Nothing
+                Return DTEDBContext.TempTransactions.FirstOrDefault(Function(t) t.id)
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+    End Class
+
+#End Region
+
 #Region "UserRepository"
 
     Public Class UserRepository
@@ -363,6 +410,44 @@ Public Class DTERepository
                 Return DTEDBContext.Logs.OrderByDescending(Function(l) l.CreateDate).ToList()
             Catch ex As Exception
                 Return Nothing
+            End Try
+        End Function
+
+    End Class
+
+#End Region
+
+#Region "Sequence"
+
+    Public Class SequenceRepository
+        Inherits DTERepository
+
+        Public Function GetSequence() As Sequence
+            Try
+                Return DTEDBContext.Sequences.FirstOrDefault()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function EditSequence(model As Sequence) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                model.UpdateDate = DateTime.Now()
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function AddSequence(model As Sequence) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                DTEDBContext.Sequences.Add(model)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
             End Try
         End Function
 

@@ -82,7 +82,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Sequence.vb" />
     <Compile Include="ServiceOrder.vb" />
+    <Compile Include="TempTransaction.vb" />
     <Compile Include="Transaction.vb" />
     <Compile Include="TransactionDetail.vb" />
     <Compile Include="UploadImage.vb" />

@@ -23,6 +23,8 @@ Namespace Controllers
             If ModelState.IsValid Then
                 Dim result = TransformFlightDataViewModelToFlightData(model)
                 services.AddFlightData(result)
+                'gen new sequence
+                services.GenerateNewSequence()
                 'log
                 Helpers.Log(Helpers.LogType.AddData, Helpers.GetCurrentUser().id, result.id, "FlightData")
                 Return RedirectToAction("ManageFlightData")
@@ -72,6 +74,8 @@ Namespace Controllers
                                     services.ImportFlightDataByDatatable(dt, New Date(filename.Substring(0, 4), filename.Substring(4, 2), filename.Substring(6, 2)))
                                     'delete trash datas
                                     services.RemoveTrashFlightData()
+                                    'gen new sequence
+                                    services.GenerateNewSequence()
                                     Return RedirectToAction("ManageFlightData")
                                 Else : ModelState.AddModelError("", "ไม่สามารถดึงข้อมูลจากไฟล์ได้")
                                 End If

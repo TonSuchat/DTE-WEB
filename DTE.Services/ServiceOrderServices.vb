@@ -321,6 +321,28 @@ Public Class ServiceOrderServices
 
 #End Region
 
+#Region "TempTransaction"
+
+    Public Function AddTempTransaction(model As TempTransaction) As Boolean
+        Using repository As New TempTransactionRepository()
+            Return repository.AddTempTransaction(model)
+        End Using
+    End Function
+
+    Public Function GetTempTransactions() As List(Of TempTransaction)
+        Using repository As New TempTransactionRepository()
+            Return repository.GetTempTransactions()
+        End Using
+    End Function
+
+    Public Function GetTempTransaction(id As Integer) As TempTransaction
+        Using repository As New TempTransactionRepository()
+            Return repository.GetTempTransaction(id)
+        End Using
+    End Function
+
+#End Region
+
 #Region "FlightData"
 
     Public Function AddFlightData(model As FlightData) As Boolean
@@ -399,6 +421,42 @@ Public Class ServiceOrderServices
             repository.RemoveFlightDatas(models)
         End Using
     End Sub
+
+#End Region
+
+#Region "Sequence"
+
+    Public Sub GenerateNewSequence()
+        Dim sequenceNo = GetRandomSequenceNo()
+        'check is exist
+        Using repository As New SequenceRepository()
+            Dim sequence = repository.GetSequence()
+            If IsNothing(sequence) Then
+                'create new sequence
+                sequence = New Sequence() With {.SequenceNo = sequenceNo, .UpdateDate = DateTime.Now()}
+                repository.AddSequence(sequence)
+            Else
+                'check is duplicate
+                Do Until sequenceNo <> sequence.SequenceNo
+                    sequenceNo = GetRandomSequenceNo()
+                Loop
+                'update sequence
+                sequence.SequenceNo = sequenceNo
+                repository.EditSequence(sequence)
+            End If
+        End Using
+    End Sub
+
+    Private Function GetRandomSequenceNo() As String
+        Dim rdm As New Random()
+        Return rdm.Next(10000, 99999)
+    End Function
+
+    Public Function GetSequence() As Sequence
+        Using repository As New SequenceRepository()
+            Return repository.GetSequence()
+        End Using
+    End Function
 
 #End Region
 
