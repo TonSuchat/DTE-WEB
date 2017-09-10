@@ -45,6 +45,7 @@ Public Class TransactionDetail
         Me.Valid = model.Valid
         Me.WONumber = model.WONumber
         Me.UploadImages = New List(Of String)
+        Me.Remark = model.Remark
     End Sub
 
 End Class

@@ -32,6 +32,7 @@
         Public Property CondOfCharge As String
         Public Property Remark As String
         Public Property UploadImages As List(Of String)
+        Public Property RefId As Integer
     End Class
 
     Public Class GetSO
@@ -42,6 +43,10 @@
         Public Property Id As Integer
     End Class
 
+    Public Class GetRecallById
+        Public Property Id As Integer
+    End Class
+
     Public Class EditSO
         Inherits SaveSO
 
@@ -49,6 +54,10 @@
     End Class
 
     Public Class DeleteSO
+        Public Property Id As Integer
+    End Class
+
+    Public Class DeleteTempSO
         Public Property Id As Integer
     End Class
 

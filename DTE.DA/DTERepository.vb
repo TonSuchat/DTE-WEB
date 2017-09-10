@@ -282,7 +282,7 @@ Public Class DTERepository
         Public Function GetTempTransaction(id As Integer) As TempTransaction
             Try
                 If id = 0 Then Return Nothing
-                Return DTEDBContext.TempTransactions.FirstOrDefault(Function(t) t.id)
+                Return DTEDBContext.TempTransactions.FirstOrDefault(Function(t) t.id = id)
             Catch ex As Exception
                 Return Nothing
             End Try
@@ -382,6 +382,34 @@ Public Class DTERepository
                 Return DTEDBContext.UploadImages.Where(Function(u) u.WONumber = woNumber).ToList()
             Catch ex As Exception
                 Return Nothing
+            End Try
+        End Function
+
+        Public Function GetUploadImages(refId As Integer) As List(Of UploadImage)
+            Try
+                Return DTEDBContext.UploadImages.Where(Function(u) u.refId = refId).ToList()
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        Public Function RemoveUploadImages(models As List(Of UploadImage)) As Boolean
+            Try
+                If IsNothing(models) Then Return False
+                DTEDBContext.UploadImages.RemoveRange(models)
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function EditUploadImages(model As UploadImage) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Return False
             End Try
         End Function
 

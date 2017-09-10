@@ -172,6 +172,28 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
+    Public Function GetUploadImages(refId As Integer) As List(Of UploadImage)
+        Using repository As New UploadImageRepository()
+            Return repository.GetUploadImages(refId)
+        End Using
+    End Function
+
+    Public Function EditUploadImages(models As List(Of UploadImage)) As Boolean
+        Using repository As New UploadImageRepository()
+            For Each item In models
+                repository.EditUploadImages(item)
+            Next
+        End Using
+        Return True
+    End Function
+
+    Public Function RemoveUploadImagesByRefId(refId As Integer) As Boolean
+        Dim models = GetUploadImages(refId)
+        Using repository As New UploadImageRepository()
+            Return repository.RemoveUploadImages(models)
+        End Using
+    End Function
+
 #End Region
 
 #Region "Transactions"
@@ -339,6 +361,21 @@ Public Class ServiceOrderServices
         Using repository As New TempTransactionRepository()
             Return repository.GetTempTransaction(id)
         End Using
+    End Function
+
+    Public Function RemoveTempTransaction(id As Integer) As Boolean
+        Using repository As New TempTransactionRepository()
+            Dim model = repository.GetTempTransaction(id)
+            If IsNothing(model) Then Return False
+            Return repository.RemoveTempTransaction(model)
+        End Using
+    End Function
+
+    Public Function ProcessRemoveTempTransaction(id As Integer) As Boolean
+        Dim result = RemoveTempTransaction(id)
+        'delete uploadimage 
+        If result Then RemoveUploadImagesByRefId(id)
+        Return result
     End Function
 
 #End Region
