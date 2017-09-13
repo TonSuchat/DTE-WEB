@@ -18,12 +18,12 @@
         Public Property PCA2 As Boolean
         Public Property PCAStart As String
         Public Property PCAStop As String
-        Public Property PCATotalTime As String
+        Public Property PCATotalMin As String
         Public Property GPU1 As Boolean
         Public Property GPU2 As Boolean
         Public Property GPUStart As String
         Public Property GPUStop As String
-        Public Property GPUTotalTime As String
+        Public Property GPUTotalMin As String
         Public Property UserID As String
         Public Property CustIDStart As String
         Public Property CustSignStart As String

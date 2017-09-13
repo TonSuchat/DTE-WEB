@@ -22,8 +22,10 @@ Public Class ServiceOrderServices
                 Dim etd As New SqlParameter("ETD", model.ETD) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim pcaStart As New SqlParameter("PCAStart", model.PCAStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim pcaEnd As New SqlParameter("PCAEnd", model.PCAEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim pcaTotalMin As New SqlParameter("PCATotalMin", model.PCATotalMin) With {.SqlDbType = SqlDbType.Int}
                 Dim gpuStart As New SqlParameter("GPUStart", model.GPUStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim gpuEnd As New SqlParameter("GPUEnd", model.GPUEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim gpuTotalMin As New SqlParameter("GPUTotalMin", model.GPUTotalMin) With {.SqlDbType = SqlDbType.Int}
                 Dim createBy As New SqlParameter("CreateBy", model.CreateBy) With {.SqlDbType = SqlDbType.Int}
                 Dim custIdStart As New SqlParameter("CustIDStart", model.CustIDStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
                 Dim custSignStart As New SqlParameter("CustSignStart", model.CustSignStart) With {.SqlDbType = SqlDbType.Text}
@@ -36,9 +38,9 @@ Public Class ServiceOrderServices
                 Dim retmessage As New SqlParameter("RetMsg", SqlDbType.NVarChar) With {.Direction = ParameterDirection.Output, .Size = 255}
 
                 repository.DTEDBContext.Database.ExecuteSqlCommand("sp_Insert_SO @Station, @GateNo, @PCA1, @PCA2, @GPU1, @GPU2, @FlightNo, @AircraftType, @AircraftReg, @AircraftCarrier, @ETA, 
-                                                                @ETD, @PCAStart, @PCAEnd, @GPUStart, @GPUEnd, @CreateBy, @CustIDStart, @CustSignStart, @CustIDStop, @CustSignStop,
+                                                                @ETD, @PCAStart, @PCAEnd, @PCATotalMin, @GPUStart, @GPUEnd, @GPUTotalMin, @CreateBy, @CustIDStart, @CustSignStart, @CustIDStop, @CustSignStop,
                                                                 @CondOfCharge, @Remark,@Success out, @RetMsg out",
-                                                                   station, gateNo, pca1, pca2, gpu1, gpu2, flightNo, acType, acReg, acCar, eta, etd, pcaStart, pcaEnd, gpuStart, gpuEnd, createBy,
+                                                                   station, gateNo, pca1, pca2, gpu1, gpu2, flightNo, acType, acReg, acCar, eta, etd, pcaStart, pcaEnd, pcaTotalMin, gpuStart, gpuEnd, gpuTotalMin, createBy,
                                                                    custIdStart, custSignStart, custIdStop, custSignStop, condOfCharge, remark, success, retmessage)
                 Dim result = New ServiceOrder.OutputSPInsertSO()
                 result.Success = success.Value

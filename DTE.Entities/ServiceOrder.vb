@@ -35,8 +35,10 @@ Public Class ServiceOrder
         Public Property ETD As String
         Public Property PCAStart As String
         Public Property PCAEnd As String
+        Public Property PCATotalMin As Integer
         Public Property GPUStart As String
         Public Property GPUEnd As String
+        Public Property GPUTotalMin As Integer
         Public Property CreateBy As Integer
         Public Property CustIDStart As String
         Public Property CustSignStart As String

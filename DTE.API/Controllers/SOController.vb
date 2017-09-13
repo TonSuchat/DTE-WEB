@@ -33,10 +33,12 @@ Namespace Controllers
                 .GPU2 = model.GPU2,
                 .GPUEnd = model.GPUStop,
                 .GPUStart = model.GPUStart,
+                .GPUTotalMin = model.GPUTotalMin,
                 .PCA1 = model.PCA1,
                 .PCA2 = model.PCA2,
                 .PCAEnd = model.PCAStop,
                 .PCAStart = model.PCAStart,
+                .PCATotalMin = model.PCATotalMin,
                 .Station = model.Station,
                 .Remark = model.Remark
                 }
@@ -77,9 +79,9 @@ Namespace Controllers
                 .CustSignStop = model.CustSignStop, .ETA = model.STA,
                 .ETD = model.STD, .FlightNo = model.FlightNo, .GateNo = model.GateNo,
                 .GPU1 = model.GPU1, .GPU2 = model.GPU2, .GPUEnd = model.GPUStop,
-                .GPUStart = model.GPUStart, .GPUTotalMin = If(String.IsNullOrEmpty(model.GPUTotalTime), Nothing, model.GPUTotalTime),
+                .GPUStart = model.GPUStart, .GPUTotalMin = If(String.IsNullOrEmpty(model.GPUTotalMin), Nothing, model.GPUTotalMin),
                 .PCA1 = model.PCA1, .PCA2 = model.PCA2, .PCAEnd = model.PCAStop,
-                .PCAStart = model.PCAStart, .PCATotalMin = If(String.IsNullOrEmpty(model.PCATotalTime), Nothing, model.PCATotalTime),
+                .PCAStart = model.PCAStart, .PCATotalMin = If(String.IsNullOrEmpty(model.PCATotalMin), Nothing, model.PCATotalMin),
                 .Remark = model.Remark, .Station = model.Station
                 }
             Dim result = services.AddTempTransaction(tempTransaction)
