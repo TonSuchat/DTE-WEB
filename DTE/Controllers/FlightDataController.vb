@@ -106,7 +106,7 @@ Namespace Controllers
                 Dim result = TransformFlightDataViewModelToFlightData(model)
                 'log
                 Helpers.Log(Helpers.LogType.EditData, Helpers.GetCurrentUser().id, result.id, "FlightData")
-                services.EditFlightData(result)
+                If services.EditFlightData(result) Then services.GenerateNewSequence() 'gen new sequence if edit flight template
                 Return RedirectToAction("ManageFlightData")
             End If
             ViewBag.Type = "Edit"
