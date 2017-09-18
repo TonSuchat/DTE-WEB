@@ -13,7 +13,21 @@ End Code
     <script type="text/javascript">
 
         $(function () {
-            $('#tblFlight').DataTable({ "bSort": false });
+            $('#tblFlight').DataTable({
+                "bSort": false,
+                "columns": [
+                    { "searchable": false },
+                    { "searchable": false },
+                    { "searchable": false },
+                    { "searchable": false },
+                    null,
+                    null,
+                    { "searchable": false },
+                    { "searchable": false },
+                    { "searchable": false },
+                    { "searchable": false }
+                ]
+            });
 
             $('.btnremove').click(function () {
                 if (confirm('ต้องการลบข้อมูลนี้?')) {
