@@ -68,6 +68,7 @@ Public Class TransactionDetail
         Me.GPUEnd = model.GPUEnd
         Me.GPUStart = model.GPUStart
         Me.GPUTotalMin = model.GPUTotalMin
+        Me.Station = model.Station
         Me.id = model.id
         Me.PCA1 = model.PCA1
         Me.PCA2 = model.PCA2
