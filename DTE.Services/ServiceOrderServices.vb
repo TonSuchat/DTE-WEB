@@ -230,12 +230,19 @@ Public Class ServiceOrderServices
         Return result
     End Function
 
-    Private Sub ProcessFindDetailForTransaction(ByRef transaction As TransactionDetail)
+    Public Function GetTransactionDetailByTempId(tempId As Integer) As TransactionDetail
+        Dim result = New TransactionDetail(GetTempTransaction(tempId))
+        ProcessFindDetailForTransaction(result, tempId)
+        Return result
+    End Function
+
+    Private Sub ProcessFindDetailForTransaction(ByRef transaction As TransactionDetail, Optional tempTransactionId As Integer = 0)
         'find createdbyname and updatedbyname
         transaction.CreatedByName = GetUser(transaction.CreateBy).UserName
         If (Not IsNothing(transaction.UpdateBy)) Then transaction.UpdatedByName = GetUser(transaction.UpdateBy).UserName
         'find upload images
-        Dim uploadImages = GetUploadImages(transaction.WONumber)
+        Dim uploadImages
+        If tempTransactionId = 0 Then uploadImages = GetUploadImages(transaction.WONumber) Else uploadImages = GetUploadImages(tempTransactionId)
         For Each img In uploadImages
             transaction.UploadImages.Add(img.objectImage)
         Next

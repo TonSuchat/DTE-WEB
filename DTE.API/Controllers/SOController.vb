@@ -126,7 +126,7 @@ Namespace Controllers
 
         <HttpPost()>
         Public Function GetRecallById(model As SORequestModels.GetRecallById) As IHttpActionResult
-            Return Ok(services.GetTempTransaction(model.Id))
+            Return Ok(services.GetTransactionDetailByTempId(model.Id))
         End Function
 
         <HttpPost()>

@@ -11,7 +11,7 @@ Public Class TransactionDetail
 
     End Sub
 
-    Public Sub New(model As Entities.Transaction)
+    Public Sub New(model As Transaction)
         Me.AircraftCarrier = model.AircraftCarrier
         Me.AircraftReg = model.AircraftReg
         Me.AircraftType = model.AircraftType
@@ -44,6 +44,36 @@ Public Class TransactionDetail
         Me.UpdateDate = model.UpdateDate
         Me.Valid = model.Valid
         Me.WONumber = model.WONumber
+        Me.UploadImages = New List(Of String)
+        Me.Remark = model.Remark
+    End Sub
+
+    Public Sub New(model As TempTransaction)
+        Me.AircraftCarrier = model.AircraftCarrier
+        Me.AircraftReg = model.AircraftReg
+        Me.AircraftType = model.AircraftType
+        Me.CondOfCharge = model.CondOfCharge
+        Me.CreateBy = model.CreateBy
+        Me.CreateDate = model.CreateDate
+        Me.CustIDStart = model.CustIDStart
+        Me.CustIDStop = model.CustIDStop
+        Me.CustSignStart = model.CustSignStart
+        Me.CustSignStop = model.CustSignStop
+        Me.ETA = model.ETA
+        Me.ETD = model.ETD
+        Me.FlightNo = model.FlightNo
+        Me.GateNo = model.GateNo
+        Me.GPU1 = model.GPU1
+        Me.GPU2 = model.GPU2
+        Me.GPUEnd = model.GPUEnd
+        Me.GPUStart = model.GPUStart
+        Me.GPUTotalMin = model.GPUTotalMin
+        Me.id = model.id
+        Me.PCA1 = model.PCA1
+        Me.PCA2 = model.PCA2
+        Me.PCAEnd = model.PCAEnd
+        Me.PCAStart = model.PCAStart
+        Me.PCATotalMin = model.PCATotalMin
         Me.UploadImages = New List(Of String)
         Me.Remark = model.Remark
     End Sub
