@@ -2,7 +2,59 @@
 
 @Code
     ViewData("Title") = "รายละเอียด-SO"
+    Dim imgIndex As Integer = 0
 End Code
+
+@section scripts
+    <style type="text/css">
+        #lightbox .modal-content {
+            display: inline-block;
+            text-align: center;   
+            margin-top:20px;
+        }
+
+        #lightbox .close {
+            opacity: 1;
+            color: rgb(255, 255, 255);
+            background-color: rgb(25, 25, 25);
+            padding: 5px 8px;
+            border-radius: 30px;
+            border: 2px solid rgb(255, 255, 255);
+            position: absolute;
+            top: -15px;
+            right: -55px;
+            z-index:1032;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            var $lightbox = $('#lightbox');
+
+            $('[data-target="#lightbox"]').on('click', function (event) {
+                var $img = $(this).find('img'),
+                    src = $img.attr('src'),
+                    alt = $img.attr('alt'),
+                    css = {
+                        'maxWidth': $(window).width() - 250,
+                        'maxHeight': $(window).height() - 250
+                    };
+
+                $lightbox.find('.close').addClass('hidden');
+                $lightbox.find('img').attr('src', src);
+                $lightbox.find('img').attr('alt', alt);
+                $lightbox.find('img').css(css);
+            });
+
+            $lightbox.on('shown.bs.modal', function (e) {
+                var $img = $lightbox.find('img');
+
+                $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
+                $lightbox.find('.close').removeClass('hidden');
+            });
+        })
+    </script>
+End Section
 
 <div class="row">
     @If IsNothing(Model) Then
@@ -230,11 +282,27 @@ End Code
             <div class="row">
                 <div Class="col-md-offset-2 col-md-8 border form-horizontal">
                     <h2 class="text-center"><u>Upload Images</u></h2>
-                    @For Each img In Model.UploadImages
-                    @<img class="img-thumbnail" src="@img" />
+                    @for Each item In Model.UploadImages
+                        @<div Class="col-xs-6 col-sm-3">
+                            <a href="#" Class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                <img src = "@item" alt="">
+                            </a>
+                        </div>
                     Next
                 </div>
             </div>
+
+             <div id = "lightbox" Class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                 <div Class="modal-dialog">
+                     @*<Button type = "button" Class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>*@
+                     <div Class="modal-content">
+                         <div Class="modal-body">
+                             <img src = "" alt="" />
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
         </div>
     End If
 </div>
