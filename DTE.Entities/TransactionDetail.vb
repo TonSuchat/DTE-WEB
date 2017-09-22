@@ -6,6 +6,7 @@ Public Class TransactionDetail
     Public Property UploadImages As List(Of String)
     Public Property CreatedByName As String
     Public Property UpdatedByName As String
+    Public Property Logo As String
 
     Public Sub New()
 

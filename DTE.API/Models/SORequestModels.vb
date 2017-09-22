@@ -36,11 +36,15 @@
     End Class
 
     Public Class GetSO
-        Public Property UserId As Integer
+        Public Property Station As String
     End Class
 
     Public Class GetSOById
         Public Property Id As Integer
+    End Class
+
+    Public Class GetListRecall
+        Public Property Station As String
     End Class
 
     Public Class GetRecallById

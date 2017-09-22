@@ -72,6 +72,13 @@ End Section
                 <div Class="col-md-offset-2 col-md-8 border form-horizontal">
 
                     <div class="form-group">
+                        <label class="col-md-3 control-label">WONumber: </label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">@Model.WONumber</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Station: </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.Station</p>

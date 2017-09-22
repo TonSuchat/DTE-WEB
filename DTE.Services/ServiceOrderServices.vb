@@ -93,12 +93,14 @@ Public Class ServiceOrderServices
 
     Public Function AddAirlineMasterData(model As AirlineMasterData) As Boolean
         Using repository As New AirlineMasterDataRepository()
+            If (Not String.IsNullOrEmpty(model.Logo)) Then model.Logo = model.Logo.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", "")
             Return repository.AddAirlineMasterData(model)
         End Using
     End Function
 
     Public Function EditAirlineMasterData(model As AirlineMasterData) As Boolean
         Using repository As New AirlineMasterDataRepository()
+            If (Not String.IsNullOrEmpty(model.Logo)) Then model.Logo = model.Logo.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", "")
             Return repository.EditAirlineMasterData(model)
         End Using
     End Function
@@ -210,6 +212,21 @@ Public Class ServiceOrderServices
         Using repository As New TransactionRepository()
             Return repository.GetTransactions()
         End Using
+    End Function
+
+    Public Function GetTransactionsDetail(station As String) As List(Of TransactionDetail)
+        Dim models As List(Of Transaction) = Nothing
+        Using repository As New TransactionRepository()
+            models = repository.GetTransactions().Where(Function(t) t.Station = station).OrderByDescending(Function(t) t.CreateDate).ToList()
+        End Using
+        If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
+        Dim result As New List(Of TransactionDetail)
+        For Each item In models
+            Dim currentDetail As New TransactionDetail(item)
+            currentDetail.Logo = FindLogoForTransaction(item.FlightNo, Helpers.ConvertDateTimeDTEFormat(item.ETA), Helpers.ConvertDateTimeDTEFormat(item.ETD))
+            result.Add(currentDetail)
+        Next
+        Return result
     End Function
 
     Public Function GetTransactions(userId As Integer) As List(Of Transaction)
@@ -360,10 +377,19 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
-    Public Function GetTempTransactions() As List(Of TempTransaction)
+    Public Function GetTempTransactionsDetail(station As String) As List(Of TransactionDetail)
+        Dim models As List(Of TempTransaction) = Nothing
         Using repository As New TempTransactionRepository()
-            Return repository.GetTempTransactions()
+            models = repository.GetTempTransactions().Where(Function(t) t.Station = station).OrderByDescending(Function(t) t.CreateDate).ToList()
         End Using
+        If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
+        Dim result As New List(Of TransactionDetail)
+        For Each item In models
+            Dim currentDetail As New TransactionDetail(item)
+            currentDetail.Logo = FindLogoForTransaction(item.FlightNo, Helpers.ConvertDateTimeDTEFormat(item.ETA), Helpers.ConvertDateTimeDTEFormat(item.ETD))
+            result.Add(currentDetail)
+        Next
+        Return result
     End Function
 
     Public Function GetTempTransaction(id As Integer) As TempTransaction
@@ -528,6 +554,15 @@ Public Class ServiceOrderServices
 
 #End Region
 
-
+    Private Function FindLogoForTransaction(flightNo As String, sta As DateTime, std As DateTime) As String
+        Try
+            Using repository As New DA.DTERepository()
+                Return (From a In repository.DTEDBContext.AirlineMasterDatas Join f In repository.DTEDBContext.FlightDatas On a.ALC3 Equals f.ACCarrier
+                        Where f.FlightNo = flightNo AndAlso f.STA = sta AndAlso f.STD = std Select a).SingleOrDefault().ImageLogo
+            End Using
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
 
 End Class

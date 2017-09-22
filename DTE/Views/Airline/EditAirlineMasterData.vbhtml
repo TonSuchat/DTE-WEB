@@ -4,6 +4,25 @@
     ViewData("Title") = "แก้ไขข้อมูล Airline"
 End Code
 
+@section scripts
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('#uploadFile').on('change', function () {
+                if ($(this).prop('files') == null) return;
+                var FR = new FileReader();
+                FR.addEventListener("load", function(e){
+                    $('#imgPreview').prop('src', e.target.result);
+                    $('#Logo').val(e.target.result);
+                });
+                FR.readAsDataURL($(this).prop('files')[0]);
+            });
+        });
+    </script>
+
+End Section
+
 <div class="row">
     <a class="btn btn-primary" href="@Url.Action("ManageAirlineMasterData", "Airline")">ย้อนกลับ</a>
 </div>
@@ -62,6 +81,17 @@ End Code
             @Html.TextBoxFor(Function(a) a.EmailAddress, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(a) a.EmailAddress)
         </div>
+
+         <div class="form-group">
+             @Html.LabelFor(Function(a) a.Logo)
+             <input type="file" id="uploadFile" accept=".png,.jpeg,.jpg" />
+             @If String.IsNullOrEmpty(Model.Logo) Then
+                 @Html.Hidden("Logo", "", New With {.id = "Logo"})
+             Else
+                 @Html.Hidden("Logo", Model.Logo, New With {.id = "Logo"})
+             End If
+             <img id="imgPreview" style="margin-top:10px;" src="@Model.ImageLogo" width="220" height="130" />
+         </div>
 
         <button type="submit" class="btn btn-primary">ตกลง</button>
 

@@ -47,23 +47,17 @@ Namespace Controllers
                 'if save from recall then remove temptransaction
                 If model.RefId <> 0 Then
                     services.ProcessRemoveTempTransaction(model.RefId)
-                    'edit upload image to this SONumber
-                    Dim uploadImgs = services.GetUploadImages(model.RefId)
-                    For Each img In uploadImgs
-                        img.WONumber = result.RetMsg
-                        img.refId = Nothing
+                    'remove recall upload image
+                    services.RemoveUploadImagesByRefId(model.RefId)
+                End If
+                'insert new uploadimages
+                If Not IsNothing(model.UploadImages) Then
+                    'insert upload images
+                    Dim uploadImgs As New List(Of Entities.UploadImage)
+                    For Each img In model.UploadImages
+                        uploadImgs.Add(New Entities.UploadImage() With {.WONumber = result.RetMsg, .objectImage = img})
                     Next
-                    services.EditUploadImages(uploadImgs)
-                Else
-                    'insert new uploadimages
-                    If Not IsNothing(model.UploadImages) Then
-                        'insert upload images
-                        Dim uploadImgs As New List(Of Entities.UploadImage)
-                        For Each img In model.UploadImages
-                            uploadImgs.Add(New Entities.UploadImage() With {.WONumber = result.RetMsg, .objectImage = img})
-                        Next
-                        services.AddUploadImages(uploadImgs)
-                    End If
+                    services.AddUploadImages(uploadImgs)
                 End If
             End If
             Return Ok(New With {.success = result.Success, .message = result.RetMsg})
@@ -102,20 +96,20 @@ Namespace Controllers
         End Function
 
         <HttpPost()>
-        Public Function GetTempSO() As IHttpActionResult
-            Dim models = services.GetTempTransactions()
+        Public Function GetTempSO(model As SORequestModels.GetListRecall) As IHttpActionResult
+            Dim models = services.GetTempTransactionsDetail(model.Station)
             Return Ok(models)
         End Function
 
-        <HttpPost()>
-        Public Function GetTempSO(id As Integer) As IHttpActionResult
-            Dim model = services.GetTempTransaction(id)
-            Return Ok(model)
-        End Function
+        '<HttpPost()>
+        'Public Function GetTempSO(id As Integer) As IHttpActionResult
+        '    Dim model = services.GetTempTransaction(id)
+        '    Return Ok(model)
+        'End Function
 
         <HttpPost()>
         Public Function GetSO(model As SORequestModels.GetSO) As IHttpActionResult
-            Dim models = services.GetTransactions(model.UserId)
+            Dim models = services.GetTransactionsDetail(model.Station)
             Return Ok(models)
         End Function
 

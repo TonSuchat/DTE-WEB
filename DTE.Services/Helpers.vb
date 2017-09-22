@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 
 Public NotInheritable Class Helpers
 
@@ -8,5 +9,13 @@ Public NotInheritable Class Helpers
             sw.WriteLine(message)
         End Using
     End Sub
+
+    Public Shared Function ConvertDateTimeDTEFormat(input As String) As DateTime
+        Try
+            Return DateTime.ParseExact(input, "yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
 
 End Class

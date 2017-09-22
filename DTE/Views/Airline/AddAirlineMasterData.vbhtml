@@ -4,6 +4,28 @@
     ViewData("Title") = "เพิ่มข้อมูล Airline"
 End Code
 
+@section scripts
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('#imgPreview').hide();
+
+            $('#uploadFile').on('change', function () {
+                if ($(this).prop('files') == null) return;
+                var FR = new FileReader();
+                FR.addEventListener("load", function(e){
+                    $('#imgPreview').prop('src', e.target.result);
+                    $('#Logo').val(e.target.result);
+                });
+                FR.readAsDataURL($(this).prop('files')[0]);
+                $('#imgPreview').show();
+            });
+        });
+    </script>
+
+End Section
+
 <div class="row">
     <a class="btn btn-primary" href="@Url.Action("ManageAirlineMasterData", "Airline")">ย้อนกลับ</a>
 </div>
@@ -59,6 +81,13 @@ End Code
             @Html.LabelFor(Function(a) a.EmailAddress)
             @Html.TextBoxFor(Function(a) a.EmailAddress, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(a) a.EmailAddress)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(Function(a) a.Logo)
+            <input type="file" id="uploadFile" accept=".png,.jpeg,.jpg" />
+            @Html.Hidden("Logo", "", New With {.id = "Logo"})
+            <img id="imgPreview" style="margin-top:10px;" src="" width="220" height="130" />
         </div>
 
         <Button type="submit" Class="btn btn-default btn-primary">ตกลง</Button>

@@ -21,7 +21,16 @@ Public Class AirlineMasterData
     Public Property ADD4 As String
     <MaxLength(255)>
     Public Property EmailAddress As String
+    Public Property Logo As String
     <Required()>
     Public Property CreateDate As DateTime
     Public Property UpdateDate As DateTime
+End Class
+
+Partial Public Class AirlineMasterData
+    Public ReadOnly Property ImageLogo As String
+        Get
+            Return "data:image/png;base64," & Me.Logo
+        End Get
+    End Property
 End Class

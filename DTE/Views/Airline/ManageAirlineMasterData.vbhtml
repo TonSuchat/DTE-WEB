@@ -19,7 +19,6 @@ End Code
                     $(this).parent('form').submit();
                 }
             })
-
         })
 
     </script>
@@ -48,6 +47,7 @@ End Section
                         <th>ADD3</th>
                         <th>ADD4</th>
                         <th>EmailAddress</th>
+                        <th>Logo</th>
                         <th>CreateDate</th>
                         <th>UpdateDate</th>
                         <th>แก้ไข</th>
@@ -65,6 +65,7 @@ End Section
                             <td>@item.ADD3</td>
                             <td>@item.ADD4</td>
                             <td>@item.EmailAddress</td>
+                            <td><img src="@item.ImageLogo" width="150" height="50" /></td>
                             <td>@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                             <td>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                             <td>
