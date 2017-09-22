@@ -43,6 +43,7 @@ Public Class TempTransaction
     Public Property CustSignStop As String
     Public Property CondOfCharge As String
     Public Property Remark As String
+    Public Property Logo As String
     <Required()>
     Public Property CreateDate As DateTime
 End Class

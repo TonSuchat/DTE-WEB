@@ -52,6 +52,7 @@ Public Class Transaction
     Public Property CustSignStop As String
     Public Property CondOfCharge As String
     Public Property Remark As String
+    Public Property Logo As String
     Public Property UpdateBy As Integer?
     <Required()>
     Public Property UpdateDate As DateTime

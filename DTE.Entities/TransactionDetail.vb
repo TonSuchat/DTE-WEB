@@ -47,6 +47,7 @@ Public Class TransactionDetail
         Me.WONumber = model.WONumber
         Me.UploadImages = New List(Of String)
         Me.Remark = model.Remark
+        Me.Logo = "data:image/png;base64," & model.Logo
     End Sub
 
     Public Sub New(model As TempTransaction)
@@ -78,6 +79,7 @@ Public Class TransactionDetail
         Me.PCATotalMin = model.PCATotalMin
         Me.UploadImages = New List(Of String)
         Me.Remark = model.Remark
+        Me.Logo = "data:image/png;base64," & model.Logo
     End Sub
 
 End Class

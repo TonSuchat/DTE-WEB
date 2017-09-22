@@ -65,6 +65,7 @@ Namespace Controllers
 
         <HttpPost()>
         Public Function SaveTempSO(model As SORequestModels.SaveSO) As IHttpActionResult
+            'find logo
             Dim tempTransaction As New Entities.TempTransaction() With {
                 .AircraftCarrier = model.ACCarrier, .AircraftReg = model.ACReg,
                 .AircraftType = model.ACType, .CondOfCharge = model.CondOfCharge,
@@ -76,7 +77,7 @@ Namespace Controllers
                 .GPUStart = model.GPUStart, .GPUTotalMin = If(String.IsNullOrEmpty(model.GPUTotalMin), Nothing, model.GPUTotalMin),
                 .PCA1 = model.PCA1, .PCA2 = model.PCA2, .PCAEnd = model.PCAStop,
                 .PCAStart = model.PCAStart, .PCATotalMin = If(String.IsNullOrEmpty(model.PCATotalMin), Nothing, model.PCATotalMin),
-                .Remark = model.Remark, .Station = model.Station
+                .Remark = model.Remark, .Station = model.Station, .Logo = services.GetAirlineLogo(model.ACCarrier)
                 }
             Dim result = services.AddTempTransaction(tempTransaction)
             If result Then

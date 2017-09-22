@@ -79,6 +79,13 @@ Public Class ServiceOrderServices
 
 #Region "AirlineMasterData"
 
+    Public Function GetAirlineLogo(ACCarrier As String) As String
+        Using repository As New AirlineMasterDataRepository()
+            Dim result = repository.GetAirlineMasterDatas().Where(Function(a) a.ALC3 = ACCarrier).FirstOrDefault()
+            If IsNothing(result) Then Return "" Else Return result.Logo
+        End Using
+    End Function
+
     Public Function GetAirlineMasterData(id As Integer) As AirlineMasterData
         Using repository As New AirlineMasterDataRepository()
             Return repository.GetAirlineMasterData(id)
@@ -220,13 +227,14 @@ Public Class ServiceOrderServices
             models = repository.GetTransactions().Where(Function(t) t.Station = station).OrderByDescending(Function(t) t.CreateDate).ToList()
         End Using
         If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
-        Dim result As New List(Of TransactionDetail)
-        For Each item In models
-            Dim currentDetail As New TransactionDetail(item)
-            currentDetail.Logo = FindLogoForTransaction(item.FlightNo, Helpers.ConvertDateTimeDTEFormat(item.ETA), Helpers.ConvertDateTimeDTEFormat(item.ETD))
-            result.Add(currentDetail)
-        Next
-        Return result
+        Return (From t In models Select New TransactionDetail(t)).ToList()
+        'Dim result As New List(Of TransactionDetail)
+        'For Each item In models
+        '    Dim currentDetail As New TransactionDetail(item)
+        '    currentDetail.Logo = FindLogoForTransaction(item.FlightNo, Helpers.ConvertDateTimeDTEFormat(item.ETA), Helpers.ConvertDateTimeDTEFormat(item.ETD))
+        '    result.Add(currentDetail)
+        'Next
+        'Return result
     End Function
 
     Public Function GetTransactions(userId As Integer) As List(Of Transaction)
@@ -383,13 +391,7 @@ Public Class ServiceOrderServices
             models = repository.GetTempTransactions().Where(Function(t) t.Station = station).OrderByDescending(Function(t) t.CreateDate).ToList()
         End Using
         If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
-        Dim result As New List(Of TransactionDetail)
-        For Each item In models
-            Dim currentDetail As New TransactionDetail(item)
-            currentDetail.Logo = FindLogoForTransaction(item.FlightNo, Helpers.ConvertDateTimeDTEFormat(item.ETA), Helpers.ConvertDateTimeDTEFormat(item.ETD))
-            result.Add(currentDetail)
-        Next
-        Return result
+        Return (From t In models Select New TransactionDetail(t)).ToList()
     End Function
 
     Public Function GetTempTransaction(id As Integer) As TempTransaction
