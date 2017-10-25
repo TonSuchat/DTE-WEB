@@ -9,6 +9,9 @@ End Code
     </div>
 
     @<div class="row">
+        
+        @Html.ValidationSummary(True)
+
          <div Class="jumbotron">
              @Html.ValidationSummary(True)
              <p> เลือกไฟล์ CSV ที่ต้องการ upload ชื่อไฟล์จะต้องเป็นวันที่ของข้อมูลในไฟล์ เช่น 20170822.csv (ตอน save file ให้เลือก Comma delimited ",")</p>

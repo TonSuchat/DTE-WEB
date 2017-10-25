@@ -68,6 +68,7 @@ Public NotInheritable Class Helpers
                 If row.Length > 1 Then
                     Dim dr = dt.NewRow()
                     For index = 0 To row.Length - 1
+                        If String.IsNullOrEmpty(row(index).Trim()) Then Continue For
                         dr(index) = row(index).Trim()
                     Next
                     dt.Rows.Add(dr)

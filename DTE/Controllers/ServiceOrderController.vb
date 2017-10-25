@@ -78,7 +78,7 @@ Namespace Controllers
                 Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.ExcelSelectedDate))
             Catch ex As Exception
                 Helpers.LogTxt(ex.ToString())
-                ModelState.AddModelError("", "เกิดข้อผิดพลาด")
+                ModelState.AddModelError("", "เกิดข้อผิดพลาด " & ex.ToString())
                 Return View("ManageServiceOrder")
             End Try
         End Function

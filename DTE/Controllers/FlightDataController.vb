@@ -89,6 +89,8 @@ Namespace Controllers
                 Return View()
             Catch ex As Exception
                 Helpers.LogTxt(ex.ToString())
+                ModelState.AddModelError("", "เกิดความผิดพลาดไม่สามารถ import file ได้ : " & ex.ToString())
+                Return View()
             Finally
                 If IO.File.Exists(filepath) Then IO.File.Delete(filepath)
             End Try
