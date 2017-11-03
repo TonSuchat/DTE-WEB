@@ -44,6 +44,9 @@ End Section
 
     <div class="row">
         <h2>จัดการข้อมูล-SO</h2>
+        <a class="btn btn-lg btn-success" href="@Url.Action("AddServiceOrder", "ServiceOrder")">เพิ่มข้อมูล SO +</a>
+        <br />
+        <hr />
         @Using Html.BeginForm("ManageServiceOrder", "ServiceOrder", FormMethod.Post)
         @<div Class="form-inline">
             <div Class="form-group">
@@ -86,7 +89,7 @@ End Section
                     <th class="text-center">CreateBy</th>
                     <th class="text-center">UpdateDate</th>
                     <th class="text-center">CreateDate</th>
-                    <th class="text-center">แก้ไข</th>
+                    @*<th class="text-center">แก้ไข</th>*@
                     <th class="text-center">ลบ</th>
                 </tr>
             </thead>
@@ -96,16 +99,16 @@ End Section
                         <td class="text-center"><a target="_blank" href="@Url.Action("Detail", "ServiceOrder", New With {.id = item.id})">@item.WONumber</a></td>
                         <td class="text-center">@item.Station</td>
                         <td class="text-center">@item.FlightNo</td>
-                         <td class="text-center">@item.ServiceRate</td>
-                        <td>@item.UpdatedByName</td>
-                        <td>@item.CreatedByName</td>
-                        <td>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        <td>@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        <td class="text-center">
+                        <td class="text-center">@item.ServiceRate</td>
+                        <td class="text-center">@item.UpdatedByName</td>
+                        <td class="text-center">@item.CreatedByName</td>
+                        <td class="text-center">@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td class="text-center">@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        @*<td class="text-center">
                             <a href="@Url.Action("EditSO", "ServiceOrder", New With {.id = item.id})" class="btn btn-warning btn-sm">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </a>
-                        </td>
+                        </td>*@
                         <td class="text-center">
                             @using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
                             @<input type="hidden" value="@item.id" name="id" />

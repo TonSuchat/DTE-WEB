@@ -171,6 +171,12 @@ Public Class ServiceOrderServices
 
 #Region "UploadImage"
 
+    Public Function AddUploadImage(model As UploadImage) As Boolean
+        Using repository As New UploadImageRepository()
+            Return repository.AddUploadImage(model)
+        End Using
+    End Function
+
     Public Function AddUploadImages(models As List(Of UploadImage)) As Boolean
         Using repository As New UploadImageRepository()
             Return repository.AddUploadImages(models)

@@ -371,6 +371,7 @@
     <Content Include="Views\FlightData\ImportExcel.vbhtml" />
     <Content Include="Views\ServiceOrder\ExportExcel.vbhtml" />
     <Content Include="Views\Home\DownloadAPK.vbhtml" />
+    <Content Include="Views\ServiceOrder\AddServiceOrder.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

@@ -22,6 +22,57 @@ Namespace Controllers
             Return View(GetManageServiceOrderViewModel(model.SelectedDate))
         End Function
 
+        Function AddServiceOrder() As ActionResult
+            Return View()
+        End Function
+
+        <HttpPost()>
+        Function AddServiceOrder(model As Transaction, hdUploadImage As String) As ActionResult
+
+            Dim inputSO = New ServiceOrder.InputSPInsertSO() With {
+                .AircraftCarrier = model.AircraftCarrier,
+                .AircraftReg = model.AircraftReg,
+                .AircraftType = model.AircraftType,
+                .CondOfCharge = "",
+                .CreateBy = Helpers.GetCurrentUser.id,
+                .CustIDStart = model.CustIDStart,
+                .CustIDStop = model.CustIDStop,
+                .CustSignStart = "",
+                .CustSignStop = "",
+                .DateNow = DateTime.Now(),
+                .ETA = model.ETA,
+                .ETD = model.ETD,
+                .FlightNo = model.FlightNo,
+                .GateNo = model.GateNo,
+                .GPU1 = model.GPU1,
+                .GPU2 = model.GPU2,
+                .GPUEnd = model.GPUEnd,
+                .GPUStart = model.GPUStart,
+                .GPUTotalMin = model.GPUTotalMin,
+                .PCA1 = model.PCA1,
+                .PCA2 = model.PCA2,
+                .PCAEnd = model.PCAEnd,
+                .PCAStart = model.PCAStart,
+                .PCATotalMin = model.PCATotalMin,
+                .Remark = model.Remark,
+                .Station = model.Station
+                }
+            'add transaction
+            Dim result = services.ExecuteStoredInsertSO(inputSO)
+
+            If result.Success = 1 Then
+                'add upload image
+                If Not String.IsNullOrEmpty(hdUploadImage) Then
+                    'insert upload images
+                    services.AddUploadImage(New UploadImage() With {.WONumber = result.RetMsg, .objectImage = hdUploadImage})
+                End If
+                Return RedirectToAction("ManageServiceOrder")
+            End If
+
+            ModelState.AddModelError("", result.RetMsg)
+            Return View(model)
+        End Function
+
         Private Function GetManageServiceOrderViewModel(selectedDate As Date)
             Dim result As New ManageServiceOrderViewModel()
             result.SelectedDate = selectedDate
