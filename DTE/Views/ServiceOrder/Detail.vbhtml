@@ -9,8 +9,8 @@ End Code
     <style type="text/css">
         #lightbox .modal-content {
             display: inline-block;
-            text-align: center;   
-            margin-top:20px;
+            text-align: center;
+            margin-top: 20px;
         }
 
         #lightbox .close {
@@ -23,7 +23,7 @@ End Code
             position: absolute;
             top: -15px;
             right: -55px;
-            z-index:1032;
+            z-index: 1032;
         }
     </style>
 
@@ -116,14 +116,14 @@ End Section
                     <div class="form-group">
                         <label class="col-md-3 control-label">Aircraft STA: </label>
                         <div class="col-md-9">
-                            <p class="form-control-static">@Model.ETA</p>
+                            <p class="form-control-static">@Helpers.ConvertDateTimeDTEFormat(Model.ETA).ToString("dd/MM/yyyy HH:mm")</p>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Aircraft STD: </label>
                         <div class="col-md-9">
-                            <p class="form-control-static">@Model.ETD</p>
+                            <p class="form-control-static">@Helpers.ConvertDateTimeDTEFormat(Model.ETD).ToString("dd/MM/yyyy HH:mm")</p>
                         </div>
                     </div>
 
@@ -137,22 +137,29 @@ End Section
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8 border form-horizontal">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Signature-Start</label>
-                        <div class="col-md-9">
-                            <img class="img-responsive" src="@Model.CustSignStart" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Signature-Stop</label>
-                        <div class="col-md-9">
-                            <img class="img-responsive" src="@Model.CustSignStop" />
-                        </div>
+            
+            @If Not String.IsNullOrEmpty(Model.CustSignStart) OrElse Not String.IsNullOrEmpty(Model.CustSignStop) Then
+                @<div Class="row">
+                    <div Class="col-md-offset-2 col-md-8 border form-horizontal">
+                            @If Not String.IsNullOrEmpty(Model.CustSignStart) Then
+                            @<div Class="form-group">
+                                <Label Class="col-md-3 control-label">Signature-Start</Label>
+                                <div Class="col-md-9">
+                                    <img Class="img-responsive" src="@Model.CustSignStart" />
+                                </div>
+                            </div>
+                            End If
+                            @If Not String.IsNullOrEmpty(Model.CustSignStop) Then
+                            @<div Class="form-group">
+                                <Label Class="col-md-3 control-label">Signature-Stop</Label>
+                                <div Class="col-md-9">
+                                    <img Class="img-responsive" src="@Model.CustSignStop" />
+                                </div>
+                            </div>
+                            End If
                     </div>
                 </div>
-            </div>
+            End If
 
             <div class="row">
                 <div class="col-md-offset-2 col-md-8 border form-horizontal">
@@ -174,7 +181,7 @@ End Section
                         <div class="col-md-9">
                             @If Not String.IsNullOrEmpty(Model.PCAStart) Then
                                 @<p Class="form-control-static">
-                                    @Helpers.ConvertDateTimeDTEFormat(Model.PCAStart).ToString("dd/MM/yyyy HH:mm:ss")
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.PCAStart).ToString("dd/MM/yyyy HH:mm")
                                 </p>
                             Else
                                 @<p Class="form-control-static">-</p>
@@ -186,7 +193,7 @@ End Section
                         <div class="col-md-9">
                             @If Not String.IsNullOrEmpty(Model.PCAEnd) Then
                                 @<p Class="form-control-static">
-                                    @Helpers.ConvertDateTimeDTEFormat(Model.PCAEnd).ToString("dd/MM/yyyy HH:mm:ss")
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.PCAEnd).ToString("dd/MM/yyyy HH:mm")
                                 </p>
                             Else
                                 @<p Class="form-control-static">-</p>
@@ -216,7 +223,7 @@ End Section
                         <div class="col-md-9">
                             @If Not String.IsNullOrEmpty(Model.GPUStart) Then
                                 @<p Class="form-control-static">
-                                    @Helpers.ConvertDateTimeDTEFormat(Model.GPUStart).ToString("dd/MM/yyyy HH:mm:ss")
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.GPUStart).ToString("dd/MM/yyyy HH:mm")
                                 </p>
                             Else
                                 @<p Class="form-control-static">-</p>
@@ -226,13 +233,13 @@ End Section
                     <div Class="form-group">
                         <Label Class="col-md-3 control-label">GPU-Stop: </Label>
                         <div Class="col-md-9">
-                           @If Not String.IsNullOrEmpty(Model.GPUEnd) Then
+                            @If Not String.IsNullOrEmpty(Model.GPUEnd) Then
                                 @<p Class="form-control-static">
-                                    @Helpers.ConvertDateTimeDTEFormat(Model.GPUEnd).ToString("dd/MM/yyyy HH:mm:ss")
+                                    @Helpers.ConvertDateTimeDTEFormat(Model.GPUEnd).ToString("dd/MM/yyyy HH:mm")
                                 </p>
-                           Else
+                            Else
                                 @<p Class="form-control-static">-</p>
-                           End If
+                            End If
                         </div>
                     </div>
                     <div class="form-group">
@@ -290,25 +297,25 @@ End Section
                 <div Class="col-md-offset-2 col-md-8 border form-horizontal">
                     <h2 class="text-center"><u>Upload Images</u></h2>
                     @for Each item In Model.UploadImages
-                        @<div Class="col-xs-6 col-sm-3">
-                            <a href="#" Class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
-                                <img src = "@item" alt="">
-                            </a>
-                        </div>
+                    @<div Class="col-xs-6 col-sm-3">
+                        <a href="#" Class="thumbnail" data-toggle="modal" data-target="#lightbox">
+                            <img src="@item" alt="">
+                        </a>
+                    </div>
                     Next
                 </div>
             </div>
 
-             <div id = "lightbox" Class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                 <div Class="modal-dialog">
-                     @*<Button type = "button" Class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>*@
-                     <div Class="modal-content">
-                         <div Class="modal-body">
-                             <img src = "" alt="" />
-                         </div>
-                     </div>
-                 </div>
-             </div>
+            <div id="lightbox" Class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div Class="modal-dialog">
+                    @*<Button type = "button" Class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>*@
+                    <div Class="modal-content">
+                        <div Class="modal-body">
+                            <img src="" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     End If

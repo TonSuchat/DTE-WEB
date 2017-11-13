@@ -27,10 +27,5 @@ End Code
             End Using
         </section>
 
-        <div class="row">
-            <p>UserName = admin</p>
-            <p>Password = password</p>
-        </div>
-
     </div>
 </div>

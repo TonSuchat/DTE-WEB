@@ -20,11 +20,11 @@ Public Class ServiceOrderServices
                 Dim acCar As New SqlParameter("AircraftCarrier", model.AircraftCarrier) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
                 Dim eta As New SqlParameter("ETA", model.ETA) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim etd As New SqlParameter("ETD", model.ETD) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
-                Dim pcaStart As New SqlParameter("PCAStart", model.PCAStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
-                Dim pcaEnd As New SqlParameter("PCAEnd", model.PCAEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim pcaStart As New SqlParameter("PCAStart", If(IsNothing(model.PCAStart), DBNull.Value, model.PCAStart)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim pcaEnd As New SqlParameter("PCAEnd", If(IsNothing(model.PCAEnd), DBNull.Value, model.PCAEnd)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim pcaTotalMin As New SqlParameter("PCATotalMin", model.PCATotalMin) With {.SqlDbType = SqlDbType.Int}
-                Dim gpuStart As New SqlParameter("GPUStart", model.GPUStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
-                Dim gpuEnd As New SqlParameter("GPUEnd", model.GPUEnd) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim gpuStart As New SqlParameter("GPUStart", If(IsNothing(model.GPUStart), DBNull.Value, model.GPUStart)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim gpuEnd As New SqlParameter("GPUEnd", If(IsNothing(model.GPUEnd), DBNull.Value, model.GPUEnd)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim gpuTotalMin As New SqlParameter("GPUTotalMin", model.GPUTotalMin) With {.SqlDbType = SqlDbType.Int}
                 Dim createBy As New SqlParameter("CreateBy", model.CreateBy) With {.SqlDbType = SqlDbType.Int}
                 Dim custIdStart As New SqlParameter("CustIDStart", model.CustIDStart) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
@@ -291,8 +291,8 @@ Public Class ServiceOrderServices
         Return result
     End Function
 
-    Public Function GetTransactionsDetail(selectedDate As Date) As List(Of TransactionDetail)
-        Dim transactions = GetTransactions().Where(Function(t) t.CreateDate.Date = selectedDate.Date).OrderByDescending(Function(t) t.CreateDate).ToList()
+    Public Function GetTransactionsDetail(selectedStartDate As Date, selectedEndDate As Date) As List(Of TransactionDetail)
+        Dim transactions = GetTransactionsByStartDateAndEndDate(selectedStartDate, selectedEndDate)
         If IsNothing(transactions) Then Return Nothing
         Dim result As New List(Of TransactionDetail)
         For Each item In transactions
@@ -303,8 +303,8 @@ Public Class ServiceOrderServices
         Return result
     End Function
 
-    Public Function GetDtTransactions(selectedDate As Date) As DataTable
-        Dim transactions = GetTransactions().Where(Function(t) t.CreateDate.Date = selectedDate).OrderBy(Function(t) t.CreateDate).ToList()
+    Public Function GetDtTransactions(selectedStartDate As Date, selectedEndDate As Date) As DataTable
+        Dim transactions = GetTransactionsByStartDateAndEndDate(selectedStartDate, selectedEndDate)
         Dim dt As New DataTable()
         InitialDtColumns(dt)
         For Each item In transactions
@@ -313,6 +313,10 @@ Public Class ServiceOrderServices
             dt.Rows.Add(row)
         Next
         Return dt
+    End Function
+
+    Private Function GetTransactionsByStartDateAndEndDate(startDate As Date, endDate As Date) As List(Of Transaction)
+        Return GetTransactions().Where(Function(t) t.CreateDate >= startDate.Date And t.CreateDate.Date <= endDate.Date).OrderByDescending(Function(t) t.CreateDate).ToList()
     End Function
 
     Private Sub InitialDtColumns(ByRef dt As DataTable)

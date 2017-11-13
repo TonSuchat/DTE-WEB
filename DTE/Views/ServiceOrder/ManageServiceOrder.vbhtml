@@ -23,17 +23,23 @@ End Code
                 }
             })
 
-            $('#SelectedDateTxt').datetimepicker({
+            //initial date-picker
+            $('#SelectedStartDateTxt').datetimepicker({
                 format: 'DD/MM/YYYY',
-                date: new Date(@Model.SelectedDate.Year,@Model.SelectedDate.Month - 1,@Model.SelectedDate.Day)
+                date: new Date(@Model.SelectedStartDate.Year,@Model.SelectedStartDate.Month - 1,@Model.SelectedStartDate.Day)
             });
+            $('#SelectedEndDateTxt').datetimepicker({ format: 'DD/MM/YYYY', date: new Date(@Model.SelectedEndDate.Year,@Model.SelectedEndDate.Month - 1,@Model.SelectedEndDate.Day) });
+            $('#SelectedEndDateTxt').data("DateTimePicker").minDate(new Date(@Model.SelectedEndDate.Year,@Model.SelectedEndDate.Month - 1,@Model.SelectedEndDate.Day));
 
-            //$('#SelectedDateTxt').on('dp.change',function(e){
-            //    $('#ExcelSelectedDate').val(e.date);
-            //});
+            $("#SelectedStartDateTxt").on("dp.change", function (e) {
+                $('#SelectedEndDateTxt').data("DateTimePicker").minDate(e.date);
+            });
+            //initial date-picker
 
-            $('#ExcelSelectedDate').val($('#SelectedDate').val());
-            //$('#removeSelectedDate').val($('#SelectedDate').val());
+
+            $('#ExcelSelectedStartDate').val($('#SelectedStartDate').val());
+            $('#ExcelSelectedEndDate').val($('#SelectedEndDate').val());
+
         })
 
     </script>
@@ -50,9 +56,18 @@ End Section
         @Using Html.BeginForm("ManageServiceOrder", "ServiceOrder", FormMethod.Post)
         @<div Class="form-inline">
             <div Class="form-group">
-                <Label> วันที่</Label>
-                <div Class='input-group date' id='SelectedDateTxt'>
-                    <input type='text' class="form-control" id="SelectedDate" name="SelectedDate" />
+                <Label> วันที่เริ่มต้น</Label>
+                <div Class='input-group date' id='SelectedStartDateTxt'>
+                    <input type='text' class="form-control" id="SelectedStartDate" name="SelectedStartDate" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="margin-left:10px;">
+                <Label> วันที่สิ้นสุด</Label>
+                <div Class='input-group date' id='SelectedEndDateTxt'>
+                    <input type='text' class="form-control" id="SelectedEndDate" name="SelectedEndDate" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                     </span>
@@ -72,7 +87,8 @@ End Section
     @<div Class="row">
         @using Html.BeginForm("ExportExcel", "ServiceOrder", FormMethod.Post)
             @<button type="submit" class="btn btn-lg btn-success">Export to Excel</button>
-            @<input type="hidden" name="ExcelSelectedDate" id="ExcelSelectedDate" />
+            @<input type="hidden" name="ExcelSelectedStartDate" id="ExcelSelectedStartDate" />
+            @<input type="hidden" name="ExcelSelectedEndDate" id="ExcelSelectedEndDate" />
         End Using
         @*<a Class="btn btn-lg btn-success" href="@Url.Action("ExportExcel", "ServiceOrder")">Export to Excel</a>*@
     </div>
@@ -112,8 +128,9 @@ End Section
                         <td class="text-center">
                             @using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
                             @<input type="hidden" value="@item.id" name="id" />
-                            @<input type="hidden" value="@Model.SelectedDate" name="removeSelectedDate" />
-                            @<button type="button" class="btn btn-sm btn-danger btnremove">
+                            @<input type="hidden" value="@Model.SelectedStartDate" name="removeSelectedStartDate" />
+                            @<input type="hidden" value="@Model.SelectedEndDate" name="removeSelectedEndDate" />
+                                                        @<button type="button" class="btn btn-sm btn-danger btnremove">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
                             End Using

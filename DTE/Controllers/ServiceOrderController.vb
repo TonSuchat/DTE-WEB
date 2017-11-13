@@ -14,12 +14,12 @@ Namespace Controllers
         End Function
 
         Function ManageServiceOrder() As ActionResult
-            Return View(GetManageServiceOrderViewModel(Date.Now()))
+            Return View(GetManageServiceOrderViewModel(Date.Now(), Date.Now()))
         End Function
 
         <HttpPost()>
         Function ManageServiceOrder(model As ManageServiceOrderViewModel) As ActionResult
-            Return View(GetManageServiceOrderViewModel(model.SelectedDate))
+            Return View(GetManageServiceOrderViewModel(model.SelectedStartDate, model.SelectedEndDate))
         End Function
 
         Function AddServiceOrder() As ActionResult
@@ -35,8 +35,8 @@ Namespace Controllers
                 .AircraftType = model.AircraftType,
                 .CondOfCharge = "",
                 .CreateBy = Helpers.GetCurrentUser.id,
-                .CustIDStart = model.CustIDStart,
-                .CustIDStop = model.CustIDStop,
+                .CustIDStart = "",
+                .CustIDStop = "",
                 .CustSignStart = "",
                 .CustSignStop = "",
                 .DateNow = DateTime.Now(),
@@ -73,10 +73,11 @@ Namespace Controllers
             Return View(model)
         End Function
 
-        Private Function GetManageServiceOrderViewModel(selectedDate As Date)
+        Private Function GetManageServiceOrderViewModel(selectedStartDate As Date, selectedEndDate As Date)
             Dim result As New ManageServiceOrderViewModel()
-            result.SelectedDate = selectedDate
-            result.TransactionsDetail = services.GetTransactionsDetail(result.SelectedDate)
+            result.SelectedStartDate = selectedStartDate
+            result.SelectedEndDate = selectedEndDate
+            result.TransactionsDetail = services.GetTransactionsDetail(result.SelectedStartDate, result.SelectedEndDate)
             Return result
         End Function
 
@@ -93,7 +94,7 @@ Namespace Controllers
             services.RemoveTransaction(model.id)
             'log
             Helpers.Log(Helpers.LogType.DeleteData, Helpers.GetCurrentUser().id, model.id, "Transaction")
-            Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.removeSelectedDate))
+            Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.removeSelectedStartDate, model.removeSelectedEndDate))
         End Function
 
         'Function ExportExcel() As ActionResult
@@ -103,9 +104,9 @@ Namespace Controllers
         <HttpPost()>
         Function ExportExcel(model As ExportExcelViewModel) As ActionResult
             Try
-                Dim dt As DataTable = services.GetDtTransactions(model.ExcelSelectedDate)
+                Dim dt As DataTable = services.GetDtTransactions(model.ExcelSelectedStartDate, model.ExcelSelectedEndDate)
                 If Not IsNothing(dt) AndAlso dt.Rows.Count > 0 Then
-                    Dim fileName As String = String.Format("SO_{0}", model.ExcelSelectedDate.ToString("yyyyMMdd"))
+                    Dim fileName As String = String.Format("SO_{0}", model.ExcelSelectedStartDate.ToString("yyyyMMdd"))
                     Dim grid As New GridView()
                     grid.DataSource = dt
                     grid.DataBind()
@@ -126,7 +127,7 @@ Namespace Controllers
                     Response.End()
                 Else : ModelState.AddModelError("", "ไม่พบข้อมูลในวันที่เลือก")
                 End If
-                Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.ExcelSelectedDate))
+                Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.ExcelSelectedStartDate, model.ExcelSelectedEndDate))
             Catch ex As Exception
                 Helpers.LogTxt(ex.ToString())
                 ModelState.AddModelError("", "เกิดข้อผิดพลาด " & ex.ToString())

@@ -29,27 +29,29 @@ End Code
             });
 
             //datepicker
-            $('#STADTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm:ss' });
+            $('#STADTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm' });
             $('#STADTPicker').on('dp.change', function (e) {
                 $('#ETA').val(GetStringFormatByDate(new Date(e.date)));
             })
-            $('#ETDDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm:ss' });
+            $('#ETDDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm' });
             $('#ETDDTPicker').on('dp.change', function (e) {
                 $('#ETD').val(GetStringFormatByDate(new Date(e.date)));
             })
 
             //PCA
-            $('#PCAStartDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm:ss' });
-            $('#PCAStopDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm:ss' });
+            $('#PCAStartDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm' });
+            $('#PCAStopDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm' });
             $("#PCAStartDTPicker").on("dp.change", function (e) {
-                $('#PCAStart').val(GetStringFormatByDate(new Date(e.date)));
+                if (!e.date) $('#PCAStart').val(null);
+                else $('#PCAStart').val(GetStringFormatByDate(new Date(e.date)));
                 $('#PCAStopDTPicker').data("DateTimePicker").minDate(e.date);
                 //diff total time
                 DiffStartStopDate(e.date, $('#PCAStopDTPicker').data("DateTimePicker").date(), 'txtTotalPCA');
                 $('#PCATotalMin').val($('#txtTotalPCA').val());
             });
             $("#PCAStopDTPicker").on("dp.change", function (e) {
-                $('#PCAEnd').val(GetStringFormatByDate(new Date(e.date)));
+                if (!e.date) $('#PCAEnd').val(null);
+                else $('#PCAEnd').val(GetStringFormatByDate(new Date(e.date)));
                 $('#PCAStartDTPicker').data("DateTimePicker").maxDate(e.date);
                 //diff total time
                 DiffStartStopDate($('#PCAStartDTPicker').data("DateTimePicker").date(), e.date, 'txtTotalPCA');
@@ -57,17 +59,19 @@ End Code
             });
 
             //GPU
-            $('#GPUStartDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm:ss' });
-            $('#GPUStopDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm:ss' });
+            $('#GPUStartDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm' });
+            $('#GPUStopDTPicker').datetimepicker({ format: 'D/MM/YYYY HH:mm' });
             $("#GPUStartDTPicker").on("dp.change", function (e) {
-                $('#GPUStart').val(GetStringFormatByDate(new Date(e.date)));
+                if (!e.date) $('#GPUStart').val(null);
+                else $('#GPUStart').val(GetStringFormatByDate(new Date(e.date)));
                 $('#GPUStopDTPicker').data("DateTimePicker").minDate(e.date);
                 //diff total time
                 DiffStartStopDate(e.date, $('#GPUStopDTPicker').data("DateTimePicker").date(), 'txtTotalGPU');
                 $('#GPUTotalMin').val($('#txtTotalGPU').val());
             });
             $("#GPUStopDTPicker").on("dp.change", function (e) {
-                $('#GPUEnd').val(GetStringFormatByDate(new Date(e.date)));
+                if (!e.date) $('#GPUEnd').val(null);
+                else $('#GPUEnd').val(GetStringFormatByDate(new Date(e.date)));
                 $('#GPUStartDTPicker').data("DateTimePicker").maxDate(e.date);
                 //diff total time
                 DiffStartStopDate($('#GPUStartDTPicker').data("DateTimePicker").date(), e.date, 'txtTotalGPU');
@@ -91,8 +95,13 @@ End Code
             }
 
             function DiffStartStopDate(startDate, stopDate, elemId) {
-                if (startDate == null || stopDate == null || elemId == null) return;
-
+                if (!startDate || !stopDate)
+                {
+                    $('#' + elemId).val(0);
+                    return;
+                } 
+                //if (startDate == null || stopDate == null || elemId == null) return;
+                
                 startDate = new Date(startDate);
                 stopDate = new Date(stopDate);
 
@@ -261,7 +270,7 @@ End Section
 
     </div>
 
-    @<div Class="row">
+    @*@<div Class="row">
         <div Class="col-md-offset-2 col-md-8 border">
             <div class="form-group">
                 <label>StartSignature By</label>
@@ -274,7 +283,7 @@ End Section
                 @Html.ValidationMessageFor(Function(model) model.CustIDStop)
             </div>
         </div>
-    </div>
+    </div>*@
 
     @<div Class="row">
         <div Class="col-md-offset-2 col-md-8 border">
