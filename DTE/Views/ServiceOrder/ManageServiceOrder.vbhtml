@@ -50,7 +50,9 @@ End Section
 
     <div class="row">
         <h2>จัดการข้อมูล-SO</h2>
-        <a class="btn btn-lg btn-success" href="@Url.Action("AddServiceOrder", "ServiceOrder")">เพิ่มข้อมูล SO +</a>
+        @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
+            @<a Class="btn btn-lg btn-success" href="@Url.Action("AddServiceOrder", "ServiceOrder")">เพิ่มข้อมูล SO +</a>
+        End If
         <br />
         <hr />
         @Using Html.BeginForm("ManageServiceOrder", "ServiceOrder", FormMethod.Post)
@@ -101,12 +103,14 @@ End Section
                     <th class="text-center">Station</th>
                     <th class="text-center">Flight No.</th>
                     <th class="text-center">Service-Rate</th>
-                    <th class="text-center">UpdateBy</th>
-                    <th class="text-center">CreateBy</th>
-                    <th class="text-center">UpdateDate</th>
-                    <th class="text-center">CreateDate</th>
+                    <th class="text-center">แก้ไขโดย</th>
+                    <th class="text-center">สร้างรายการโดย</th>
+                    <th class="text-center">วันที่แก้ไข</th>
+                    <th class="text-center">วันที่สร้างรายการ</th>
                     @*<th class="text-center">แก้ไข</th>*@
-                    <th class="text-center">ลบ</th>
+                    @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
+                        @<th Class="text-center">ลบ</th>
+                    End If
                 </tr>
             </thead>
             <tbody>
@@ -125,16 +129,18 @@ End Section
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </a>
                         </td>*@
-                        <td class="text-center">
-                            @using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
-                            @<input type="hidden" value="@item.id" name="id" />
-                            @<input type="hidden" value="@Model.SelectedStartDate" name="removeSelectedStartDate" />
-                            @<input type="hidden" value="@Model.SelectedEndDate" name="removeSelectedEndDate" />
-                                                        @<button type="button" class="btn btn-sm btn-danger btnremove">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
-                            End Using
-                        </td>
+                        @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
+                            @<td Class="text-center">
+                                @Using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})
+                                    @<input type="hidden" value="@item.id" name="id" />
+                                    @<input type="hidden" value="@Model.SelectedStartDate" name="removeSelectedStartDate" />
+                                    @<input type="hidden" value="@Model.SelectedEndDate" name="removeSelectedEndDate" />
+                                    @<button type="button" class="btn btn-sm btn-danger btnremove">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                End Using
+                            </td>
+                        End if  
                     </tr>
                 Next
             </tbody>

@@ -115,6 +115,12 @@ Namespace Controllers
         End Function
 
         <HttpPost()>
+        Public Function GetSOIdByWONumber(model As SORequestModels.GetSOByWONumber) As IHttpActionResult
+            Dim result = services.GetTransaction(model.WONumber)
+            If IsNothing(result) Then Return Ok(0) Else Return Ok(result.id)
+        End Function
+
+        <HttpPost()>
         Public Function GetSOById(model As SORequestModels.GetSOById) As IHttpActionResult
             Return Ok(services.GetTransactionDetail(model.Id))
         End Function
@@ -147,6 +153,24 @@ Namespace Controllers
         <HttpPost()>
         Public Function GetSequenceNo() As IHttpActionResult
             Return Ok(services.GetSequence().SequenceNo)
+        End Function
+
+        <HttpPost()>
+        Public Function GetAirlineLogo(model As SORequestModels.GetAirlineLogo) As IHttpActionResult
+            If String.IsNullOrEmpty(model.ACCarrier) Then Return Ok("")
+            Return Ok(services.GetAirlineLogo(model.ACCarrier))
+        End Function
+
+        <HttpPost()>
+        Public Function ChangePassword(model As SORequestModels.ChangePassword) As IHttpActionResult
+            If model.UserId = 0 OrElse String.IsNullOrEmpty(model.NewPassword.Trim()) Then Return Ok(New With {.Success = False, .Message = "ไม่พบผู้ใช้งานนี้/รหัสผ่านใหม่ห้ามเป็นค่าว่าง"})
+            'check the old password
+            Dim user = services.GetUser(model.UserId)
+            If IsNothing(user) Then Return Ok(New With {.Success = False, .Message = "ไม่พบผู้ใช้งานนี้"})
+            If user.PWD <> model.OldPassword Then Return Ok(New With {.Success = False, .Message = "รหัสผ่านเก่าไม่ถูกต้อง"})
+            'change password
+            Dim response = services.ChangePassword(model.UserId, model.NewPassword)
+            Return Ok(New With {.Success = response, .Message = If(response, "เปลี่ยนรหัสผ่านเรียบร้อย", "ไม่สามารถเปลี่ยนรหัสผ่านได้ โปรดแจ้ง Admin ตรวจสอบ Log")})
         End Function
 
     End Class

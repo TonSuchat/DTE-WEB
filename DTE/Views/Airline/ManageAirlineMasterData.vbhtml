@@ -28,9 +28,11 @@ End Section
 <div class="row">
     <h2>จัดการข้อมูล-Airline</h2>
 
-    <div class="row">
-        <a class="btn btn-lg btn-success" href="@Url.Action("AddAirlineMasterData", "Airline")">เพิ่มข้อมูล Airline</a>
-    </div>
+    @If Helpers.GetCurrentUser.Type = 1 Then
+        @<div class="row">
+            <a Class="btn btn-lg btn-success" href="@Url.Action("AddAirlineMasterData", "Airline")">เพิ่มข้อมูล Airline</a>
+        </div>
+    End If
 
     @If IsNothing(Model) OrElse Model.Count = 0 Then
         @Html.Partial("NotFoundData")
@@ -48,10 +50,12 @@ End Section
                         <th>ADD4</th>
                         <th>EmailAddress</th>
                         <th>Logo</th>
-                        <th>CreateDate</th>
-                        <th>UpdateDate</th>
-                        <th>แก้ไข</th>
-                        <th>ลบ</th>
+                        <th>วันที่สร้างรายการ</th>
+                        <th>วันที่แก้ไขรายการ</th>
+                        @If Helpers.GetCurrentUser.Type = 1 Then
+                            @<th>แก้ไข</th>
+                            @<th>ลบ</th>
+                        End If
                     </tr>
                 </thead>
                 <tbody>
@@ -68,19 +72,21 @@ End Section
                             <td><img src="@item.ImageLogo" width="150" height="50" /></td>
                             <td>@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                             <td>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                            <td>
-                                <a class="btn btn-sm btn-warning" href="@Url.Action("EditAirlineMasterData", "Airline", New With {.id = item.Id})">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                            <td>
-                                @using Html.BeginForm("RemoveAirlineMasterData", "Airline", FormMethod.Post, New With {.role = "form"})
-                                    @<input type="hidden" value="@item.Id" name="id" />
-                                    @<button type="button" class="btn btn-sm btn-danger btnremove">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                                End Using
-                            </td>
+                            @If Helpers.GetCurrentUser.Type = 1 Then
+                                @<td>
+                                    <a Class="btn btn-sm btn-warning" href="@Url.Action("EditAirlineMasterData", "Airline", New With {.id = item.Id})">
+                                        <span Class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                                @<td>
+                                    @using Html.BeginForm("RemoveAirlineMasterData", "Airline", FormMethod.Post, New With {.role = "form"})
+                                        @<input type="hidden" value="@item.Id" name="id" />
+                                        @<button type="button" class="btn btn-sm btn-danger btnremove">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    End Using
+                                </td>
+                            End If
                         </tr>
                     Next
                 </tbody>

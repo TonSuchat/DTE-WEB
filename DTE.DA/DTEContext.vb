@@ -10,6 +10,7 @@ Public Class DTEContext
     End Sub
 
     Public Property AirlineMasterDatas As DbSet(Of AirlineMasterData)
+    Public Property CodeErrorLogs As DbSet(Of CodeErrorLog)
     Public Property FlightDatas As DbSet(Of FlightData)
     Public Property Transactions As DbSet(Of Transaction)
     Public Property TempTransactions As DbSet(Of TempTransaction)

@@ -2,6 +2,7 @@
 
 @Code
     ViewData("Title") = "เพิ่ม User"
+    Dim userTypes = Helpers.GetSelectListItemUserTypes()
 End Code
 
 <div class="row">
@@ -29,8 +30,8 @@ End Code
         </div>
 
         @<div Class="form-group">
-            @Html.CheckBoxFor(Function(u) u.IsAdmin)
-            @Html.LabelFor(Function(u) u.IsAdmin)
+            @Html.LabelFor(Function(u) u.Type)
+            @Html.DropDownList("Type", userTypes, New With {.class = "form-control"})
         </div>
 
         @<div Class="form-group">

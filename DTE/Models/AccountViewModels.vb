@@ -2,9 +2,26 @@
 
 Public Class LogInViewModel
     <Required()>
+    <Display(Name:="ชื่อผู้ใช้งาน")>
     Public Property UserName As String
     <Required()>
+    <Display(Name:="รหัสผ่าน")>
     Public Property Password As String
+End Class
+
+Public Class ChangePasswordViewModel
+    <Required()>
+    Public Property Id As String
+    <Required(ErrorMessage:="ห้ามเป็นค่าว่าง")>
+    <Display(Name:="รหัสผ่านเก่า")>
+    Public Property OldPassword As String
+    <Required(ErrorMessage:="ห้ามเป็นค่าว่าง")>
+    <Display(Name:="รหัสผ่านใหม่")>
+    Public Property NewPassword As String
+    <Required(ErrorMessage:="ห้ามเป็นค่าว่าง")>
+    <Compare("NewPassword", ErrorMessage:="รหัสผ่านต้องตรงกัน")>
+    <Display(Name:="ยืนยันรหัสผ่าน")>
+    Public Property ConfirmPassword As String
 End Class
 
 'Public Class ExternalLoginConfirmationViewModel

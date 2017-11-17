@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirlineMasterData.vb" />
+    <Compile Include="CodeErrorLog.vb" />
     <Compile Include="FlightData.vb" />
     <Compile Include="Log.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

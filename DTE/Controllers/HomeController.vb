@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Net
 
 Public Class HomeController
     Inherits System.Web.Mvc.Controller

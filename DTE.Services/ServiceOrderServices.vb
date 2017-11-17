@@ -151,7 +151,7 @@ Public Class ServiceOrderServices
         Using repository As New UserRepository()
             Dim user = repository.GetUser(username, password)
             If IsNothing(user) Then Return Nothing
-            If user.IsAdmin Then Return user Else Return Nothing
+            If user.Type = 1 Then Return user Else Return Nothing
         End Using
     End Function
 
@@ -161,9 +161,28 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
+    Public Function GetUsersByRole(role As Integer) As List(Of User)
+        Return GetUsers().Where(Function(u) u.Type > role).ToList()
+    End Function
+
+    Public Function EditUser(model As User) As Boolean
+        Using repository As New UserRepository()
+            Return repository.EditUser(model)
+        End Using
+    End Function
+
     Public Function RemoveUser(id As Integer) As Boolean
         Using repository As New UserRepository()
             Return repository.RemoveUser(id)
+        End Using
+    End Function
+
+    Public Function ChangePassword(userChangePasswordId As Integer, newPassword As String) As Boolean
+        Using repository As New UserRepository()
+            Dim user = repository.GetUser(userChangePasswordId)
+            If IsNothing(user) Then Return False
+            user.PWD = newPassword
+            Return repository.EditUser(user)
         End Using
     End Function
 
@@ -218,6 +237,12 @@ Public Class ServiceOrderServices
     Public Function GetTransaction(id As Integer) As Transaction
         Using repository As New TransactionRepository()
             Return repository.GetTransaction(id)
+        End Using
+    End Function
+
+    Public Function GetTransaction(WONumber As String) As Transaction
+        Using repository As New TransactionRepository()
+            Return repository.GetTransactions().FirstOrDefault(Function(t) t.WONumber = WONumber)
         End Using
     End Function
 

@@ -32,12 +32,17 @@ End Section
             <table class="table table-bordered table-striped">
                 <tr>
                     <th class="text-center">Id</th>
-                    <th class="text-center">UserName</th>
-                    <th class="text-center">UserDesc</th>
-                    <th class="text-center">IsAdmin</th>
+                    <th class="text-center">ชื่อผู้ใช้งาน</th>
+                    <th class="text-center">หมายเหตุ</th>
+                    <th class="text-center">ระดับ</th>
                     <th class="text-center">Station</th>
-                    <th class="text-center">CreateDate</th>
-                    @*<th class="text-center">แก้ไข</th>*@
+                    <th class="text-center">วันที่สร้างรายการ</th>
+
+                    @If Helpers.GetCurrentUser.Type = 1 Then
+                        @<th Class="text-center">แก้ไข</th>
+                    End If
+                    
+                    <th class="text-center">เปลี่ยนรหัส</th>
                     <th class="text-center">ลบ</th>
                 </tr>
                 @For Each item In Model
@@ -45,14 +50,19 @@ End Section
                         <td class="text-center">@item.id</td>
                         <td class="text-center">@item.UserName</td>
                         <td>@item.UserDesc</td>
-                        <td class="text-center">@item.IsAdmin</td>
+                        <td class="text-center">@Helpers.ConvertUserTypeToText(item.Type)</td>
                          <td class="text-center">@item.Station</td>
                         <td class="text-center">@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        @*<td class="text-center">
-                            <a class="btn btn-sm btn-warning" href="@Url.Action("EditUser", "Admin")">
+                         <td class="text-center">
+                             <a class="btn btn-sm btn-warning" href="@Url.Action("EditUser", "Admin", New With {.id = item.id, .userName = item.UserName})">
+                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                             </a>
+                         </td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-warning" href="@Url.Action("ChangePassword", "Admin", New With {.id = item.id, .userName = item.UserName})">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </a>
-                        </td>*@
+                        </td>
                         <td class="text-center">
                             @using Html.BeginForm("RemoveUser", "Admin", FormMethod.Post, New With {.role = "form"})
                                 @<input type="hidden" name="id" value="@item.id" />

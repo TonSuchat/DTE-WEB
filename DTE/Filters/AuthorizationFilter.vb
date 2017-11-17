@@ -19,7 +19,10 @@
         For Each role In roles
             If role.ToLower = "user" Then Return True
             If role.ToLower = "administrator" Then
-                If Helpers.GetCurrentUser().IsAdmin Then Return True Else Return False
+                If Helpers.GetCurrentUser().Type = 1 Then Return True
+            End If
+            If role.ToLower = "superuser" Then
+                If Helpers.GetCurrentUser().Type = 2 Then Return True
             End If
         Next
         Return False

@@ -23,7 +23,7 @@ End Code
                     @Html.ValidationMessageFor(Function(m) m.Password, "", New With {.class = "text-danger"})
                 </div>
                 @<div class="form-group">
-                    <input type="submit" id="btnLogIn" value="Log in" class="btn btn-default" />
+                    <input type="submit" id="btnLogIn" value="เข้าสู่ระบบ" class="btn btn-default" />
                 </div>
             End Using
         </section>

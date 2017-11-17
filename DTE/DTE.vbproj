@@ -373,6 +373,9 @@
     <Content Include="Views\ServiceOrder\ExportExcel.vbhtml" />
     <Content Include="Views\Home\DownloadAPK.vbhtml" />
     <Content Include="Views\ServiceOrder\AddServiceOrder.vbhtml" />
+    <Content Include="Views\Admin\ChangePassword.vbhtml" />
+    <Content Include="Views\Account\ChangePassword.vbhtml" />
+    <Content Include="Views\Admin\EditUser.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -413,6 +416,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DTE.DA\DTE.DA.vbproj">
+      <Project>{EB94C7AB-68EF-4522-859C-014B6E6A9DEA}</Project>
+      <Name>DTE.DA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTE.Entities\DTE.Entities.vbproj">
       <Project>{67040889-8257-47dc-aa06-d17cb37aa80f}</Project>
       <Name>DTE.Entities</Name>

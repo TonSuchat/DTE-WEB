@@ -45,6 +45,7 @@ Public Class DTERepository
                 DTEDBContext.AirlineMasterDatas.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "AirlineMasterData", .MethodName = "AddAirlineMasterData", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -54,6 +55,7 @@ Public Class DTERepository
                 If id = 0 Then Return Nothing
                 Return DTEDBContext.AirlineMasterDatas.FirstOrDefault(Function(a) a.Id = id)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "AirlineMasterData", .MethodName = "GetAirlineMasterData", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -62,6 +64,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.AirlineMasterDatas().OrderByDescending(Function(a) a.UpdateDate).ThenByDescending(Function(a) a.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "AirlineMasterData", .MethodName = "GetAirlineMasterDatas", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -73,6 +76,7 @@ Public Class DTERepository
                 DTEDBContext.Entry(model).State = Entity.EntityState.Modified
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "AirlineMasterData", .MethodName = "EditAirlineMasterData", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -84,6 +88,7 @@ Public Class DTERepository
                 DTEDBContext.AirlineMasterDatas.Remove(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "AirlineMasterData", .MethodName = "RemoveAirlineMasterDatas", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -132,6 +137,7 @@ Public Class DTERepository
                 DTEDBContext.FlightDatas.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "AddFlightData", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -140,6 +146,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.FlightDatas.OrderByDescending(Function(f) f.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "GetFlightDatas", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -148,6 +155,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.FlightDatas.Where(Function(f) Entity.DbFunctions.TruncateTime(f.STD) = selectedDate OrElse Entity.DbFunctions.TruncateTime(f.STA) = selectedDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "GetFlightDatas", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -156,6 +164,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.FlightDatas.FirstOrDefault(Function(f) f.id = id)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "GetFlightData", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -166,6 +175,7 @@ Public Class DTERepository
                 DTEDBContext.Entry(model).State = Entity.EntityState.Modified
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "EditFlightData", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -178,6 +188,7 @@ Public Class DTERepository
                 DTEDBContext.FlightDatas.Remove(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "RemoveFlightData", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -188,6 +199,7 @@ Public Class DTERepository
                 DTEDBContext.FlightDatas.RemoveRange(models)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "FlightData", .MethodName = "RemoveFlightDatas", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -206,6 +218,7 @@ Public Class DTERepository
                 If id = 0 Then Return Nothing
                 Return DTEDBContext.Transactions.FirstOrDefault(Function(t) t.id = id AndAlso t.IsActive = True)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Transaction", .MethodName = "GetTransaction", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -214,6 +227,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.Transactions.OrderByDescending(Function(t) t.UpdateDate).ThenByDescending(Function(t) t.CreateDate).Where(Function(t) t.IsActive = True).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Transaction", .MethodName = "GetTransactions", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -223,6 +237,7 @@ Public Class DTERepository
                 If userId = 0 Then Return Nothing
                 Return DTEDBContext.Transactions.Where(Function(t) t.CreateBy = userId AndAlso t.IsActive = True).OrderByDescending(Function(t) t.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Transaction", .MethodName = "GetTransactions", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -237,6 +252,7 @@ Public Class DTERepository
                 DTEDBContext.Entry(model).State = Entity.EntityState.Modified
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Transaction", .MethodName = "RemoveTransaction", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -257,6 +273,7 @@ Public Class DTERepository
                 DTEDBContext.TempTransactions.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "TempTransaction", .MethodName = "AddTempTransaction", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -267,6 +284,7 @@ Public Class DTERepository
                 DTEDBContext.TempTransactions.Remove(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "TempTransaction", .MethodName = "RemoveTempTransaction", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -275,6 +293,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.TempTransactions.OrderByDescending(Function(t) t.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "TempTransaction", .MethodName = "GetTempTransactions", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -284,6 +303,7 @@ Public Class DTERepository
                 If id = 0 Then Return Nothing
                 Return DTEDBContext.TempTransactions.FirstOrDefault(Function(t) t.id = id)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "TempTransaction", .MethodName = "GetTempTransaction", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -302,7 +322,7 @@ Public Class DTERepository
                 If String.IsNullOrEmpty(username) OrElse String.IsNullOrEmpty(password) Then Return Nothing
                 Return DTEDBContext.Users.FirstOrDefault(Function(u) u.UserName.Trim() = username AndAlso u.PWD.Trim() = password)
             Catch ex As Exception
-                Log(ex.ToString())
+                Log(New CodeErrorLog() With {.ModelType = "User", .MethodName = "GetUser", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -312,6 +332,7 @@ Public Class DTERepository
                 If id = 0 Then Return Nothing
                 Return DTEDBContext.Users.FirstOrDefault(Function(u) u.id = id)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "User", .MethodName = "GetUser", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -320,6 +341,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.Users.OrderByDescending(Function(u) u.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "User", .MethodName = "GetUsers", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -331,6 +353,18 @@ Public Class DTERepository
                 DTEDBContext.Users.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "User", .MethodName = "AddUser", .Message = ex.ToString()})
+                Return False
+            End Try
+        End Function
+
+        Public Function EditUser(model As User) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "User", .MethodName = "EditUser", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -342,6 +376,7 @@ Public Class DTERepository
                 DTEDBContext.Users.Remove(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "User", .MethodName = "RemoveUser", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -362,6 +397,7 @@ Public Class DTERepository
                 DTEDBContext.UploadImages.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "UploadImage", .MethodName = "AddUploadImage", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -373,6 +409,7 @@ Public Class DTERepository
                 Next
                 Return True
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "UploadImage", .MethodName = "AddUploadImages", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -381,6 +418,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.UploadImages.Where(Function(u) u.WONumber = woNumber).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "UploadImage", .MethodName = "GetUploadImages", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -389,6 +427,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.UploadImages.Where(Function(u) u.refId = refId).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "UploadImage", .MethodName = "GetUploadImages", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -399,6 +438,7 @@ Public Class DTERepository
                 DTEDBContext.UploadImages.RemoveRange(models)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "UploadImage", .MethodName = "RemoveUploadImages", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -409,6 +449,7 @@ Public Class DTERepository
                 DTEDBContext.Entry(model).State = Entity.EntityState.Modified
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "UploadImage", .MethodName = "EditUploadImages", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -429,6 +470,7 @@ Public Class DTERepository
                 DTEDBContext.Logs.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Log", .MethodName = "AddLog", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -437,6 +479,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.Logs.OrderByDescending(Function(l) l.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Log", .MethodName = "GetLogs", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -454,6 +497,7 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.Sequences.FirstOrDefault()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Sequence", .MethodName = "GetSequence", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
@@ -465,6 +509,7 @@ Public Class DTERepository
                 DTEDBContext.Entry(model).State = Entity.EntityState.Modified
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Sequence", .MethodName = "EditSequence", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -475,6 +520,7 @@ Public Class DTERepository
                 DTEDBContext.Sequences.Add(model)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "Sequence", .MethodName = "AddSequence", .Message = ex.ToString()})
                 Return False
             End Try
         End Function
@@ -491,12 +537,37 @@ Public Class DTERepository
             Try
                 Return DTEDBContext.ViewLogs.OrderByDescending(Function(l) l.CreateDate).ToList()
             Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "VW_Log", .MethodName = "GetViewLogs", .Message = ex.ToString()})
                 Return Nothing
             End Try
         End Function
 
     End Class
 #End Region
+
+#Region "CodeErrorLog"
+    Public Class CodeErrorLogRepository
+        Inherits DTERepository
+
+        Public Sub AddCodeErrorLog(model As CodeErrorLog)
+            Try
+                If IsNothing(model) Then Exit Sub
+                model.CreateDate = DateTime.Now()
+                DTEDBContext.CodeErrorLogs.Add(model)
+                DTEDBContext.SaveChanges()
+            Catch ex As Exception
+
+            End Try
+        End Sub
+
+    End Class
+#End Region
+
+    Public Sub Log(model As CodeErrorLog)
+        Using repository As New CodeErrorLogRepository()
+            repository.AddCodeErrorLog(model)
+        End Using
+    End Sub
 
 
     Public Shared Sub Log(message As String)

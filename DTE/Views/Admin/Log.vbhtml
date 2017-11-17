@@ -26,12 +26,12 @@ End Section
     @<table id="tblLog" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th class="text-center">LogType</th>
-                <th class="text-center">ReferenceId</th>
+                <th class="text-center">ประเภท</th>
+                <th class="text-center">Id อ้างอิง</th>
                 <th class="text-center">Model</th>
-                <th class="text-center">UserId</th>
-                <th class="text-center">Remark</th>
-                <th class="text-center">CreateDate</th>
+                <th class="text-center">ชื่อผู้ใช้งาน</th>
+                <th class="text-center">หมายเหตุ</th>
+                <th class="text-center">วันที่สร้างรายการ</th>
             </tr>
         </thead>
         <tbody>

@@ -97,4 +97,23 @@ Public NotInheritable Class Helpers
         End Try
     End Function
 
+    Public Shared Function ConvertUserTypeToText(type As Integer) As String
+        Select Case type
+            Case 1 : Return "Admin"
+            Case 2 : Return "SuperUser"
+            Case 3 : Return "User"
+            Case 4 : Return "Operator"
+            Case Else : Return ""
+        End Select
+    End Function
+
+    Public Shared Function GetSelectListItemUserTypes() As List(Of SelectListItem)
+        Dim userTypes = New List(Of SelectListItem)() From {
+                                                        New SelectListItem() With {.Text = "Admin", .Value = 1, .Selected = True},
+                                                        New SelectListItem() With {.Text = "Super User", .Value = 2},
+                                                        New SelectListItem() With {.Text = "User", .Value = 3},
+                                                        New SelectListItem() With {.Text = "Operator", .Value = 4}}
+        Return userTypes
+    End Function
+
 End Class

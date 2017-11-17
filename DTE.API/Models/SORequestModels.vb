@@ -39,6 +39,10 @@
         Public Property Station As String
     End Class
 
+    Public Class GetSOByWONumber
+        Public Property WONumber As String
+    End Class
+
     Public Class GetSOById
         Public Property Id As Integer
     End Class
@@ -67,6 +71,16 @@
 
     Public Class GetFlightData
         Public Property FlightDate As String
+    End Class
+
+    Public Class GetAirlineLogo
+        Public Property ACCarrier As String
+    End Class
+
+    Public Class ChangePassword
+        Public Property UserId As Integer
+        Public Property OldPassword As String
+        Public Property NewPassword As String
     End Class
 
 End Class

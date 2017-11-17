@@ -25,7 +25,8 @@
                         @<li><a href="@Url.Action("ManageServiceOrder", "ServiceOrder")">ข้อมูล Service-Order</a></li>
                         @<li> <a href="@Url.Action("ManageFlightData", "FlightData")">ข้อมูล Flight-Data</a></li>
                         @<li> <a href="@Url.Action("ManageAirlineMasterData", "Airline")">ข้อมูล Airline</a></li>
-                        If Helpers.GetCurrentUser().IsAdmin Then
+                        @<li> <a href="@Url.Action("ChangePassword", "Account")">เปลี่ยนรหัสผ่าน</a></li>
+                        If Helpers.GetCurrentUser().Type = 1 OrElse Helpers.GetCurrentUser().Type = 2 Then
                             @<li Class="dropdown">
                                 <a href="#" Class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span Class="caret"></span></a>
                                 <ul Class="dropdown-menu">
