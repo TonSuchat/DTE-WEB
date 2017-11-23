@@ -1,7 +1,7 @@
 ﻿@ModelType Entities.TransactionDetail
 
 @Code
-    ViewData("Title") = "รายละเอียด-SO"
+    ViewData("Title") = "รายละเอียด-S/O"
     Dim imgIndex As Integer = 0
 End Code
 
@@ -64,7 +64,7 @@ End Section
 
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
-                    <h2>รายละเอียด-SO</h2>
+                    <h2>รายละเอียด-S/O</h2>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@ End Section
                 <div Class="col-md-offset-2 col-md-8 border form-horizontal">
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">WONumber: </label>
+                        <label class="col-md-3 control-label">S/O Number: </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.WONumber</p>
                         </div>
@@ -201,7 +201,7 @@ End Section
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">PCA-TotalTime: </label>
+                        <label class="col-md-3 control-label">PCA-TotalTime(Min): </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.PCATotalMin</p>
                         </div>
@@ -243,7 +243,7 @@ End Section
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">GPU-TotalTime: </label>
+                        <label class="col-md-3 control-label">GPU-TotalTime(Min): </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.GPUTotalMin</p>
                         </div>

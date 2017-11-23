@@ -1,7 +1,7 @@
 ﻿@ModelType ExportExcelViewModel
 
 @Code
-    ViewData("Title") = "Export-ข้อมูล SO"
+    ViewData("Title") = "Export-ข้อมูล S/O"
 End Code
 
 @section scripts
@@ -26,7 +26,7 @@ End Section
 
 @Using Html.BeginForm("ExportExcel", "ServiceOrder", FormMethod.Post, New With {.id = "frmExport"})
     @<div Class="row">
-        <h2> Export-ข้อมูล SO</h2>
+        <h2> Export-ข้อมูล S/O</h2>
 
         <a Class="btn btn-primary" href="@Url.Action("ManageServiceOrder", "ServiceOrder")">ย้อนกลับ</a>
         
@@ -36,7 +36,7 @@ End Section
         @Html.ValidationSummary(True)
 
         <div class="form-group">
-            <label>วันที่สร้างรายการ SO</label>
+            <label>วันที่สร้างรายการ S/O</label>
             <div class='input-group date' id='SelectedDateTxt'>
                 <input type='text' class="form-control" id="SelectedDate" name="SelectedDate" />
                 <span class="input-group-addon">

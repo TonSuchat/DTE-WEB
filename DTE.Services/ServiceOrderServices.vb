@@ -345,7 +345,7 @@ Public Class ServiceOrderServices
     End Function
 
     Private Sub InitialDtColumns(ByRef dt As DataTable)
-        dt.Columns.Add("WONumber")
+        dt.Columns.Add("S/O_Number")
         dt.Columns.Add("Station")
         dt.Columns.Add("GateNo")
         dt.Columns.Add("PCA1")
@@ -378,7 +378,7 @@ Public Class ServiceOrderServices
     End Sub
 
     Private Sub SetValueToDataRow(ByRef row As DataRow, data As Transaction)
-        row("WONumber") = data.WONumber
+        row("S/O_Number") = data.WONumber
         row("Station") = data.Station
         row("GateNo") = data.GateNo
         row("PCA1") = data.PCA1

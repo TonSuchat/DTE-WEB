@@ -1,7 +1,7 @@
 ﻿@ModelType Entities.Transaction
 
 @Code
-    ViewData("Title") = "เพิ่มข้อมูล-SO"
+    ViewData("Title") = "เพิ่มข้อมูล-S/O"
 End Code
 
 @section scripts
@@ -225,7 +225,7 @@ End Section
             </div>
 
             <div Class="form-group">
-                <Label> TotalTime(Minute)</Label>
+                <Label> Total Time (Min)</Label>
                 <input type="text" id="txtTotalPCA" Class="form-control" disabled />
                 <input type="hidden" id="PCATotalMin" name="PCATotalMin" value="0" />
             </div>
@@ -261,7 +261,7 @@ End Section
             </div>
 
             <div Class="form-group">
-                <Label> TotalTime(Minute)</Label>
+                <Label> Total Time (Min)</Label>
                 <input type="text" id="txtTotalGPU" Class="form-control" disabled />
                 <input type="hidden" id="GPUTotalMin" name="GPUTotalMin" value="0" />
             </div>

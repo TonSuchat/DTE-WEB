@@ -1,9 +1,9 @@
 ﻿@ModelType FlightDataViewModel
 
 @Code
-    ViewData("Title") = "แก้ไขข้อมูล-FlightData"
     Dim type As String = ViewBag.Type.ToString()
     Dim action = If(type = "Add", "AddFlightData", "EditFlightData")
+    ViewData("Title") = If(type = "Add", "เพิ่มข้อมูล-FlightData", "แก้ไขข้อมูล-FlightData")
 End Code
 
 @section scripts
@@ -62,7 +62,12 @@ End Section
 
 <div class="row">
 
-    <h2>แก้ไขข้อมูล-FlightData</h2>
+    @If type = "Add" Then
+        @<h2>เพิ่มข้อมูล-FlightData</h2>
+    Else
+        @<h2>แก้ไขข้อมูล-FlightData</h2>
+    End If
+    
 
     <a class="btn btn-primary" href="@Url.Action("ManageFlightData", "FlightData")">ย้อนกลับ</a>
 

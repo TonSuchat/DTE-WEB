@@ -31,19 +31,19 @@ End Section
 
         @<div class="form-group">
             @Html.LabelFor(Function(c) c.OldPassword)
-            @Html.PasswordFor(Function(f) f.OldPassword, New With {.class = "form-control"})
+            @Html.TextBoxFor(Function(f) f.OldPassword, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(f) f.OldPassword)
         </div>
 
         @<div class="form-group">
             @Html.LabelFor(Function(c) c.NewPassword)
-            @Html.PasswordFor(Function(f) f.NewPassword, New With {.class = "form-control"})
+            @Html.TextBoxFor(Function(f) f.NewPassword, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(f) f.NewPassword)
         </div>
 
         @<div class="form-group">
             @Html.LabelFor(Function(c) c.ConfirmPassword)
-            @Html.PasswordFor(Function(f) f.ConfirmPassword, New With {.class = "form-control"})
+            @Html.TextBoxFor(Function(f) f.ConfirmPassword, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(f) f.ConfirmPassword)
         </div>
 

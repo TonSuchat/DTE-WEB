@@ -1,7 +1,7 @@
 ﻿@ModelType  ManageServiceOrderViewModel
 
 @Code
-    ViewData("Title") = "จัดการข้อมูล-SO"
+    ViewData("Title") = "จัดการข้อมูล-S/O"
 End Code
 
 @section scripts
@@ -49,9 +49,9 @@ End Section
 <div class="row">
 
     <div class="row">
-        <h2>จัดการข้อมูล-SO</h2>
+        <h2>จัดการข้อมูล-S/O</h2>
         @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
-            @<a Class="btn btn-lg btn-success" href="@Url.Action("AddServiceOrder", "ServiceOrder")">เพิ่มข้อมูล SO +</a>
+            @<a Class="btn btn-lg btn-success" href="@Url.Action("AddServiceOrder", "ServiceOrder")">เพิ่มข้อมูล S/O +</a>
         End If
         <br />
         <hr />
@@ -99,7 +99,7 @@ End Section
         <table id="tblSO" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th class="text-center">WONumber</th>
+                    <th class="text-center">S/O Number</th>
                     <th class="text-center">Station</th>
                     <th class="text-center">Flight No.</th>
                     <th class="text-center">Service-Rate</th>
