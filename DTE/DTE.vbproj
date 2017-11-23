@@ -314,6 +314,7 @@
     <Content Include="Content\bootstrap-dialog.less" />
     <Content Include="Content\jquery.scrollUp.min" />
     <Content Include="Images\logo.jpg" />
+    <Content Include="Images\pure_logo.jpg" />
     <Content Include="MasterPage.Master" />
     <Content Include="Grid.mvc.readme" />
     <Content Include="Files\app.apk" />

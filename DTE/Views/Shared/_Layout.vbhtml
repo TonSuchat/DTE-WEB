@@ -17,10 +17,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("DTE", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
+                <a href="@Url.Action("Index", "Home")" class="pull-left">
+                    <img src="~/Images/pure_logo.jpg" class="logo" />
+                </a>
+                @*@Html.ActionLink("DTE", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})*@
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="margin-left:10px;">
                     @if Helpers.CheckIsAuthen() Then
                         @<li><a href="@Url.Action("ManageServiceOrder", "ServiceOrder")">ข้อมูล Service-Order</a></li>
                         @<li> <a href="@Url.Action("ManageFlightData", "FlightData")">ข้อมูล Flight-Data</a></li>
