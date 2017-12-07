@@ -48,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - DTE Application</p>
+            <p>&copy; @DateTime.Now.Year - DTE Application Version @Helpers.Version</p>
         </footer>
     </div>
 

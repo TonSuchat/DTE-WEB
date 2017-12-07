@@ -12,6 +12,8 @@ Public NotInheritable Class Helpers
         DeleteData = 6
     End Enum
 
+    Public Const Version As String = "1.0"
+
     Private Shared services As New Services.ServiceOrderServices()
 
     Public Shared Function CheckIsAuthen() As Boolean
