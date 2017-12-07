@@ -14,7 +14,6 @@ End Code
     <script type="text/javascript">
 
         $(function () {
-            console.log('@type');
             $('#SelectedDateTxt').datetimepicker({
                 format: 'DD/MM/YYYY',
                 date: ('@type' == 'Add') ? new Date() : new Date(@Model.STA.Year, @Model.STA.Month - 1, @Model.STA.Day)
@@ -25,19 +24,10 @@ End Code
                 date: '@Model.STA' == null ? new Date() : new Date(@Model.STA.Year, @Model.STA.Month - 1, @Model.STA.Day , @Model.STA.Hour, @Model.STA.Minute)
             });
 
-            $('#STDTimeTxt').datetimepicker({
-                format: 'HH:mm',
-                date: '@Model.STD' == null ? new Date() : new Date(@Model.STD.Year, @Model.STD.Month - 1, @Model.STD.Day , @Model.STD.Hour, @Model.STD.Minute)
-            });
-
             $('#btnOK').click(function(){
                 //check validate
                 if(CheckValidate()){
-                    console.log($('#SelectedDate').val());
-                    console.log($('#STDTime').val());
-                    console.log($('#STATime').val());
                     $(this).parent('form').submit();
-                    console.log('submit');
                 }
             })
 
@@ -46,7 +36,7 @@ End Code
                     alert('ต้องเลือกวันที่');
                     return false;
                 }
-                if((!$('#STATime').val() || $('#STATime').val().length <= 0) || (!$('#STDTime').val() || $('#STDTime').val().length <= 0)){
+                if((!$('#STATime').val() || $('#STATime').val().length <= 0)){
                     alert('ต้องตั้งค่าเวลาของ STA/STD');
                     return false;
                 }
@@ -57,6 +47,22 @@ End Code
         })
 
     </script>
+
+    @If IsNothing(Model.STD) OrElse Not Model.STD.HasValue Then
+        @<script type="text/javascript">
+            $(function(){$('#STDTimeTxt').datetimepicker({format: 'HH:mm'});})
+        </script>
+    Else
+        @<script type="text/javascript">
+            $(function(){
+                $('#STDTimeTxt').datetimepicker({
+                    format: 'HH:mm',
+                    date : '@Model.STD' == null ? new Date() : new Date(@CDate(Model.STD).Year, @CDate(Model.STD).Month - 1, @CDate(Model.STD).Day , @CDate(Model.STD).Hour, @CDate(Model.STD).Minute)
+                });
+            })
+        </script>
+    End If
+
 
 End Section
 

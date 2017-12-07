@@ -53,18 +53,20 @@ End Section
                         <td class="text-center">@Helpers.ConvertUserTypeToText(item.Type)</td>
                          <td class="text-center">@item.Station</td>
                         <td class="text-center">@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                         <td class="text-center">
-                             <a class="btn btn-sm btn-warning" href="@Url.Action("EditUser", "Admin", New With {.id = item.id, .userName = item.UserName})">
-                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                             </a>
-                         </td>
-                        <td class="text-center">
-                            <a class="btn btn-sm btn-warning" href="@Url.Action("ChangePassword", "Admin", New With {.id = item.id, .userName = item.UserName})">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        @if Helpers.GetCurrentUser.Type = 1 Then
+                            @<td Class="text-center">
+                                <a Class="btn btn-sm btn-warning" href="@Url.Action("EditUser", "Admin", New With {.id = item.id, .userName = item.UserName})">
+                                    <span Class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        End If
+                        <td Class="text-center">
+                            <a Class="btn btn-sm btn-warning" href="@Url.Action("ChangePassword", "Admin", New With {.id = item.id, .userName = item.UserName})">
+                                <span Class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </a>
                         </td>
-                        <td class="text-center">
-                            @using Html.BeginForm("RemoveUser", "Admin", FormMethod.Post, New With {.role = "form"})
+                        <td Class="text-center">
+                            @Using Html.BeginForm("RemoveUser", "Admin", FormMethod.Post, New With {.role = "form"})
                                 @<input type="hidden" name="id" value="@item.id" />
                                 @<Button Class="btn btn-sm btn-danger removebtn" type="button">
                                     <span Class="glyphicon glyphicon-trash" aria-hidden="true"></span>

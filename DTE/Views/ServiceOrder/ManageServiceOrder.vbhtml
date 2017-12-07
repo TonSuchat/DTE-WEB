@@ -107,6 +107,9 @@ End Section
                     <th class="text-center">สร้างรายการโดย</th>
                     <th class="text-center">วันที่แก้ไข</th>
                     <th class="text-center">วันที่สร้างรายการ</th>
+                    @If Helpers.GetCurrentUser.Type = 1 Then
+                        @<th Class="text-center">แก้ไข</th>
+                    End If
                     @*<th class="text-center">แก้ไข</th>*@
                     @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
                         @<th Class="text-center">ลบ</th>
@@ -124,11 +127,13 @@ End Section
                         <td class="text-center">@item.CreatedByName</td>
                         <td class="text-center">@item.UpdateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                         <td class="text-center">@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        @*<td class="text-center">
-                            <a href="@Url.Action("EditSO", "ServiceOrder", New With {.id = item.id})" class="btn btn-warning btn-sm">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                        </td>*@
+                        @If Helpers.GetCurrentUser.Type = 1 Then
+                            @<td Class="text-center">
+                                <a href = "@Url.Action("EditSO", "ServiceOrder", New With {.id = item.id})" Class="btn btn-warning btn-sm">
+                                    <span Class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        End If
                         @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
                             @<td Class="text-center">
                                 @Using Html.BeginForm("RemoveSO", "ServiceOrder", FormMethod.Post, New With {.role = "form"})

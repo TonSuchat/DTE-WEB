@@ -128,7 +128,11 @@ Namespace Controllers
             'sta
             result.STA = New Date(model.SelectedDate.Year, model.SelectedDate.Month, model.SelectedDate.Day, model.STATime.Hour, model.STATime.Minute, 0)
             'std
-            result.STD = New Date(model.SelectedDate.Year, model.SelectedDate.Month, model.SelectedDate.Day, model.STDTime.Hour, model.STDTime.Minute, 0)
+            If (Not IsNothing(model.STDTime)) Then
+                result.STD = New Date(model.SelectedDate.Year, model.SelectedDate.Month, model.SelectedDate.Day, CDate(model.STDTime).Hour, CDate(model.STDTime).Minute, 0)
+            Else
+                result.STD = Nothing
+            End If
             Return result
         End Function
 

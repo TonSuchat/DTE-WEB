@@ -86,7 +86,29 @@ Namespace Controllers
         End Function
 
         Function EditSO(id As Integer) As ActionResult
-            Return View(services.GetTransactionDetail(id))
+            Return View(services.GetTransaction(id))
+        End Function
+
+        <HttpPost()>
+        Function EditSO(model As Transaction) As ActionResult
+            Try
+                If ModelState.IsValid Then
+                    model.UpdateDate = DateTime.Now()
+                    model.UpdateBy = Helpers.GetCurrentUser.id
+                    're calculate service-rate
+                    Dim serviceRate = services.GetServiceRate(model.AircraftType, model.PCATotalMin, model.GPUTotalMin)
+                    model.ServiceRate = serviceRate
+                    'edit transaction
+                    services.EditTransaction(model)
+                    'log
+                    Helpers.Log(Helpers.LogType.EditData, Helpers.GetCurrentUser.id, model.id, "Transaction")
+                    'redirect to manageIndex
+                    Return RedirectToAction("ManageServiceOrder")
+                End If
+            Catch ex As Exception
+                ModelState.AddModelError("ManageServiceOrder", ex.ToString())
+            End Try
+            Return View(model)
         End Function
 
         <HttpPost()>

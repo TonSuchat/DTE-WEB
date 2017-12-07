@@ -105,8 +105,14 @@ End Section
                             <td class="text-center">@item.ACCarrier</td>
                             <td class="text-center">@item.ACReg</td>
                             <td class="text-center">@item.STA.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td class="text-center">@item.STD.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td class="text-center">@item.GateNo</td>
+                             @if Not IsNothing(item.STD) Then
+                                 @<td Class="text-center">
+                                      @CDate(item.STD).ToString("dd/MM/yyyy HH:mm")
+                                 </td>
+                             Else
+                                 @<td Class="text-center"></td>
+                             End If
+                            <td Class="text-center">@item.GateNo</td>
                             <td class="text-center">@item.CreateDate.ToString("dd/MM/yyyy HH:mm")</td>
                             @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
                                 @<td Class="text-center">

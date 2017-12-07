@@ -2,7 +2,7 @@
 
 @Code
     ViewData("Title") = "เพิ่ม User"
-    Dim userTypes = Helpers.GetSelectListItemUserTypes()
+    Dim userTypes = Helpers.GetSelectListItemUserTypes(Helpers.GetCurrentUser.Type)
 End Code
 
 <div class="row">

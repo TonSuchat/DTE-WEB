@@ -94,21 +94,21 @@ End Code
                 }
             }
 
-            function DiffStartStopDate(startDate, stopDate, elemId) {
-                if (!startDate || !stopDate)
-                {
-                    $('#' + elemId).val(0);
-                    return;
-                } 
-                //if (startDate == null || stopDate == null || elemId == null) return;
+            //function DiffStartStopDate(startDate, stopDate, elemId) {
+            //    if (!startDate || !stopDate)
+            //    {
+            //        $('#' + elemId).val(0);
+            //        return;
+            //    } 
+            //    //if (startDate == null || stopDate == null || elemId == null) return;
                 
-                startDate = new Date(startDate);
-                stopDate = new Date(stopDate);
+            //    startDate = new Date(startDate);
+            //    stopDate = new Date(stopDate);
 
-                var diff = (stopDate - startDate);
-                var diffMins = Math.round(diff / 60000);
-                $('#' + elemId).val(diffMins);
-            }
+            //    var diff = (stopDate - startDate);
+            //    var diffMins = Math.round(diff / 60000);
+            //    $('#' + elemId).val(diffMins);
+            //}
 
         });
 

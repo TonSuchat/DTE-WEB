@@ -14,9 +14,10 @@ Public Class FlightDataViewModel
     Public Property STATime As DateTime
     <DataType(DataType.DateTime)>
     <DisplayFormat(DataFormatString:="{0:dd/MM/yyyy}", ApplyFormatInEditMode:=True)>
-    Public Property STDTime As DateTime
+    Public Property STDTime As DateTime?
 
     Public Sub New()
+        STDTime = STATime
     End Sub
 
     Public Sub New(model As Entities.FlightData)

@@ -6,7 +6,7 @@ Public Class User
     <Key()>
     Public Property id As Integer
     <Required()>
-    <MaxLength(10)>
+    <MaxLength(150)>
     <Display(Name:="ชื่อผู้ใช้")>
     Public Property UserName As String
     <Required()>

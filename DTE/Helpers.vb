@@ -107,12 +107,13 @@ Public NotInheritable Class Helpers
         End Select
     End Function
 
-    Public Shared Function GetSelectListItemUserTypes() As List(Of SelectListItem)
+    Public Shared Function GetSelectListItemUserTypes(role As Integer) As List(Of SelectListItem)
         Dim userTypes = New List(Of SelectListItem)() From {
                                                         New SelectListItem() With {.Text = "Admin", .Value = 1, .Selected = True},
                                                         New SelectListItem() With {.Text = "Super User", .Value = 2},
                                                         New SelectListItem() With {.Text = "User", .Value = 3},
                                                         New SelectListItem() With {.Text = "Operator", .Value = 4}}
+        userTypes = userTypes.Where(Function(u) u.Value >= role).ToList()
         Return userTypes
     End Function
 

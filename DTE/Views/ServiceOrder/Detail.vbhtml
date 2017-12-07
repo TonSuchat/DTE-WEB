@@ -79,6 +79,13 @@ End Section
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-3 control-label">ServiceRate: </label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">@Model.ServiceRate</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Station: </label>
                         <div class="col-md-9">
                             <p class="form-control-static">@Model.Station</p>

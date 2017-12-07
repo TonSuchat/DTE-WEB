@@ -2,7 +2,7 @@
 
 @Code
     ViewData("Title") = "แก้ไขผู้ใช้งาน"
-    Dim userTypes = Helpers.GetSelectListItemUserTypes()
+    Dim userTypes = Helpers.GetSelectListItemUserTypes(Helpers.GetCurrentUser.Type)
 End Code
 
 

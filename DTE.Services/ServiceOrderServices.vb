@@ -77,6 +77,20 @@ Public Class ServiceOrderServices
         End Try
     End Function
 
+    Public Function GetServiceRate(acType As String, pcaTotalMin As Integer, gpuTotalMin As Integer) As Integer
+        Try
+            'calculate pca service rate
+            Dim ratePCA = ExecuteStoredCalcServiceRate(New ServiceOrder.InputServiceRate() With {.ACType = acType, .ServiceID = 1, .UsageMin = pcaTotalMin})
+            If ratePCA.success = 0 Then Throw New ArgumentException("ACtype Not Found")
+            'calculate gpu service rate
+            Dim rateGPU = ExecuteStoredCalcServiceRate(New ServiceOrder.InputServiceRate() With {.ACType = acType, .ServiceID = 2, .UsageMin = gpuTotalMin})
+            If ratePCA.success = 0 Then Throw New ArgumentException("ACtype Not Found")
+            Return ratePCA.Rate + rateGPU.Rate
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
 #Region "AirlineMasterData"
 
     Public Function GetAirlineLogo(ACCarrier As String) As String
@@ -162,7 +176,7 @@ Public Class ServiceOrderServices
     End Function
 
     Public Function GetUsersByRole(role As Integer) As List(Of User)
-        Return GetUsers().Where(Function(u) u.Type > role).ToList()
+        Return GetUsers().Where(Function(u) u.Type >= role).OrderBy(Function(u) u.Type).ThenBy(Function(u) u.UserName).ToList()
     End Function
 
     Public Function EditUser(model As User) As Boolean
@@ -409,6 +423,12 @@ Public Class ServiceOrderServices
         row("UpdateDate") = data.UpdateDate
         row("CreateDate") = data.CreateDate
     End Sub
+
+    Public Function EditTransaction(model As Transaction) As Boolean
+        Using repository As New TransactionRepository()
+            Return repository.EditTransaction(model)
+        End Using
+    End Function
 
 #End Region
 

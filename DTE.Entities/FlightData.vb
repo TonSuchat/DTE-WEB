@@ -22,15 +22,19 @@ Public Class FlightData
     <DataType(DataType.DateTime)>
     <DisplayFormat(DataFormatString:="{0:dd/MM/yyyy}", ApplyFormatInEditMode:=True)>
     Public Property STA As DateTime
-    <Required()>
     <DataType(DataType.DateTime)>
     <DisplayFormat(DataFormatString:="{0:dd/MM/yyyy}", ApplyFormatInEditMode:=True)>
-    Public Property STD As DateTime
+    Public Property STD As DateTime?
     <Required()>
     <MaxLength(10)>
     Public Property GateNo As String
     <Required()>
     Public Property CreateDate As DateTime
+
+    Public Sub New()
+        STD = STA
+    End Sub
+
 End Class
 
 Partial Public Class FlightData
