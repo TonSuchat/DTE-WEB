@@ -110,7 +110,7 @@ Namespace Controllers
 
         <HttpPost()>
         Public Function GetSO(model As SORequestModels.GetSO) As IHttpActionResult
-            Dim models = services.GetTransactionsDetail(model.Station)
+            Dim models = services.GetTransactionsDetail(model.Station, model.SelectedDate)
             Return Ok(models)
         End Function
 

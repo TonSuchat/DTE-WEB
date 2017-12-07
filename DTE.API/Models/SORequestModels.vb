@@ -37,6 +37,7 @@
 
     Public Class GetSO
         Public Property Station As String
+        Public Property SelectedDate As String
     End Class
 
     Public Class GetSOByWONumber

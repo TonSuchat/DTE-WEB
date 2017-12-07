@@ -31,7 +31,7 @@
                         @<li> <a href="@Url.Action("ChangePassword", "Account")">เปลี่ยนรหัสผ่าน</a></li>
                         If Helpers.GetCurrentUser().Type = 1 OrElse Helpers.GetCurrentUser().Type = 2 Then
                             @<li Class="dropdown">
-                                <a href="#" Class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span Class="caret"></span></a>
+                                <a href="#" Class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ข้อมูลผู้ใช้งาน <span Class="caret"></span></a>
                                 <ul Class="dropdown-menu">
                                     <li> <a href="@Url.Action("ManageUser", "Admin")"> จัดการ-User</a></li>
                                     <li> <a href="@Url.Action("Log", "Admin")"> ดู-Log</a></li>

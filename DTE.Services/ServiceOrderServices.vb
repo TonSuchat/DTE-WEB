@@ -266,20 +266,23 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
-    Public Function GetTransactionsDetail(station As String) As List(Of TransactionDetail)
-        Dim models As List(Of Transaction) = Nothing
-        Using repository As New TransactionRepository()
-            models = repository.GetTransactions().Where(Function(t) t.Station = station).OrderByDescending(Function(t) t.CreateDate).ToList()
-        End Using
-        If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
-        Return (From t In models Select New TransactionDetail(t)).ToList()
-        'Dim result As New List(Of TransactionDetail)
-        'For Each item In models
-        '    Dim currentDetail As New TransactionDetail(item)
-        '    currentDetail.Logo = FindLogoForTransaction(item.FlightNo, Helpers.ConvertDateTimeDTEFormat(item.ETA), Helpers.ConvertDateTimeDTEFormat(item.ETD))
-        '    result.Add(currentDetail)
-        'Next
-        'Return result
+    Public Function GetTransactionsDetail(station As String, selectedDate As String) As List(Of TransactionDetail)
+        Try
+            Dim models As List(Of Transaction) = Nothing
+            Using repository As New TransactionRepository()
+                If String.IsNullOrEmpty(selectedDate) Then
+                    models = repository.GetTransactions().Where(Function(t) t.Station = station).OrderByDescending(Function(t) t.CreateDate).Take(100).ToList()
+                Else
+                    Dim split = selectedDate.Split("/")
+                    Dim realDate = New Date(split(2), split(1), split(0), 12, 0, 0)
+                    models = repository.GetTransactions().Where(Function(t) t.CreateDate.Date = realDate.Date).OrderByDescending(Function(t) t.CreateDate).ToList()
+                End If
+            End Using
+            If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
+            Return (From t In models Select New TransactionDetail(t)).ToList()
+        Catch ex As Exception
+            Return Nothing
+        End Try
     End Function
 
     Public Function GetTransactions(userId As Integer) As List(Of Transaction)
