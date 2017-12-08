@@ -310,8 +310,9 @@ Public Class ServiceOrderServices
     End Function
 
     Private Sub ProcessFindDetailForTransaction(ByRef transaction As TransactionDetail, Optional tempTransactionId As Integer = 0)
+        If IsNothing(transaction) Then Exit Sub
         'find createdbyname and updatedbyname
-        transaction.CreatedByName = GetUser(transaction.CreateBy).UserName
+        transaction.CreatedByName = If(IsNothing(GetUser(transaction.CreateBy)), "", GetUser(transaction.CreateBy).UserName)
         If (Not IsNothing(transaction.UpdateBy)) Then transaction.UpdatedByName = GetUser(transaction.UpdateBy).UserName
         'find upload images
         Dim uploadImages
