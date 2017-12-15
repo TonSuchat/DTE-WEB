@@ -9,17 +9,17 @@ Public Class ServiceOrderServices
             Using repository As New DA.DTERepository()
                 'initial parameters
                 Dim station As New SqlParameter("Station", model.Station) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim gateNo As New SqlParameter("GateNo", model.GateNo) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
+                Dim gateNo As New SqlParameter("GateNo", If(String.IsNullOrEmpty(model.GateNo), DBNull.Value, model.GateNo)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
                 Dim pca1 As New SqlParameter("PCA1", model.PCA1) With {.SqlDbType = SqlDbType.Bit}
                 Dim pca2 As New SqlParameter("PCA2", model.PCA2) With {.SqlDbType = SqlDbType.Bit}
                 Dim gpu1 As New SqlParameter("GPU1", model.GPU1) With {.SqlDbType = SqlDbType.Bit}
                 Dim gpu2 As New SqlParameter("GPU2", model.GPU2) With {.SqlDbType = SqlDbType.Bit}
                 Dim flightNo As New SqlParameter("FlightNo", model.FlightNo) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim acType As New SqlParameter("AircraftType", model.AircraftType) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim acReg As New SqlParameter("AircraftReg", model.AircraftReg) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim acCar As New SqlParameter("AircraftCarrier", model.AircraftCarrier) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
-                Dim eta As New SqlParameter("ETA", model.ETA) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
-                Dim etd As New SqlParameter("ETD", model.ETD) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim acType As New SqlParameter("AircraftType", If(String.IsNullOrEmpty(model.AircraftType), "", model.AircraftType)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
+                Dim acReg As New SqlParameter("AircraftReg", If(String.IsNullOrEmpty(model.AircraftReg), "", model.AircraftReg)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
+                Dim acCar As New SqlParameter("AircraftCarrier", If(String.IsNullOrEmpty(model.AircraftCarrier), "", model.AircraftCarrier)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
+                Dim eta As New SqlParameter("ETA", If(IsNothing(model.ETA), DBNull.Value, model.ETA)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
+                Dim etd As New SqlParameter("ETD", If(IsNothing(model.ETD), DBNull.Value, model.ETD)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim pcaStart As New SqlParameter("PCAStart", If(IsNothing(model.PCAStart), DBNull.Value, model.PCAStart)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim pcaEnd As New SqlParameter("PCAEnd", If(IsNothing(model.PCAEnd), DBNull.Value, model.PCAEnd)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 14}
                 Dim pcaTotalMin As New SqlParameter("PCATotalMin", model.PCATotalMin) With {.SqlDbType = SqlDbType.Int}
@@ -32,7 +32,7 @@ Public Class ServiceOrderServices
                 Dim custIdStop As New SqlParameter("CustIDStop", model.CustIDStop) With {.SqlDbType = SqlDbType.NVarChar, .Size = 10}
                 Dim custSignStop As New SqlParameter("CustSignStop", model.CustSignStop) With {.SqlDbType = SqlDbType.Text}
                 Dim condOfCharge As New SqlParameter("CondOfCharge", model.CondOfCharge) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
-                Dim remark As New SqlParameter("Remark", model.Remark) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
+                Dim remark As New SqlParameter("Remark", If(String.IsNullOrEmpty(model.Remark), "", model.Remark)) With {.SqlDbType = SqlDbType.NVarChar, .Size = 255}
                 'initial output parameters
                 Dim success As New SqlParameter("Success", SqlDbType.Int) With {.Direction = ParameterDirection.Output}
                 Dim retmessage As New SqlParameter("RetMsg", SqlDbType.NVarChar) With {.Direction = ParameterDirection.Output, .Size = 255}

@@ -45,7 +45,7 @@ Partial Public Class FlightData
     End Property
     Public ReadOnly Property STDValueTxt As String
         Get
-            Return STD.ToString("yyyyMMddHHmmss")
+            Return If(IsNothing(STD), "", Convert.ToDateTime(STD).ToString("yyyyMMddHHmmss"))
         End Get
     End Property
 End Class

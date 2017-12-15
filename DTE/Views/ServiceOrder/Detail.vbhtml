@@ -130,7 +130,11 @@ End Section
                     <div class="form-group">
                         <label class="col-md-3 control-label">Aircraft STD: </label>
                         <div class="col-md-9">
-                            <p class="form-control-static">@Helpers.ConvertDateTimeDTEFormat(Model.ETD).ToString("dd/MM/yyyy HH:mm")</p>
+                            @If Not String.IsNullOrEmpty(Model.ETD) Then
+                                @<p Class="form-control-static">@Helpers.ConvertDateTimeDTEFormat(Model.ETD).ToString("dd/MM/yyyy HH:mm")</p>
+                            Else
+                                @<p>-</p>
+                            End If
                         </div>
                     </div>
 

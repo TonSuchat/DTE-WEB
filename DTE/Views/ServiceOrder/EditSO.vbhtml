@@ -39,7 +39,9 @@ End Code
             });
             InitialDateTimePicker("ETDDTPicker", GetDateFromServerDate('@Model.ETD'));
             $('#ETDDTPicker').on('dp.change', function (e) {
-                $('#ETD').val(GetStringFormatByDate(new Date(e.date)));
+                console.log(e);
+                if (!e.date) $('#ETD').val(null);
+                else $('#ETD').val(GetStringFormatByDate(new Date(e.date)));
             });
 
             //PCA
