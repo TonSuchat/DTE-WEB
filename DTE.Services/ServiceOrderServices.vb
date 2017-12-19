@@ -519,18 +519,19 @@ Public Class ServiceOrderServices
             If IsNothing(dt) Then Return False
             Dim flightDatas As New List(Of FlightData)
             For Each row As DataRow In dt.Rows
-                If String.IsNullOrEmpty(row(4).ToString()) OrElse String.IsNullOrEmpty(row(5).ToString()) Then Continue For
+                If String.IsNullOrEmpty(row(4).ToString()) OrElse row(4).ToString().ToLower().Trim() = "sta" Then Continue For
                 Dim sta As DateTime = If(row(4).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(4).ToString().Split(":")(0), row(4).ToString().Split(":")(1), 0), DirectCast(row(4), DateTime))
-                Dim std As DateTime = If(row(4).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(5).ToString().Split(":")(0), row(5).ToString().Split(":")(1), 0), DirectCast(row(5), DateTime))
+                'Dim std As DateTime = If(row(5).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(5).ToString().Split(":")(0), row(5).ToString().Split(":")(1), 0), DirectCast(row(5), DateTime))
                 Dim currentFlightData As New FlightData() With {
-                    .FlightNo = row(0).ToString().Replace(" ", ""),
-                    .ACType = row(1),
-                    .ACCarrier = row(2),
-                    .ACReg = row(3),
+                    .FlightNo = row(5).ToString().Replace(" ", ""),
+                    .ACType = row(6),
+                    .ACCarrier = row(1).ToString().Substring(0, 3),
+                    .ACReg = "-",
                     .STA = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, sta.Hour, sta.Minute, 0),
-                    .STD = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, std.Hour, std.Minute, 0),
-                    .GateNo = row(6)
+                    .STD = Nothing,
+                    .GateNo = row(7)
                     }
+                '.STD = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, std.Hour, std.Minute, 0),
                 flightDatas.Add(currentFlightData)
             Next
             'remove recent data of selected date
@@ -550,7 +551,7 @@ Public Class ServiceOrderServices
 
     Public Sub RemoveTrashFlightData()
         Using repository As New FlightDataRepository()
-            Dim models = repository.GetFlightDatas().Where(Function(f) f.STA.Date < DateAdd(DateInterval.Day, -30, Date.Now())).ToList()
+            Dim models = repository.GetFlightDatas().Where(Function(f) f.STA.Date < DateAdd(DateInterval.Day, -7, Date.Now())).ToList()
             repository.RemoveFlightDatas(models)
         End Using
     End Sub

@@ -1,0 +1,10 @@
+[09:30:10] Message: System.IndexOutOfRangeException: Cannot find column 8.
+   at System.Data.DataColumnCollection.get_Item(Int32 index)
+   at System.Data.DataRow.set_Item(Int32 columnIndex, Object value)
+   at DTE.Helpers.GetExcelDataCSV(String filePath) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Helpers.vb:line 80
+   at DTE.Controllers.FlightDataController.ImportExcel(FormCollection collection) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\FlightDataController.vb:line 63
+[09:31:49] Message: System.IndexOutOfRangeException: Cannot find column 8.
+   at System.Data.DataColumnCollection.get_Item(Int32 index)
+   at System.Data.DataRow.set_Item(Int32 columnIndex, Object value)
+   at DTE.Helpers.GetExcelDataCSV(String filePath) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Helpers.vb:line 80
+   at DTE.Controllers.FlightDataController.ImportExcel(FormCollection collection) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\FlightDataController.vb:line 63

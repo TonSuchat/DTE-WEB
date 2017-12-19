@@ -19,7 +19,7 @@ End Code
 
         @<div Class="form-group">
             @Html.LabelFor(Function(u) u.PWD)
-            @Html.TextBoxFor(Function(u) u.PWD, New With {.class = "form-control"})
+            @Html.PasswordFor(Function(u) u.PWD, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(u) u.PWD)
         </div>
 

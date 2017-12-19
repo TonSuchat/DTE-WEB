@@ -23,7 +23,7 @@ End Code
                 $('#tblFlight').DataTable({
                     "bSort": false,
                     "columns": [
-                        { "searchable": false },
+                        null,
                         { "searchable": false },
                         { "searchable": false },
                         { "searchable": false },
@@ -41,7 +41,7 @@ End Code
                 $('#tblFlight').DataTable({
                     "bSort": false,
                     "columns": [
-                        { "searchable": false },
+                        null,
                         { "searchable": false },
                         { "searchable": false },
                         { "searchable": false },

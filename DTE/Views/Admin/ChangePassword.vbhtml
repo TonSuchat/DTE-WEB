@@ -42,7 +42,7 @@ End Section
 
         @<div Class="form-group">
             <label class="control-label">รหัสผ่านใหม่</label>
-            @Html.TextBox("newPassword", Nothing, New With {.class = "form-control", .id = "newPassword"})
+            @Html.Password("newPassword", Nothing, New With {.class = "form-control", .id = "newPassword"})
         </div>
 
         @<input type="button" id="btnChangePassword" class="btn btn-default btn-primary" value="เปลี่ยนรหัส" />
