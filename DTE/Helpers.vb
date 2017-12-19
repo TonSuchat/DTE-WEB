@@ -12,7 +12,7 @@ Public NotInheritable Class Helpers
         DeleteData = 6
     End Enum
 
-    Public Const Version As String = "1.0"
+    Public Const Version As String = "1.1"
 
     Private Shared services As New Services.ServiceOrderServices()
 
