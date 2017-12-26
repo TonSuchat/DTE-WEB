@@ -153,7 +153,7 @@ Namespace Controllers
             Catch ex As Exception
                 Helpers.LogTxt(ex.ToString())
                 ModelState.AddModelError("", "เกิดข้อผิดพลาด " & ex.ToString())
-                Return View("ManageServiceOrder")
+                Return View("ManageServiceOrder", GetManageServiceOrderViewModel(model.ExcelSelectedStartDate, model.ExcelSelectedEndDate))
             End Try
         End Function
 

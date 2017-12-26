@@ -50,6 +50,7 @@ End Section
 
     <div class="row">
         <h2>จัดการข้อมูล-S/O</h2>
+        @Html.ValidationSummary(True)
         @If Helpers.GetCurrentUser.Type = 1 OrElse Helpers.GetCurrentUser.Type = 2 Then
             @<a Class="btn btn-lg btn-success" href="@Url.Action("AddServiceOrder", "ServiceOrder")">เพิ่มข้อมูล S/O +</a>
         End If

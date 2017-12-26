@@ -1,0 +1,30 @@
+[11:38:28] Message: System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at DTE.Services.ServiceOrderServices.SetValueToDataRow(DataRow& row, Transaction data) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 411
+   at DTE.Services.ServiceOrderServices.GetDtTransactions(DateTime selectedStartDate, DateTime selectedEndDate) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 355
+   at DTE.Controllers.ServiceOrderController.ExportExcel(ExportExcelViewModel model) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\ServiceOrderController.vb:line 129
+[11:39:07] Message: System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at DTE.Services.ServiceOrderServices.SetValueToDataRow(DataRow& row, Transaction data) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 411
+   at DTE.Services.ServiceOrderServices.GetDtTransactions(DateTime selectedStartDate, DateTime selectedEndDate) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 355
+   at DTE.Controllers.ServiceOrderController.ExportExcel(ExportExcelViewModel model) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\ServiceOrderController.vb:line 129
+[11:42:53] Message: System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at DTE.Services.ServiceOrderServices.SetValueToDataRow(DataRow& row, Transaction data) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 411
+   at DTE.Services.ServiceOrderServices.GetDtTransactions(DateTime selectedStartDate, DateTime selectedEndDate) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 355
+   at DTE.Controllers.ServiceOrderController.ExportExcel(ExportExcelViewModel model) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\ServiceOrderController.vb:line 129
+[11:44:45] Message: System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at DTE.Services.ServiceOrderServices.SetValueToDataRow(DataRow& row, Transaction data) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 411
+   at DTE.Services.ServiceOrderServices.GetDtTransactions(DateTime selectedStartDate, DateTime selectedEndDate) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 355
+   at DTE.Controllers.ServiceOrderController.ExportExcel(ExportExcelViewModel model) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\ServiceOrderController.vb:line 129
+[12:02:38] Message: System.FormatException: The DateTime represented by the string is not supported in calendar System.Globalization.GregorianCalendar.
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at DTE.Services.ServiceOrderServices.SetValueToDataRow(DataRow& row, Transaction data) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 411
+   at DTE.Services.ServiceOrderServices.GetDtTransactions(DateTime selectedStartDate, DateTime selectedEndDate) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE.Services\ServiceOrderServices.vb:line 355
+   at DTE.Controllers.ServiceOrderController.ExportExcel(ExportExcelViewModel model) in E:\Projects\Projects_VS2015\Workspace\DTE-WEB\DTE\Controllers\ServiceOrderController.vb:line 129

@@ -33,12 +33,12 @@ Namespace Controllers
                 .GPU2 = model.GPU2,
                 .GPUEnd = model.GPUStop,
                 .GPUStart = model.GPUStart,
-                .GPUTotalMin = model.GPUTotalMin,
+                .GPUTotalMin = If(String.IsNullOrEmpty(model.GPUTotalMin), 0, model.GPUTotalMin),
                 .PCA1 = model.PCA1,
                 .PCA2 = model.PCA2,
                 .PCAEnd = model.PCAStop,
                 .PCAStart = model.PCAStart,
-                .PCATotalMin = model.PCATotalMin,
+                .PCATotalMin = If(String.IsNullOrEmpty(model.PCATotalMin), 0, model.PCATotalMin),
                 .Station = model.Station,
                 .Remark = model.Remark
                 }
