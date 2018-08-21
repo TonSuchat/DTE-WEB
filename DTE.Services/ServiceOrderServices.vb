@@ -279,7 +279,7 @@ Public Class ServiceOrderServices
                 End If
             End Using
             If IsNothing(models) OrElse models.Count = 0 Then Return Nothing
-            Return (From t In models Select New TransactionDetail(t)).ToList()
+            Return (From t In models Select New TransactionDetail(t)).Take(30).ToList()
         Catch ex As Exception
             Return Nothing
         End Try
@@ -441,6 +441,12 @@ Public Class ServiceOrderServices
     Public Function AddTempTransaction(model As TempTransaction) As Boolean
         Using repository As New TempTransactionRepository()
             Return repository.AddTempTransaction(model)
+        End Using
+    End Function
+
+    Public Function UpdateTempTransaction(model As TempTransaction) As Boolean
+        Using repository As New TempTransactionRepository()
+            Return repository.UpdateTempTransaction(model)
         End Using
     End Function
 

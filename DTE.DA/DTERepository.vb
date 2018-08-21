@@ -319,6 +319,17 @@ Public Class DTERepository
             End Try
         End Function
 
+        Public Function UpdateTempTransaction(model As TempTransaction) As Boolean
+            Try
+                If IsNothing(model) Then Return False
+                DTEDBContext.Entry(model).State = Entity.EntityState.Modified
+                Return If(DTEDBContext.SaveChanges > 0, True, False)
+            Catch ex As Exception
+                Log(New CodeErrorLog() With {.ModelType = "TempTransaction", .MethodName = "UpdateTempTransaction", .Message = ex.ToString()})
+                Return False
+            End Try
+        End Function
+
     End Class
 
 #End Region

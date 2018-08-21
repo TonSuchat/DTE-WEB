@@ -92,6 +92,41 @@ Namespace Controllers
         End Function
 
         <HttpPost()>
+        Public Function UpdateTempSO(model As SORequestModels.SaveSO) As IHttpActionResult
+            'find temptransaction by id
+            Dim tempTransaction = services.GetTempTransaction(model.RefId)
+            If IsNothing(tempTransaction) Then Return InternalServerError(New ArgumentException("ไม่พบข้อมูล S/O นี้"))
+            tempTransaction.AircraftCarrier = model.ACCarrier
+            tempTransaction.AircraftReg = model.ACReg
+            tempTransaction.AircraftType = model.ACType
+            tempTransaction.CondOfCharge = model.CondOfCharge
+            tempTransaction.CreateBy = model.UserID
+            tempTransaction.CustIDStart = model.CustIDStart
+            tempTransaction.CustIDStop = model.CustIDStop
+            tempTransaction.CustSignStart = model.CustSignStart
+            tempTransaction.CustSignStop = model.CustSignStop
+            tempTransaction.ETA = model.STA
+            tempTransaction.ETD = model.STD
+            tempTransaction.FlightNo = model.FlightNo
+            tempTransaction.GateNo = model.GateNo
+            tempTransaction.GPU1 = model.GPU1
+            tempTransaction.GPU2 = model.GPU2
+            tempTransaction.GPUEnd = model.GPUStop
+            tempTransaction.GPUStart = model.GPUStart
+            tempTransaction.GPUTotalMin = If(String.IsNullOrEmpty(model.GPUTotalMin), Nothing, model.GPUTotalMin)
+            tempTransaction.PCA1 = model.PCA1
+            tempTransaction.PCA2 = model.PCA2
+            tempTransaction.PCAEnd = model.PCAStop
+            tempTransaction.PCAStart = model.PCAStart
+            tempTransaction.PCATotalMin = If(String.IsNullOrEmpty(model.PCATotalMin), Nothing, model.PCATotalMin)
+            tempTransaction.Remark = model.Remark
+            tempTransaction.Station = model.Station
+            tempTransaction.Logo = services.GetAirlineLogo(model.ACCarrier)
+            Dim result = services.UpdateTempTransaction(tempTransaction)
+            If result Then Return Ok(New With {.success = If(result, 1, 0)}) Else Return InternalServerError(New ArgumentException("เกิดข้อผิดพลาดขณะทำการอัพเดตข้อมูล/โปรดติดต่อผู้ดูแลระบบ"))
+        End Function
+
+        <HttpPost()>
         Public Function DeleteTempSO(model As SORequestModels.DeleteTempSO) As IHttpActionResult
             Return Ok(services.ProcessRemoveTempTransaction(model.Id))
         End Function
