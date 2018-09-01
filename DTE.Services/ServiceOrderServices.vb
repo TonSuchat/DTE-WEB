@@ -520,6 +520,41 @@ Public Class ServiceOrderServices
         End Using
     End Function
 
+    'Public Function ImportFlightDataByDatatable(dt As DataTable, selectedDate As Date) As Boolean
+    '    Try
+    '        If IsNothing(dt) Then Return False
+    '        Dim flightDatas As New List(Of FlightData)
+    '        For Each row As DataRow In dt.Rows
+    '            If String.IsNullOrEmpty(row(4).ToString()) OrElse row(4).ToString().ToLower().Trim() = "sta" Then Continue For
+    '            Dim sta As DateTime = If(row(4).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(4).ToString().Split(":")(0), row(4).ToString().Split(":")(1), 0), DirectCast(row(4), DateTime))
+    '            'Dim std As DateTime = If(row(5).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(5).ToString().Split(":")(0), row(5).ToString().Split(":")(1), 0), DirectCast(row(5), DateTime))
+    '            Dim currentFlightData As New FlightData() With {
+    '                .FlightNo = row(5).ToString().Replace(" ", ""),
+    '                .ACType = row(6),
+    '                .ACCarrier = row(1).ToString().Substring(0, 3),
+    '                .ACReg = "-",
+    '                .STA = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, sta.Hour, sta.Minute, 0),
+    '                .STD = Nothing,
+    '                .GateNo = row(7)
+    '                }
+    '            '.STD = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, std.Hour, std.Minute, 0),
+    '            flightDatas.Add(currentFlightData)
+    '        Next
+    '        'remove recent data of selected date
+    '        Using repository As New FlightDataRepository()
+    '            Dim recentDatas = repository.GetFlightDatas(selectedDate)
+    '            repository.RemoveFlightDatas(recentDatas)
+    '        End Using
+    '        'add datas from CSV file
+    '        For Each item In flightDatas
+    '            AddFlightData(item)
+    '        Next
+    '        Return True
+    '    Catch ex As Exception
+    '        Return False
+    '    End Try
+    'End Function
+
     Public Function ImportFlightDataByDatatable(dt As DataTable, selectedDate As Date) As Boolean
         Try
             If IsNothing(dt) Then Return False
@@ -527,17 +562,16 @@ Public Class ServiceOrderServices
             For Each row As DataRow In dt.Rows
                 If String.IsNullOrEmpty(row(4).ToString()) OrElse row(4).ToString().ToLower().Trim() = "sta" Then Continue For
                 Dim sta As DateTime = If(row(4).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(4).ToString().Split(":")(0), row(4).ToString().Split(":")(1), 0), DirectCast(row(4), DateTime))
-                'Dim std As DateTime = If(row(5).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(5).ToString().Split(":")(0), row(5).ToString().Split(":")(1), 0), DirectCast(row(5), DateTime))
+                Dim std As DateTime = If(row(5).ToString().Length <= 5, New DateTime(Date.Now.Year, Date.Now.Month, Date.Now.Day, row(5).ToString().Split(":")(0), row(5).ToString().Split(":")(1), 0), DirectCast(row(5), DateTime))
                 Dim currentFlightData As New FlightData() With {
-                    .FlightNo = row(5).ToString().Replace(" ", ""),
-                    .ACType = row(6),
-                    .ACCarrier = row(1).ToString().Substring(0, 3),
-                    .ACReg = "-",
+                    .FlightNo = row(0).ToString().Replace(" ", ""),
+                    .ACType = row(1).ToString().Trim(),
+                    .ACCarrier = row(2).ToString().Trim(),
+                    .ACReg = row(3).ToString().Trim(),
                     .STA = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, sta.Hour, sta.Minute, 0),
-                    .STD = Nothing,
-                    .GateNo = row(7)
+                    .STD = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, std.Hour, std.Minute, 0),
+                    .GateNo = row(6).ToString().Trim()
                     }
-                '.STD = New Date(selectedDate.Year, selectedDate.Month, selectedDate.Day, std.Hour, std.Minute, 0),
                 flightDatas.Add(currentFlightData)
             Next
             'remove recent data of selected date

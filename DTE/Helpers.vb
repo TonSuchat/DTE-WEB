@@ -64,18 +64,17 @@ Public NotInheritable Class Helpers
         dt.Columns.Add("")
         dt.Columns.Add("")
         dt.Columns.Add("")
-        dt.Columns.Add("")
         Dim passFirstRowFlag = False
         Using sr As New IO.StreamReader(filePath)
             Do While Not sr.EndOfStream()
                 Dim row = sr.ReadLine().Split(",")
                 If row.Length > 1 Then
-                    If Not passFirstRowFlag Then
-                        passFirstRowFlag = True
-                        Continue Do
-                    End If
+                    'If Not passFirstRowFlag Then
+                    '    passFirstRowFlag = True
+                    '    Continue Do
+                    'End If
                     Dim dr = dt.NewRow()
-                    For index = 0 To 7
+                    For index = 0 To row.Length - 1
                         If String.IsNullOrEmpty(row(index).Trim()) Then Continue For
                         dr(index) = row(index).Trim()
                     Next
