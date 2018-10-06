@@ -457,6 +457,10 @@ Public Class DTERepository
         Public Function RemoveUploadImages(models As List(Of UploadImage)) As Boolean
             Try
                 If IsNothing(models) Then Return False
+                'attach object for prevent errors does not contain object in this context
+                For Each item In models
+                    DTEDBContext.UploadImages.Attach(item)
+                Next
                 DTEDBContext.UploadImages.RemoveRange(models)
                 Return If(DTEDBContext.SaveChanges > 0, True, False)
             Catch ex As Exception

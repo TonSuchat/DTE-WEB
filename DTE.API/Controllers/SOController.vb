@@ -123,7 +123,17 @@ Namespace Controllers
             tempTransaction.Station = model.Station
             tempTransaction.Logo = services.GetAirlineLogo(model.ACCarrier)
             Dim result = services.UpdateTempTransaction(tempTransaction)
-            If result Then Return Ok(New With {.success = If(result, 1, 0)}) Else Return InternalServerError(New ArgumentException("เกิดข้อผิดพลาดขณะทำการอัพเดตข้อมูล/โปรดติดต่อผู้ดูแลระบบ"))
+            If result Then
+                'remove existing upload images
+                services.RemoveUploadImagesByRefId(tempTransaction.id)
+                'insert new upload images
+                Dim uploadImgs As New List(Of Entities.UploadImage)
+                    For Each img In model.UploadImages
+                        uploadImgs.Add(New Entities.UploadImage() With {.refId = tempTransaction.id, .objectImage = img})
+                    Next
+                    services.AddUploadImages(uploadImgs)
+                End If
+                If result Then Return Ok(New With {.success = If(result, 1, 0)}) Else Return InternalServerError(New ArgumentException("เกิดข้อผิดพลาดขณะทำการอัพเดตข้อมูล/โปรดติดต่อผู้ดูแลระบบ"))
         End Function
 
         <HttpPost()>
